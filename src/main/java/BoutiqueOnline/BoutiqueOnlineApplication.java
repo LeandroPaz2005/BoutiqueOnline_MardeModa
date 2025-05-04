@@ -1,4 +1,4 @@
-package com.PixelRun.BoutiqueOnline;
+package BoutiqueOnline;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
