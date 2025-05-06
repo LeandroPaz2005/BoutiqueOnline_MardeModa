@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.Collection;
 
+//represanta la entidad de usuario
 @Entity
 @Table(name = "usuarios", uniqueConstraints =@UniqueConstraint(columnNames = "email"))
 public class Usuario {
@@ -20,89 +21,86 @@ public class Usuario {
     private String email;
     private String password;
 
-    //relacion de muchos a muchos
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    //relacion de muchos a muchos entre usuarios y roles
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL) //se cargan los roles y las operaciones de los roles
     @JoinTable(
-            name = "usuarios_roles",
+            name = "usuarios_roles", //tabal para establecer relacion
             joinColumns = @JoinColumn(name="usuario_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "rol_id",referencedColumnName = "id")
     )
     private Collection<Rol> roles;
 
-    public Usuario(String apellido, String email, Long id, String nombre, String password, Collection<Rol> roles) {
+    public Usuario(Long id, String nombre, String apellido, String email, String password, Collection<Rol> roles) {
         super();
-        this.apellido = apellido;
-        this.email = email;
         this.id = id;
         this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
         this.password = password;
         this.roles = roles;
     }
 
-    public Usuario(String apellido, String email, String nombre, String password, Collection<Rol> roles) {
-        super();
+    //contructores para almacenar datos
+    public Usuario(String nombre, String apellido, String email, String password, Collection<Rol> roles) {
+        this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
-        this.nombre = nombre;
         this.password = password;
         this.roles = roles;
     }
+
 
     public Usuario() {
         super();
     }
 
-    public String apellido() {
-        return apellido;
-    }
-
-    public Usuario setApellido(String apellido) {
-        this.apellido = apellido;
-        return this;
-    }
-
-    public String email() {
-        return email;
-    }
-
-    public Usuario setEmail(String email) {
-        this.email = email;
-        return this;
-    }
-
-    public Long id() {
+    public Long getId() {
         return id;
     }
 
-    public Usuario setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
-        return this;
     }
 
-    public String password() {
-        return password;
-    }
-
-    public Usuario setPassword(String password) {
-        this.password = password;
-        return this;
-    }
-
-    public String nombre() {
+    public String getNombre() {
         return nombre;
     }
 
-    public Usuario setNombre(String nombre) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
-        return this;
     }
 
-    public Collection<Rol> roles() {
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Collection<Rol> getRoles() {
         return roles;
     }
 
-    public Usuario setRoles(Collection<Rol> roles) {
+    public void setRoles(Collection<Rol> roles) {
         this.roles = roles;
-        return this;
     }
+
+
 }
