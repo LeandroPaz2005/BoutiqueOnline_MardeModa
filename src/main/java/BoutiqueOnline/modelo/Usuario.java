@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 import java.util.Collection;
 import java.util.Objects;
-import java.util.Set;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -13,9 +12,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "usuarios", uniqueConstraints =@UniqueConstraint(columnNames = "email"))
 public class Usuario {
-    
-    private static final long serialVersion=1L;
-    
+   
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -55,9 +52,9 @@ public class Usuario {
             joinColumns = @JoinColumn(name="usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "rol_id")
     )
-    private Set<Rol> roles;
+    private Collection<Rol> roles;
 
-    public Usuario(Long id, String nombre, String apellido, String email, String password, Set<Rol> roles) {
+    public Usuario(Long id, String nombre, String apellido, String email, String password, Collection<Rol> roles) {
         super();
         this.id = id;
         this.nombre = nombre;
@@ -68,7 +65,7 @@ public class Usuario {
     }
 
     //contructores para almacenar datos
-    public Usuario(String nombre, String apellido, String email, String password, Set<Rol> roles) {
+    public Usuario(String nombre, String apellido, String email, String password, Collection<Rol> roles) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
@@ -124,12 +121,7 @@ public class Usuario {
     public Collection<Rol> getRoles() {
         return roles;
     }
-
-    public void setRoles(Set<Rol> roles) {
-        this.roles = roles;
-    }
-
-
+   
     //metodos sobreescritos para comparacion y loggin
 
     @Override

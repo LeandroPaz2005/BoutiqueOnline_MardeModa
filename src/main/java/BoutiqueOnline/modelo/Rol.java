@@ -1,19 +1,22 @@
 package BoutiqueOnline.modelo;
 
 import jakarta.persistence.*;
+import java.io.Serializable;
+import java.util.Set;
 
 //entidad JPA representa un rol de usuario para definir los perfiles : adm y usuario
 @Entity
 @Table(name = "rol")
-public class Rol {
+public class Rol { 
 
     //para identifar el rol
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     //nombre de rol
-    private String nombre;
-
+    private String nombre; 
+    
     //por hacer: realizar dos roles para administrador y usuario
     public Rol(Long id, String nombre) {
         super();

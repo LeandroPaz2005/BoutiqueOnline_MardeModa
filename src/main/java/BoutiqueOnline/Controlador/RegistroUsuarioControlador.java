@@ -24,19 +24,19 @@ public class RegistroUsuarioControlador {
 
     //crea un objeto
     @ModelAttribute("usuario")
-    public UsuarioRegistroDTO retornarNueviUsuarioRegistroDTO(){
+    public UsuarioRegistroDTO retornarNueviUsuarioRegistroDTO() {
         return new UsuarioRegistroDTO();
     }
 
     //muestra el formulario de registro al usuario
     @GetMapping
-    public String mostrarFormulario(){
+    public String mostrarFormulario() {
         return "registro";
     }
 
     //procesa el registro enviado
     @PostMapping
-    public String registrarCuenta(@ModelAttribute("usuario")UsuarioRegistroDTO registroDTO ){
+    public String registrarCuenta(@ModelAttribute("usuario") UsuarioRegistroDTO registroDTO) {
         usuarioServicio.guardar(registroDTO);
         return "redirect:/registro?exito";
     }
