@@ -57,7 +57,7 @@ Bienvenidos al repositorio de la Boutique Online Mar de Moda, este proyecto tien
 > Diagrama de Procesos Boutique Online Mar de Moda- Mejorado
 ![Image](https://github.com/user-attachments/assets/6897d20d-2c6b-4e9a-8350-f7353939a4bb)
 
-> Diagrama de Entidades
+> Diagrama de Entidad-Relación
 ![Image](https://github.com/user-attachments/assets/9f63edbe-e6a0-4f72-aad7-82b83efaab0c)
 
 ## Capturas
