@@ -1,85 +1,138 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-    <head>
-        <meta charset="utf-8">
-        <title>Inicio</title>
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet"
-              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-              crossorigin="anonymous">
-
-        <!-- Optional theme -->
-        <link rel="stylesheet"
-              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-              integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-              crossorigin="anonymous">
-    </head>
-    <body>
-
-
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed"
-                            data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-                            aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span> <span
-                            class="icon-bar"></span> <span class="icon-bar"></span> <span
-                            class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#" th:href="@{/inicio}">Registro y
-                        inicio de sesión</a>
-                </div>
-     
-                <div id="navbar" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Cerrar
-                                sesión</a></li>
-                    </ul>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adminstrador-Boutique Mar de Moda</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script th:src="@{/JS/script.js}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <header>
+        <div class="top-message" id="mensaje-oferta"></div>
+        <div class="header-content">
+            <div class="logo">
+                <a href="index.html">BOUTIQUE ONLINE MAR DE MODA</a>
+            </div>
+            <div class="nav-buttons">
+                <div class="admin-dropdown">
+                    <button class="admin-btn">Admin <i class="fas fa-caret-down"></i></button>
+                    <div class="dropdown-content">
+                        <a href="login.html">Cerrar Sesión</a>
+                    </div>
                 </div>
             </div>
-        </nav>
+        </div>
+    </header>
 
-        <br>
-        <br>
-
-        <div class="container">
-            <h1>Registro e inicio de sesión</h1>
-            <br>
-            <h4>
-                Bienvenido al Boutique Mar de Moda <span sec:authentication="principal.username"></span>
-            </h4>
-
-            <br> <br>
-
-            <table class="table table-striped table-bordered">
-                <thead class="table-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Email</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="usuario : ${usuarios}">
-                        <td th:text="${usuario.id}">ID</td>
-                        <td th:text="${usuario.nombre}">ID</td>
-                        <td th:text="${usuario.apellido}">ID</td>
-                        <td th:text="${usuario.email}">ID</td>
-                    </tr>
-                </tbody>
-            </table>
+    <main class="admin-panel-container">
+        <div class="admin-header">
+            <h2>Panel de Administración</h2>
+            <p>Bienvenido, <span id="admin-username">administrador</span></p>
         </div>
 
+        <!-- Tabla de usuarios -->
+        <section class="admin-users-section">
+            <div class="container">
+                <h2>Registro e Inicio de Sesión</h2>
+                <p>Bienvenido al Boutique Mar de Moda, 
+                    <span sec:authentication="principal.username"></span>
+                </p>
 
+                <div class="table-container">
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="usuario : ${usuarios}">
+                                <td th:text="${usuario.id}">ID</td>
+                                <td th:text="${usuario.nombre}">Nombre</td>
+                                <td th:text="${usuario.apellido}">Apellido</td>
+                                <td th:text="${usuario.email}">Email</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+       
+        <div class="admin-card-grid">
+            <a href="dashboard.html" class="admin-card-link">
+                <div class="admin-card">
+                    <i class="fas fa-tachometer-alt fa-3x" style="color:#a0004d;"></i>
+                    <h3>Dashboard</h3>
+                    <p>Resumen general y estadísticas del sistema.</p>
+                </div>
+            </a>
 
-        <!-- Latest compiled and minified JavaScript -->
-        <script
-            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
-    </body>
+            <a href="gestion_productos.html" class="admin-card-link">
+                <div class="admin-card">
+                    <i class="fas fa-box-open fa-3x" style="color:#a0004d;"></i>
+                    <h3>Gestión Productos</h3>
+                    <p>Añadir, editar y eliminar productos del catálogo.</p>
+                </div>
+            </a>
+
+            <a href="editar_categorias.html" class="admin-card-link">
+                <div class="admin-card">
+                    <i class="fas fa-tags fa-3x" style="color:#a0004d;"></i>
+                    <h3>Editar Categorías</h3>
+                    <p>Administrar las categorías de los productos.</p>
+                </div>
+            </a>
+
+            <a href="gestion_inventario.html" class="admin-card-link">
+                <div class="admin-card">
+                    <i class="fas fa-cubes fa-3x" style="color:#a0004d;"></i>
+                    <h3>Gestión Inventario</h3>
+                    <p>Control del stock y seguimiento del inventario.</p>
+                </div>
+            </a>
+
+            <a href="gestion_pedidos.html" class="admin-card-link">
+                <div class="admin-card">
+                    <i class="fas fa-shopping-cart fa-3x" style="color:#a0004d;"></i>
+                    <h3>Gestión Pedidos</h3>
+                    <p>Ver, procesar y gestionar los pedidos de los clientes.</p>
+                </div>
+            </a>
+
+            <a href="gestion_usuarios.html" class="admin-card-link">
+                <div class="admin-card">
+                    <i class="fas fa-users fa-3x" style="color:#a0004d;"></i>
+                    <h3>Gestión Usuarios</h3>
+                    <p>Administrar las cuentas de los usuarios del sitio.</p>
+                </div>
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 Boutique Online Mar de Moda. Todos los derechos reservados.</p>
+        <div class="social-links">
+            <a href="https://wa.me" target="_blank" class="social-icon">
+                <span>WhatsApp</span>
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://www.tiktok.com" target="_blank" class="social-icon">
+                <span>TikTok</span>
+                <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://www.instagram.com" target="_blank" class="social-icon">
+                <span>Instagram</span>
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </footer>
+</body>
 </html>

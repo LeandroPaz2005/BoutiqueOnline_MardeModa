@@ -3,6 +3,7 @@ package BoutiqueOnline.Controlador;
 
 //gestiona las vistas del sistema 
 
+import BoutiqueOnline.modelo.Usuario;
 import BoutiqueOnline.servicio.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

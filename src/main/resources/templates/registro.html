@@ -1,92 +1,140 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="utf-8">
-        <title>Registro de usuarios</title>
-        <link rel="stylesheet"
-              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-              crossorigin="anonymous">
-        <link rel="stylesheet"
-              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-              integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-              crossorigin="anonymous">
-    </head>
-    <body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro - Boutique Mar de Moda</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <script th:src="@{/JS/script.js}"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="top-message" id="mensaje-oferta"></div>
+      <div class="header-content">
+        <div class="logo">
+          <a th:href="@{/}">BOUTIQUE ONLINE MAR DE MODA</a>
+        </div>
+        <div class="nav-buttons">
+          <a th:href="@{/login}" class="btn">Inicia Sesión</a>
+          <a th:href="@{/carrito}" class="btn">Carrito</a>
+        </div>
+      </div>
+      <nav class="navbar">
+        <ul class="nav-links">
+          <li><a th:href="@{/polos}">Polos</a></li>
+          <li><a th:href="@{/blusas}">Blusas</a></li>
+          <li><a th:href="@{/tops}">Tops</a></li>
+          <li><a th:href="@{/otros}">Otros</a></li>
+        </ul>
+      </nav>
+    </header>
 
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed"
-                            data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-                            aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" th:href="@{/login}">Registro e inicio de sesión</a>
-                </div>
+    <main>
+      <section class="registro-usuario">
+        <div class="formulario">
+          <h2>Registro de Usuario</h2>
+          <br />
+
+          <!-- Mensajes de error -->
+          <div
+            th:if="${errorEmail}"
+            class="alert alert-danger"
+            th:text="${errorEmail}"
+          ></div>
+          <div
+            th:if="${errorPassword}"
+            class="alert alert-danger"
+            th:text="${errorPassword}"
+          ></div>
+          <div th:if="${param.exito}">
+            <div class="alert alert-info">
+              Se ha registrado exitosamente en la aplicación
             </div>
-        </nav>
+          </div>
 
-        <br><br>
+          <!-- Formulario de registro -->
+          <form th:action="@{/registro}" method="post" th:object="${usuario}">
+            <label for="nombre">Nombre:</label>
+            <input
+              type="text"
+              id="nombre"
+              th:field="*{nombre}"
+              required
+            /><br />
 
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-md-offset-3">
+            <label for="apellido">Apellido:</label>
+            <input
+              type="text"
+              id="apellido"
+              th:field="*{apellido}"
+              required
+            /><br />
 
-                    <!-- Mostrar error si el correo ya está registrado -->
-                    <div th:if="${errorEmail}" class="alert alert-danger" th:text="${errorEmail}"></div>
+            <label for="email">Correo electrónico:</label>
+            <input type="email" id="email" th:field="*{email}" required /><br />
+            <div
+              class="text-danger"
+              th:if="${#fields.hasErrors('email')}"
+              th:errors="*{email}"
+            ></div>
 
-                    <!-- Mostrar error si las contraseñas no coinciden -->
-                    <div th:if="${errorPassword}" class="alert alert-danger" th:text="${errorPassword}"></div>
-
-                    <div th:if="${param.exito}">
-                        <div class="alert alert-info">Se ha registrado exitosamente en la aplicación</div>
-                    </div>
-
-                    <h1>Regístrate</h1>
-
-                    <form th:action="@{/registro}" method="POST" th:object="${usuario}">
-                        <div class="form-group">
-                            <label class="control-label" for="nombre">Nombre:</label>
-                            <input id="nombre" type="text" class="form-control" th:field="*{nombre}" required autofocus>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label" for="apellido">Apellido:</label>
-                            <input id="apellido" type="text" class="form-control" th:field="*{apellido}" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label" for="email">Email:</label>
-                            <input id="email" type="email" class="form-control" th:field="*{email}" required>
-
-                            <!-- Mostrar error específico de email -->
-                            <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label" for="password">Password:</label>
-                            <input id="password" type="password" class="form-control" th:field="*{password}" required>
-
-                            <!-- Mostrar error específico de password si quieres -->
-                            <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-success">Registrar</button>
-                            <span>¿Ya tienes una cuenta? <a th:href="@{/login}">Inicia sesión aquí</a></span>
-                        </div>
-                    </form>
-
-                </div>
+            <label for="password">Contraseña:</label>
+            <div class="password-container">
+              <input
+                type="password"
+                id="password"
+                th:field="*{password}"
+                required
+              />
+              <i class="fas fa-eye" id="togglePassword"></i>
             </div>
+            <div
+              class="text-danger"
+              th:if="${#fields.hasErrors('password')}"
+              th:errors="*{password}"
+            ></div>
+
+            <button type="submit" class="btn">Aceptar</button>
+            <!-- Botón para iniciar sesión -->
+            <div
+              class="iniciar-sesion-link"
+              style="margin-top: 15px; text-align: center"
+            >
+              <a th:href="@{/login}" class="btn"
+                >¿Ya tienes cuenta? Inicia Sesión</a
+              >
+            </div>
+          </form>
         </div>
 
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
-    </body>
+        <div class="imagen-registro">
+          <img src="img/ropa.jpg" alt="Ropa colgada" />
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        &copy; 2025 Boutique Online Mar de Moda. Todos los derechos reservados.
+      </p>
+      <div class="social-links">
+        <a href="https://wa.me" target="_blank" class="social-icon">
+          <span>WhatsApp</span>
+          <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://www.tiktok.com" target="_blank" class="social-icon">
+          <span>TikTok</span>
+          <i class="fab fa-tiktok"></i>
+        </a>
+        <a href="https://www.instagram.com" target="_blank" class="social-icon">
+          <span>Instagram</span>
+          <i class="fab fa-instagram"></i>
+        </a>
+      </div>
+    </footer>
+  </body>
 </html>
