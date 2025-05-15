@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🛍️ Boutique Online Mar de Moda
 ![Image](https://github.com/user-attachments/assets/5ee223df-ac04-4506-bf5f-80dfc05b7504)
 
@@ -98,3 +99,6 @@ CONEXION A  BASE DE DATOS
 - MySQL
 - HTML
 - Git y GitHub
+=======
+
+>>>>>>> desarrollador1/backend/karol
