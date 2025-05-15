@@ -26,7 +26,7 @@ public class RegistroControlador {
 
     //para para los usuarios normales
     @GetMapping("/")
-    public String VerpaginaInicio(Model model) {
+    public String PaginaInicial(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (auth != null && auth.getAuthorities().stream()
