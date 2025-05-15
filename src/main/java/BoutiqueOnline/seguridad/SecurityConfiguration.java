@@ -1,8 +1,6 @@
-
 package BoutiqueOnline.seguridad;
 
 //configuracion de seguridad para personalizar la autenticacion y autorizacion
-
 import BoutiqueOnline.servicio.UsuarioServicio;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,9 +17,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfiguration {
-
+    
     private final UsuarioServicio usuarioServicio;
-
+    
     public SecurityConfiguration(@Lazy UsuarioServicio usuarioServicio) {
         this.usuarioServicio = usuarioServicio;
     }
@@ -48,14 +46,11 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/registro**", "/js/**", "/css/**", "/img/**").permitAll()
                 .anyRequest().authenticated())
-                
-                
                 .formLogin(form -> form
                 .loginPage("/login")
+                .defaultSuccessUrl("/", true)
                 .permitAll()
                 )
-                
-                
                 .logout(logout -> logout
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
@@ -63,7 +58,7 @@ public class SecurityConfiguration {
                 .logoutSuccessUrl("/login?logout")
                 .permitAll()
                 );
-
+        
         return http.build();
     }
 }
