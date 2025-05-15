@@ -5,6 +5,8 @@ package BoutiqueOnline.Controlador;
 
 import BoutiqueOnline.servicio.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +27,15 @@ public class RegistroControlador {
     //para para los usuarios normales
     @GetMapping("/")
     public String VerpaginaInicio(Model model) {
-        //agregar el nombre del usuario 
-        model.addAttribute("usuarios",servicio.listarUsuario());
-        return "panel_Admin";
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth != null && auth.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROL_ADMIN"))) {
+
+            model.addAttribute("usuarios", servicio.listarUsuario());
+            return "panel_Admin";
+        } else {
+            return "index";
+        }
     }
 }
