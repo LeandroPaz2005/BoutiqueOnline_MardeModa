@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -55,6 +56,12 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 
     private Collection<? extends GrantedAuthority> mapearAutoridadesRoles(Collection<Rol> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.nombre())).collect(Collectors.toList());
+    }
+
+    //para implementar el servivio de eliminar
+    @Override
+    public Usuario ELiminarUsuario(UsuarioRegistroDTO registroDTO) {
+    return UsuarioRepositorio.deleteById(id);
     }
 
 }
