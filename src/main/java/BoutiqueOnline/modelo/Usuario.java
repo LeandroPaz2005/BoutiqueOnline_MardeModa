@@ -5,6 +5,7 @@ package BoutiqueOnline.modelo;
 
 import jakarta.persistence.*;
 import java.util.Collection;
+import java.util.List;
 import javax.validation.constraints.*;
 
 @Entity
@@ -51,7 +52,16 @@ public class Usuario{
     )
     private Collection<Rol> roles;
   
+    //las relaciones con las demas clases
+    
+     //lista de productos
+    @OneToMany(mappedBy = "usuario") //relacion de uno a muchos: un usuarios puede tener muchos productos y se mappea con usuario
+    private List<Producto> productos;
 
+    //lista de ordenens para un usuarios
+    @OneToMany(mappedBy = "usuario") //relacion de uno a muchos: un usurios puede tener muchas ordenes y se mapea con usuarios
+    private List<Orden> ordenes;
+    
     public Usuario(Long id, String nombre, String apellido, String email, String password, Collection<Rol> roles) {
         super();
         this.id = id;
@@ -119,5 +129,22 @@ public class Usuario{
         return roles;
     }
 
+    public List<Producto> getProductos() {
+        return productos;
+    }
 
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
+    }
+
+    public List<Orden> getOrdenes() {
+        return ordenes;
+    }
+
+    public void setOrdenes(List<Orden> ordenes) {
+        this.ordenes = ordenes;
+    }
+
+
+    
 }
