@@ -1,8 +1,6 @@
-
 package BoutiqueOnline.Controlador;
 
 //gestiona las vistas del sistema 
-
 import BoutiqueOnline.modelo.Usuario;
 import BoutiqueOnline.servicio.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,7 @@ public class RegistroControlador {
     //muestra de la vista del login
     @GetMapping("/login")
     public String inicarSesion() {
-        return "login";
+        return "administrador/login";
     }
 
     //para para los usuarios normales
@@ -34,9 +32,11 @@ public class RegistroControlador {
                 .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROL_ADMIN"))) {
 
             model.addAttribute("usuarios", servicio.listarUsuario());
-            return "panel_Admin";
+            return "administrador/panel_Admin";
         } else {
             return "index";
         }
     }
+
+   
 }

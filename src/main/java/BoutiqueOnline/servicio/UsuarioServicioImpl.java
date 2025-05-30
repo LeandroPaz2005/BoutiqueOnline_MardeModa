@@ -58,10 +58,5 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.nombre())).collect(Collectors.toList());
     }
 
-    //para implementar el servivio de eliminar
-    @Override
-    public Usuario ELiminarUsuario(UsuarioRegistroDTO registroDTO) {
-    return UsuarioRepositorio.deleteById(id);
-    }
-
+   
 }

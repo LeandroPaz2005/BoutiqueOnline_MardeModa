@@ -35,37 +35,7 @@
             <p>Bienvenido, <span id="admin-username">administrador</span></p>
         </div>
 
-        <!-- Tabla de usuarios -->
-        <section class="admin-users-section">
-            <div class="container">
-                <h2>Registro e Inicio de Sesión</h2>
-                <p>Bienvenido al Boutique Mar de Moda, 
-                    <span sec:authentication="principal.username"></span>
-                </p>
-
-                <div class="table-container">
-                    <table class="users-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Email</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="usuario : ${usuarios}">
-                                <td th:text="${usuario.id}">ID</td>
-                                <td th:text="${usuario.nombre}">Nombre</td>
-                                <td th:text="${usuario.apellido}">Apellido</td>
-                                <td th:text="${usuario.email}">Email</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-       
+ 
         <div class="admin-card-grid">
             <a href="dashboard.html" class="admin-card-link">
                 <div class="admin-card">
@@ -107,7 +77,7 @@
                 </div>
             </a>
 
-            <a href="gestion_usuarios.html" class="admin-card-link">
+            <a th:href="@{/administrador/gestionUsuario}" class="admin-card-link">
                 <div class="admin-card">
                     <i class="fas fa-users fa-3x" style="color:#a0004d;"></i>
                     <h3>Gestión Usuarios</h3>

@@ -16,6 +16,4 @@ public interface UsuarioServicio extends UserDetailsService{ //busqueda de un su
     //para hacer una lista de usuario
     public List<Usuario> listarUsuario();
 
-    //metodo para eliminar usuario
-    public Usuario ELiminarUsuario(UsuarioRegistroDTO registroDTO);
 }
