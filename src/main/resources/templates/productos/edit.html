@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión Producto - Editar</title>
+    <link rel="stylesheet" th:href="@{/css/estilo2.css}">
+    <script th:src="@{/JS/script.js}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="top-message" id="mensaje-oferta"></div>
+        <div class="header-content">
+            <div class="logo">
+                <a th:href="@{/}">BOUTIQUE ONLINE MAR DE MODA</a>
+            </div>
+            <div class="nav-buttons">
+                <div class="admin-dropdown">
+                    <button class="admin-btn">Admin <i class="fas fa-caret-down"></i></button>
+                    <div class="dropdown-content">
+                        <a th:href="@{/logout}">Cerrar Sesión</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="container">
+        <!-- Título de sección -->
+        <h1 class="mt-4 mb-3">Gestión de Productos <small>Editar Producto</small></h1>
+
+        <!-- Breadcrumbs -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/productos}">Productos</a></li>
+            <li class="breadcrumb-item active">Editar</li>
+        </ol>
+
+        <!-- Formulario de actualización -->
+        <section class="form-section">
+            <h2>Actualizar Información del Producto</h2>
+
+            <form class="form-horizontal" th:action="@{/productos/update}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="id" th:value="${producto.id}">    
+
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre"
+                           placeholder="Ingrese el nombre del producto" required autocomplete="off"
+                           th:value="${producto.nombre}">
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion">Descripción:</label>
+                    <textarea class="form-control" id="descripcion" name="descripcion"
+                              placeholder="Ingrese la descripción del producto" required autocomplete="off"
+                              th:text="${producto.descripcion}"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="cantidad">Cantidad:</label>
+                    <input type="number" class="form-control" id="cantidad" name="cantidad" min="0"
+                           placeholder="Ingrese la cantidad del producto" th:value="${producto.cantidad}" required autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label for="precio">Precio:</label>
+                    <input type="number" class="form-control" step="any" id="precio" name="precio" min="0"
+                           placeholder="Ingrese el precio del producto" th:value="${producto.precio}" required autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label for="img">Imagen:</label>
+                    <input type="file" class="form-control-file" id="img" name="img">
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Guardar Cambios</button>
+                    <a th:href="@{/productos}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Boutique Online Mar de Moda. Todos los derechos reservados.</p>
+        <div class="social-links">
+            <a href="https://wa.me" target="_blank" class="social-icon">
+                <span>WhatsApp</span>
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://www.tiktok.com" target="_blank" class="social-icon">
+                <span>TikTok</span>
+                <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://www.instagram.com" target="_blank" class="social-icon">
+                <span>Instagram</span>
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </footer>
+</body>
+</html>

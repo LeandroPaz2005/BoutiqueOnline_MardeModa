@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutique - Ver Productos</title>
+    <link rel="stylesheet" th:href="@{/css/estilo2.css}">
+    <script th:src="@{/JS/script.js}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .container {
+            padding: 40px 20px;
+        }
+
+        table th, table td {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <!-- Encabezado personalizado -->
+    <header>
+        <div class="top-message" id="mensaje-oferta"></div>
+        <div class="header-content">
+            <div class="logo">
+                <a href="index.html">BOUTIQUE ONLINE MAR DE MODA</a>
+            </div>
+            <div class="nav-buttons">
+                <div class="admin-dropdown">
+                    <button class="admin-btn">Admin <i class="fas fa-caret-down"></i></button>
+                    <div class="dropdown-content">
+                        <a href="login.html">Cerrar Sesión</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <div class="container">
+        <!-- Título y Breadcrumbs -->
+        <h1 class="mt-4 mb-3">
+            Gestión de Productos <small>Mar de Moda</small>
+        </h1>
+
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
+            <li class="breadcrumb-item active">Ver Productos</li>
+        </ol>
+
+        <!-- Botón para crear nuevo producto -->
+        <a class="btn btn-primary mb-3" th:href="@{/productos/create}">Crear Producto</a>
+
+        <!-- Tabla de productos -->
+        <h2>Lista de Productos</h2>
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Inventario</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col" colspan="2">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="producto : ${productos}">
+                    <td th:text="${producto.nombre}">Nombre</td>
+                    <td th:text="${producto.descripcion}">Descripción</td>
+                    <td th:text="${producto.cantidad}">Inventario</td>
+                    <td th:text="${producto.precio}">Precio</td>
+                    <td>
+                        <a class="btn btn-warning" th:href="@{/productos/edit/{id}(id=${producto.id})}">Editar</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" th:href="@{/productos/delete/{id}(id=${producto.id})}">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pie de página -->
+    <footer>
+        <p>© 2025 Boutique Online Mar de Moda. Todos los derechos reservados.</p>
+        <div class="social-links">
+            <a href="https://wa.me" target="_blank" class="social-icon">
+                <span>WhatsApp</span>
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://www.tiktok.com" target="_blank" class="social-icon">
+                <span>TikTok</span>
+                <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://www.instagram.com" target="_blank" class="social-icon">
+                <span>Instagram</span>
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </footer>
+</body>
+</html>
