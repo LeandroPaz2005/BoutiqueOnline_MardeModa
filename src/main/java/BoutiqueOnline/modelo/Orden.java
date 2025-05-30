@@ -1,0 +1,107 @@
+
+package BoutiqueOnline.modelo;
+
+import jakarta.persistence.*;
+import java.util.Date;
+
+
+@Entity
+@Table(name="ordenes")
+public class Orden {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String numero;
+    private Date fechaCreacion;
+    private Date fechaRecibida;
+    private double total;
+
+    //relacion de mucho a uno: muchos usuarios pueden tener una orden
+    @ManyToOne
+    private Usuario usuario;
+    
+    //relacion de uno a uno con detalle: un orden puede tener un detalle de orden
+    @OneToOne(mappedBy = "orden")
+    private DetalleOrden orden;
+    
+    public Orden() {
+    }
+
+    public Orden(Integer id, String numero, Date fechaCreacion, Date fechaRecibida, double total) {
+        super();
+        this.id = id;
+        this.numero = numero;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaRecibida = fechaRecibida;
+        this.total = total;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Date getFechaRecibida() {
+        return fechaRecibida;
+    }
+
+    public void setFechaRecibida(Date fechaRecibida) {
+        this.fechaRecibida = fechaRecibida;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public DetalleOrden getOrden() {
+        return orden;
+    }
+
+    public void setOrden(DetalleOrden orden) {
+        this.orden = orden;
+    }
+
+    
+    @Override
+    public String toString() {
+        return "Orden del pedido"
+                + "Id:" + id
+                + "Numero:" + numero
+                + "Fecha Creacion:" + fechaCreacion
+                + "Fecha Recibida:" + fechaRecibida
+                + "Total:" + total;
+    }
+
+}
