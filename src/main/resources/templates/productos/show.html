@@ -11,10 +11,71 @@
               href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
         <script th:src="@{/JS/script.js}"></script>
+        <style>
+            /* Mejora general para la tabla */
+            .table {
+                background-color: #fff;
+                border-collapse: collapse;
+                border-radius: 10px;
+                overflow: hidden;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            }
+
+            /* Cabecera elegante */
+            .table thead {
+                background-color: #a0004d;
+                color: white;
+                font-weight: bold;
+            }
+
+            /* Bordes más suaves */
+            .table td, .table th {
+                vertical-align: middle;
+                padding: 14px 12px;
+                border-color: #ddd;
+            }
+
+            /* Hover con suavidad */
+            .table-hover tbody tr:hover {
+                background-color: #fce4ec;
+                transition: background-color 0.3s ease;
+            }
+
+            /* Botones más definidos */
+            .btn-warning, .btn-danger {
+                padding: 6px 12px;
+                border-radius: 6px;
+                font-size: 0.9rem;
+            }
+
+            .btn-warning i, .btn-danger i {
+                margin-right: 4px;
+            }
+
+            /* Celda de descripción con efecto de corte elegante */
+            td[style*="text-overflow: ellipsis;"] {
+                max-width: 200px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            /* Centrado del texto en acciones */
+            td.text-center a.btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .table-responsive {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+        </style>
     </head>
     <body>
 
-        <!-- ============ HEADER ============ -->
         <header>
             <div class="top-message" id="mensaje-oferta"></div>
 
@@ -45,66 +106,73 @@
         <!-- ============ MAIN ============ -->
         <main class="container bg-white p-5 shadow-lg rounded mt-4 mb-5">
 
-             <div class="container">
-            <h1 class="mt-4 mb-3">
-                Boutique Online Mar de Moda 
-                <small>
-                    <a th:href="@{/productos/gestionProducto}" style="color: #a0004d; text-decoration: none;">
-                        Gestión de Productos
-                    </a>
-                </small>
-            </h1>
+            <div class="text-center">
+                <h1 class="mb-3">
+                    Boutique Online <span style="color: #a0004d;">Mar de Moda</span>
+                </h1>
+                <a class="h5 text-decoration-none" th:href="@{/productos/gestionProducto}" style="color: #a0004d;">
+                    Gestión de Productos
+                </a>
+            </div>
 
-            <ol class="breadcrumb bg-white px-0">
-                <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
-                <li class="breadcrumb-item active">Ver Productos</li>
-            </ol>
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="mt-4">
+                <ol class="breadcrumb bg-white px-0">
+                    <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Ver Productos</li>
+                </ol>
+            </nav>
 
-            <!-- Botón “Crear producto” -->
-            <div class="text-right mb-4">
-                <a class="btn btn-primary"
-                   th:href="@{/productos/create}">
+            <!-- Botón Crear Producto -->
+            <div class="text-end mb-4">
+                <a class="btn btn-primary" th:href="@{/productos/create}">
                     <i class="fas fa-plus"></i> Crear Producto
                 </a>
             </div>
 
-            <!-- Tabla de productos -->
-            <h3 class="text-secondary mb-3">Lista de Productos</h3>
+            <!-- Título Tabla -->
+            <h3 class="text-secondary text-center mb-4">Lista de Productos</h3>
 
+            <!-- Tabla de Productos -->
             <div class="table-responsive">
-                <table class="table table-bordered table-hover align-middle">
-                    <thead class="thead-dark">
+                <table class="table table-bordered table-hover align-middle mx-auto">
+                    <thead class="thead-dark text-center">
                         <tr>
+                            <th>Imagen</th>
                             <th>Nombre</th>
                             <th>Descripción</th>
                             <th>Inventario</th>
-                            <th>Precio</th>
-                            <th class="text-center" colspan="2">Acciones</th>
+                            <th>Precio (S/.)</th>
+                            <th colspan="2" style="width: 130px;">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="producto : ${productos}">
                             <td th:text="${producto.nombre}">Nombre</td>
-                            <td th:text="${producto.descripcion}">Descripción</td>
-                            <td th:text="${producto.cantidad}">Inventario</td>
-                            <td th:text="${producto.precio}">Precio</td>
+                            <td th:text="${producto.descripcion}" style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></td>
+                            <td class="text-center" th:text="${producto.cantidad}">0</td>
+                            <td class="text-end fw-bold" th:text="${#numbers.formatDecimal(producto.precio, 1, 'COMMA', 2, 'POINT')}">0.00</td>
                             <td class="text-center">
-                                <a class="btn btn-sm btn-warning"
-                                   th:href="@{/productos/edit/{id}(id=${producto.id})}">
+                                <a class="btn btn-sm btn-warning" th:href="@{/productos/edit/{id}(id=${producto.id})}" title="Editar">
                                     <i class="fas fa-edit"></i> Editar
                                 </a>
                             </td>
                             <td class="text-center">
-                                <a class="btn btn-sm btn-danger"
-                                   th:href="@{/productos/delete/{id}(id=${producto.id})}"
-                                   onclick="return confirm('¿Eliminar este producto?');">
+                                <a class="btn btn-sm btn-danger" th:href="@{/productos/delete/{id}(id=${producto.id})}"
+                                   onclick="return confirm('¿Eliminar este producto?');" title="Eliminar">
                                     <i class="fas fa-trash"></i> Eliminar
                                 </a>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(productos)}">
+                            <td colspan="7" class="text-center text-muted py-4">
+                                No hay productos para mostrar.
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+
         </main>
 
         <!-- ============ FOOTER ============ -->
