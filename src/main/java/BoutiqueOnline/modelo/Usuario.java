@@ -14,7 +14,7 @@ public class Usuario{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     //nombre del usuario(requerido,entre 2 y 30 caracteres)
     @NotBlank(message = "El nombre no puede estar vacío")
@@ -62,14 +62,14 @@ public class Usuario{
     @OneToMany(mappedBy = "usuario") //relacion de uno a muchos: un usurios puede tener muchas ordenes y se mapea con usuarios
     private List<Orden> ordenes;
     
-    public Usuario(Long id, String nombre, String apellido, String email, String password, Collection<Rol> roles) {
+    public Usuario(int id, String nombre, String apellido, String email, String password, String roles) {
         super();
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.password = password;
-        this.roles = roles;
+        
     }
 
     //contructores para almacenar datos
@@ -85,11 +85,11 @@ public class Usuario{
         super();
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
