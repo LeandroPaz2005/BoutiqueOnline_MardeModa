@@ -5,6 +5,7 @@ import BoutiqueOnline.modelo.Usuario;
 import BoutiqueOnline.servicio.ProductoServicio;
 import BoutiqueOnline.servicio.UploadFileService;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +32,10 @@ public class ProductoControlador {
     private UploadFileService upload;
 
     @GetMapping("/gestionProducto")
-    public String VistaProducto() {
+    public String VistaProducto(Model model) {
+        List<Producto> productos=productoServicio.findAll();
+        model.addAttribute("productos", productos);
+        
         return "productos/gestionProducto";
     }
 
@@ -79,20 +83,18 @@ public class ProductoControlador {
     @PostMapping("/update")
     public String updale(Producto producto, @RequestParam("img") MultipartFile file) throws IOException {
 
+        Producto p = new Producto();
+        p = productoServicio.get(producto.getId()).get();
+
         if (file.isEmpty()) {//cuando se edita la misma imagen y se carga esa imagen
-            Producto p = new Producto();
-            p = productoServicio.get(producto.getId()).get();
             producto.setImagen((p.getImagen()));
         } else {//cuando queremos editar la imagen
-
-            Producto p = new Producto();
-            p = productoServicio.get(producto.getId()).get();
-
             //para eliminar cuando no sea la imagen por defecto
             if (!p.getImagen().equals("default.jpg")) {
                 upload.deleteImagen(p.getImagen());
             }
 
+            producto.setUsuario(p.getUsuario());
             String nombreImagen = upload.saveImages(file);
             producto.setImagen(nombreImagen);
         }
