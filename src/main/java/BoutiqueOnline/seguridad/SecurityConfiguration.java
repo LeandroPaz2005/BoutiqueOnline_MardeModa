@@ -17,9 +17,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfiguration {
-    
+
     private final UsuarioServicio usuarioServicio;
-    
+
     public SecurityConfiguration(@Lazy UsuarioServicio usuarioServicio) {
         this.usuarioServicio = usuarioServicio;
     }
@@ -44,8 +44,15 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/registro**", "/js/**", "/css/**", "/img/**").permitAll()
-                .anyRequest().authenticated())
+                .requestMatchers(
+                        "/",
+                        "/registro/**",
+                        "/productos/**", 
+                        "/administrador/registro", 
+                        "/js/**", "/css/**", "/img/**"
+                ).permitAll()
+                .anyRequest().authenticated()
+                )
                 .formLogin(form -> form
                 .loginPage("/login")
                 .defaultSuccessUrl("/", true)
@@ -58,7 +65,7 @@ public class SecurityConfiguration {
                 .logoutSuccessUrl("/login?logout")
                 .permitAll()
                 );
-        
         return http.build();
     }
+
 }

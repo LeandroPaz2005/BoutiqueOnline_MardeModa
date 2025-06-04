@@ -38,5 +38,10 @@ public class ProductoServicioImple implements ProductoServicio{
     public List<Producto> findAll() {
         return productoRepositorio.findAll();
     }
+
+    public ProductoServicioImple(ProductoRepositorio productoRepositorio) {
+        this.productoRepositorio = productoRepositorio;
+    }
+    
     
 }
