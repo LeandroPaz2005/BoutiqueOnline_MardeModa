@@ -42,7 +42,7 @@
                 <p>Bienvenido al Boutique Mar de Moda, 
                     <span sec:authentication="principal.username"></span>
                 </p>
-                
+
                 <div class="table-container">
                     <a th:href="@{/nuevoUsuario}" class="btn btn-primary">Nuevo usuario</a>
                     <table class="users-table">
@@ -62,16 +62,13 @@
                                 <td th:text="${usuario.apellido}">Apellido</td>
                                 <td th:text="${usuario.email}">Email</td>
                                 <td>
-                                    <a th:href="@{/editar/}+${usuario.id}" class="btn btn-warning">Editar</a>
-                                    <a th:onclick="eliminar([[${usuario.id}]])" class="btn btn-danger">Eliminnar</a>
+                                    <a class="btn btn-warning">Editar</a>
+                                    <a class="btn btn-danger">Eliminnar</a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-                <script src="funciones.js"></script>
             </div>
         </section>
    

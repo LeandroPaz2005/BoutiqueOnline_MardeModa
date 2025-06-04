@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro - Boutique Mar de Moda</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <script th:src="@{/JS/script.js}"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="top-message" id="mensaje-oferta"></div>
+      <div class="header-content">
+        <div class="logo">
+          <a th:href="@{/}">BOUTIQUE ONLINE MAR DE MODA</a>
+        </div>
+        <div class="nav-buttons">
+          <a th:href="@{/login}" class="btn">Inicia Sesión</a>
+          <a th:href="@{/carrito}" class="btn">Carrito</a>
+        </div>
+      </div>
+      <nav class="navbar">
+        <ul class="nav-links">
+          <li><a th:href="@{/polos}">Polos</a></li>
+          <li><a th:href="@{/blusas}">Blusas</a></li>
+          <li><a th:href="@{/tops}">Tops</a></li>
+          <li><a th:href="@{/otros}">Otros</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="registro-usuario">
+        <div class="formulario">
+          <h2>Registro de Usuario</h2>
+          <br />
+
+          <!-- Mensajes de error -->
+          <div
+            th:if="${errorEmail}"
+            class="alert alert-danger"
+            th:text="${errorEmail}"
+          ></div>
+          <div
+            th:if="${errorPassword}"
+            class="alert alert-danger"
+            th:text="${errorPassword}"
+          ></div>
+          <div th:if="${param.exito}">
+            <div class="alert alert-info">
+              Se ha registrado exitosamente en la aplicación
+            </div>
+          </div>
+
+          <!-- Formulario de registro -->
+          <form th:action="@{/registro}" method="post" th:object="${usuario}">
+            <label for="nombre">Nombre:</label>
+            <input
+              type="text"
+              id="nombre"
+              th:field="*{nombre}"
+              required
+            /><br />
+
+            <label for="apellido">Apellido:</label>
+            <input
+              type="text"
+              id="apellido"
+              th:field="*{apellido}"
+              required
+            /><br />
+
+            <label for="email">Correo electrónico:</label>
+            <input type="email" id="email" th:field="*{email}" required /><br />
+            <div
+              class="text-danger"
+              th:if="${#fields.hasErrors('email')}"
+              th:errors="*{email}"
+            ></div>
+
+            <label for="password">Contraseña:</label>
+            <div class="password-container">
+              <input
+                type="password"
+                id="password"
+                th:field="*{password}"
+                required
+              />
+              <i class="fas fa-eye" id="togglePassword"></i>
+            </div>
+            <div
+              class="text-danger"
+              th:if="${#fields.hasErrors('password')}"
+              th:errors="*{password}"
+            ></div>
+
+            <button type="submit" class="btn">Aceptar</button>
+            <!-- Botón para iniciar sesión -->
+            <div
+              class="iniciar-sesion-link"
+              style="margin-top: 15px; text-align: center"
+            >
+              <a th:href="@{/login}" class="btn"
+                >¿Ya tienes cuenta? Inicia Sesión</a
+              >
+            </div>
+          </form>
+        </div>
+
+        <div class="imagen-registro">
+          <img src="img/ropa.jpg" alt="Ropa colgada" />
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        &copy; 2025 Boutique Online Mar de Moda. Todos los derechos reservados.
+      </p>
+      <div class="social-links">
+        <a href="https://wa.me" target="_blank" class="social-icon">
+          <span>WhatsApp</span>
+          <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://www.tiktok.com" target="_blank" class="social-icon">
+          <span>TikTok</span>
+          <i class="fab fa-tiktok"></i>
+        </a>
+        <a href="https://www.instagram.com" target="_blank" class="social-icon">
+          <span>Instagram</span>
+          <i class="fab fa-instagram"></i>
+        </a>
+      </div>
+    </footer>
+  </body>
+</html>
