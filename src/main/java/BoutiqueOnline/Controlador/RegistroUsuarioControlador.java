@@ -35,7 +35,7 @@ public class RegistroUsuarioControlador {
     //muestra el formulario de registro al usuario
     @GetMapping
     public String mostrarFormulario() {
-        return "registro";
+        return "administrador/registro";
     }
 
     //procesa el registro enviado

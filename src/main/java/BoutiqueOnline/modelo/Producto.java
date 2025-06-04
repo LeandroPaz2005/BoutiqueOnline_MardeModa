@@ -32,6 +32,13 @@ public class Producto {
         this.usuario = usuario;
     }
 
+    public Producto(String nombre, double precio) {
+        this.nombre = nombre;
+        this.precio = precio;
+    }
+
+    
+    
     public Integer getId() {
         return id;
     }
