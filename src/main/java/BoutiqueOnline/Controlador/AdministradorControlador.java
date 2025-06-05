@@ -22,7 +22,7 @@ public class AdministradorControlador {
     private ProductoServicio productoServicio;
     
     //controlador para ver el registro Usuario
-    @GetMapping("/Usuarios")
+    @GetMapping("/usuarios")
     public String mostrarUsuario(Model model){
     model.addAttribute("usuarios", usuarioServicio.listarUsuario());
     return "administrador/gestionUsuario";
