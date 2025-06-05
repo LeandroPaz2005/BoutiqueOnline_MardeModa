@@ -49,6 +49,7 @@ public class SecurityConfiguration {
                         "/registro/**",
                         "/productos/**", 
                         "/administrador/registro", 
+                        "/",
                         "/js/**", "/css/**", "/img/**"
                 ).permitAll()
                 .anyRequest().authenticated()
