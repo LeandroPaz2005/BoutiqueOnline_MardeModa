@@ -47,6 +47,14 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
                         "/",
+
+                        "/registro/**",
+                        "/productos/**", 
+                        "/administrador/registro", 
+                        "/",
+                        "/js/**", "/css/**", "/img/**"
+
+
                 ).permitAll()
                 .anyRequest().authenticated()
                 )
