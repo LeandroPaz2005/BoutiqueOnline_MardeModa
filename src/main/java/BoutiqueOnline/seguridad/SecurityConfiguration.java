@@ -47,10 +47,6 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
                         "/",
-                        "/registro/",
-                        "/productos/",
-                        "/administrador/registro",
-                        "/js/", "/css/", "/img/"
                 ).permitAll()
                 .anyRequest().authenticated()
                 )
@@ -68,4 +64,5 @@ public class SecurityConfiguration {
                 );
         return http.build();
     }
+
 }
