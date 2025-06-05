@@ -1,15 +1,20 @@
 package BoutiqueOnline.Controlador;
 
+import BoutiqueOnline.Reportes.ReporteExcelServicio;
 import BoutiqueOnline.modelo.Producto;
 import BoutiqueOnline.modelo.Usuario;
 import BoutiqueOnline.servicio.ProductoServicio;
 import BoutiqueOnline.servicio.UploadFileService;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,11 +36,14 @@ public class ProductoControlador {
     @Autowired
     private UploadFileService upload;
 
+    @Autowired
+    private ReporteExcelServicio reporteExcel;
+
     @GetMapping("/gestionProducto")
     public String VistaProducto(Model model) {
-        List<Producto> productos=productoServicio.findAll();
+        List<Producto> productos = productoServicio.findAll();
         model.addAttribute("productos", productos);
-        
+
         return "productos/gestionProducto";
     }
 
@@ -116,5 +124,17 @@ public class ProductoControlador {
 
         productoServicio.delete(id);
         return "redirect:/productos/show";
+    }
+
+    //endpoint para producto 
+    @GetMapping("/reporte")
+    public ResponseEntity<byte[]> generarReporte() throws IOException {
+        List<Producto> productos = productoServicio.findAll();
+        ByteArrayInputStream excelStream = reporteExcel.generarReporteExcel(productos);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=reporte_productos.xlsx")
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(excelStream.readAllBytes());
     }
 }
