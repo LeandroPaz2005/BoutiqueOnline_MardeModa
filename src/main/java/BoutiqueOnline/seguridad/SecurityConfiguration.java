@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+//establecer reglas de seguridad HTTP los permisos
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -46,11 +47,14 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
                         "/",
+
                         "/registro/**",
                         "/productos/**", 
                         "/administrador/registro", 
                         "/",
                         "/js/**", "/css/**", "/img/**"
+
+
                 ).permitAll()
                 .anyRequest().authenticated()
                 )
