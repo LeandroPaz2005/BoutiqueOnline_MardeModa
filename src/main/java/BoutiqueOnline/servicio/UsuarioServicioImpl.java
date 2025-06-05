@@ -7,6 +7,7 @@ import BoutiqueOnline.repositorio.UsuarioRepositorio;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
@@ -42,7 +43,7 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 
     @Override
     public List<Usuario> listarUsuario() {
-        return usuarioRepositorio.findAll();
+        return (List<Usuario>)usuarioRepositorio.findAll();
     }
 
     @Override
@@ -58,5 +59,14 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.nombre())).collect(Collectors.toList());
     }
 
-   
+    @Override
+    public Optional<Usuario> listarId(Long id) {
+        return usuarioRepositorio.findById(id);
+    }
+
+    @Override
+    public void eliminnar(Long id) {
+        usuarioRepositorio.deleteById(id);
+    }
+
 }

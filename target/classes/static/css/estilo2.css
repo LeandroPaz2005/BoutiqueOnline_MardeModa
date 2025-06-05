@@ -1,0 +1,183 @@
+/* ==============================
+   Estilos Generales
+============================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #fdfdfd;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* ==============================
+   Encabezado
+============================== */
+header {
+    background-color: #a0004d;
+    color: white;
+    padding: 10px 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+.nav-buttons {
+    position: relative;
+}
+
+.admin-dropdown {
+    position: relative;
+}
+
+.admin-btn {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    min-width: 160px;
+    z-index: 1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-content a {
+    color: #a0004d;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-weight: 500;
+}
+
+.admin-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f2f2f2;
+}
+
+/* ==============================
+   Main (Panel Administrativo)
+============================== */
+.admin-panel-container {
+    padding: 30px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.admin-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.admin-header h2 {
+    font-size: 2rem;
+    color: #a0004d;
+    margin-bottom: 10px;
+}
+
+.admin-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.admin-card-link {
+    text-decoration: none;
+}
+
+.admin-card {
+    background-color: #fff;
+    border: 2px solid #a0004d;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.admin-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.admin-card h3 {
+    margin: 15px 0 10px;
+    font-size: 1.2rem;
+    color: #a0004d;
+}
+
+.admin-card p {
+    font-size: 0.95rem;
+    color: #444;
+}
+
+/* ==============================
+   Footer
+============================== */
+footer {
+    background-color: #a0004d;
+    color: white;
+    text-align: center;
+    padding: 20px 10px;
+    margin-top: 40px;
+}
+
+footer p {
+    margin-bottom: 10px;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.social-icon {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+
+.social-icon:hover {
+    color: #ffccdd;
+}
+
+/* ==============================
+   Mensaje Superior (Oferta)
+============================== */
+.top-message {
+    background-color: #ffccdd;
+    color: #a0004d;
+    padding: 5px 10px;
+    font-weight: bold;
+    text-align: center;
+}
