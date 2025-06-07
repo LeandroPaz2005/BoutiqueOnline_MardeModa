@@ -7,6 +7,7 @@ import BoutiqueOnline.repositorio.UsuarioRepositorio;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
@@ -30,7 +31,7 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         this.usuarioRepositorio = usuarioRepositorio;
     }
 
-    @Override
+    //registro desde el formulario con DTO
     public Usuario guardar(UsuarioRegistroDTO registroDTO) {
         Usuario usuario = new Usuario(registroDTO.getNombre(),
                 registroDTO.getApellido(),
@@ -40,11 +41,13 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         return usuarioRepositorio.save(usuario);
     }
 
+    //listar usuarios
     @Override
     public List<Usuario> listarUsuario() {
         return usuarioRepositorio.findAll();
     }
 
+    //login (spring security)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepositorio.findByEmail(username);
@@ -58,5 +61,34 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.nombre())).collect(Collectors.toList());
     }
 
-   
+    //metodo del crud para guardar el usuario
+    @Override
+    public Usuario save(Usuario usuario) {
+        // En caso de que quieras encriptar la contraseña si es nueva
+        if (usuario.getPassword() != null && !usuario.getPassword().startsWith("$2a$")) { // ya codificada
+            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        }
+        return usuarioRepositorio.save(usuario);
+    }
+
+    //metodo para actulizar un usuario
+    @Override
+    public void update(Usuario usuario) {
+        // Opcional si vuelve a codificar la contraseña si fue cambiada
+        if (usuario.getPassword() != null && !usuario.getPassword().startsWith("$2a$")) {
+            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        }
+        usuarioRepositorio.save(usuario);
+    }
+
+    @Override
+    public Optional<Usuario> get(Integer id) {
+        return usuarioRepositorio.findById(Long.valueOf(id)); // Convierte a Long
+    }
+
+    @Override
+    public void delete(Integer id) {
+        usuarioRepositorio.deleteById(Long.valueOf(id)); // Convierte a Long
+    }
+
 }
