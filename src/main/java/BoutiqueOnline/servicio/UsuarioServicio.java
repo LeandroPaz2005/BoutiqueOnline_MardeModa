@@ -8,7 +8,9 @@ import BoutiqueOnline.modelo.Usuario;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface UsuarioServicio extends UserDetailsService{ //busqueda de un suario heredar
    
    //metodo para guardar 
@@ -28,5 +30,9 @@ public interface UsuarioServicio extends UserDetailsService{ //busqueda de un su
     
     //para guardar un usuarioDTO
     Usuario guardar(UsuarioRegistroDTO registroDTO);
+    //para listar por id
+    public Optional<Usuario>listarId(Long id);
+    //para eliminar usuario
+    public void eliminnar(Long id);
 
 }

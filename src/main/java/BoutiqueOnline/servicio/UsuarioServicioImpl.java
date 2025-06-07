@@ -44,7 +44,7 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     //listar usuarios
     @Override
     public List<Usuario> listarUsuario() {
-        return usuarioRepositorio.findAll();
+        return (List<Usuario>)usuarioRepositorio.findAll();
     }
 
     //login (spring security)
@@ -60,6 +60,7 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     private Collection<? extends GrantedAuthority> mapearAutoridadesRoles(Collection<Rol> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.nombre())).collect(Collectors.toList());
     }
+
 
     //metodo del crud para guardar el usuario
     @Override
@@ -91,4 +92,3 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         usuarioRepositorio.deleteById(Long.valueOf(id)); // Convierte a Long
     }
 
-}
