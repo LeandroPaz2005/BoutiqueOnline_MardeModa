@@ -1,0 +1,379 @@
+/* Estilos generales para la página de compra */
+.pagina-comprar {
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.contenedor-compra {
+    max-width: 960px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.titulo-compra {
+    color: #a0004d;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #f2c3d1;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+/* Barra de progreso */
+.barra-progreso {
+    margin-bottom: 20px;
+}
+
+.pasos-compra {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.paso {
+    color: #777;
+    font-size: 0.9em;
+    text-align: center;
+    flex-grow: 1;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eee;
+    position: relative;
+}
+
+.paso::before {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: #ccc;
+    border-radius: 50%;
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.paso.activo {
+    color: #a0004d;
+    font-weight: bold;
+    border-bottom-color: #a0004d;
+}
+
+.paso.activo::before {
+    background-color: #a0004d;
+}
+
+/* Estilos para la lista de items del carrito */
+.lista-items-carrito {
+    margin-bottom: 20px;
+}
+
+.item-carrito {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+    /* Añadido para mejor espaciado entre elementos */
+    gap: 15px; /* Define el espacio entre los hijos directos del flex container */
+}
+
+.item-carrito:last-child {
+    border-bottom: none;
+}
+
+.imagen-carrito {
+    width: 80px;
+    height: 80px;
+    /* margin-right: 15px; /* Eliminado, ahora manejado por gap */
+    border-radius: 5px;
+    overflow: hidden;
+    flex-shrink: 0; /* No permite que la imagen se encoja */
+}
+
+.imagen-carrito img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.detalles-carrito {
+    flex-grow: 1; /* Permite que los detalles crezcan y ocupen el máximo espacio */
+}
+
+.nombre-producto-carrito {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.talla-carrito, .precio-carrito {
+    color: #555;
+    font-size: 0.9em;
+    margin-bottom: 3px;
+}
+
+.precio-carrito {
+    color: #ff5c8d;
+    font-weight: bold;
+}
+
+.cantidad-carrito {
+    display: flex;
+    align-items: center;
+    /* margin-left: auto; /* Puedes mantenerlo si quieres que se pegue a la derecha antes del total/eliminar */
+    gap: 10px;
+    flex-shrink: 0; /* Evita que este contenedor se encoja si no hay espacio */
+}
+
+.cantidad-carrito label {
+    font-size: 0.9em;
+    color: #777;
+}
+
+.cantidad-carrito input[type="number"] {
+    width: 50px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    -moz-appearance: textfield; /* Firefox */
+}
+
+.cantidad-carrito input[type="number"]::-webkit-outer-spin-button,
+.cantidad-carrito input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Nuevos estilos para el total del item individual */
+.total-item {
+    font-weight: bold;
+    flex-shrink: 0; /* Asegura que no se comprima */
+    min-width: 80px; /* Ancho mínimo para el total */
+    text-align: right; /* Alinea el texto a la derecha */
+}
+
+.total-item span {
+    color: #ff5c8d; /* Color del total */
+}
+
+/* **** Estilos para el botón de eliminar individual (Punto 2) **** */
+.eliminar-item-btn {
+    background-color: #dc3545; /* Rojo */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    white-space: nowrap; /* Evita que el texto se rompa */
+    display: inline-flex; /* Usamos inline-flex para que ocupe solo el espacio necesario */
+    justify-content: center; /* Centra horizontalmente el texto */
+    align-items: center; /* Centra verticalmente el texto */
+    transition: background-color 0.2s ease;
+    
+    /* **** CLAVE PARA LA SEPARACIÓN: Ajusta este margen **** */
+    margin-left: 20px; /* Separación a la izquierda del botón 'Eliminar' del total */
+    flex-shrink: 0; /* Asegura que no se encoja */
+}
+
+.eliminar-item-btn:hover {
+    background-color: #c82333; /* Rojo más oscuro al pasar el ratón */
+}
+/* Ya no se necesita .eliminar-item-btn i porque no hay icono */
+
+
+/* Estilos para el resumen de compra */
+.resumen-compra {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #eee;
+    /* Añadido para que los botones se apilen y ocupen el 100% */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.detalle-resumen {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: #555;
+    width: 100%; /* Asegura que el detalle de resumen ocupe todo el ancho */
+}
+
+.detalle-resumen.total {
+    font-weight: bold;
+    color: #333;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.detalle-resumen.total p:last-child {
+    color: #ff5c8d;
+}
+
+/* Estilos para los métodos de pago */
+.metodos-pago {
+    margin-top: 20px;
+    width: 100%; /* Para que los h3 y botones ocupen el ancho completo del resumen */
+}
+
+.metodos-pago h3 {
+    color: #a0004d;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    text-align: left; /* Asegura que el título de métodos de pago se alinee a la izquierda */
+}
+
+.botones-pago {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Alinea los botones de pago a la izquierda */
+}
+
+.boton-pago {
+    background-color: #f2f2f2;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.boton-pago i {
+    font-size: 1.2em;
+}
+
+.boton-pago:hover {
+    background-color: #e0e0e0;
+}
+
+/* **** Estilos para los botones de acción principales (Punto 1) **** */
+/* Estilos base para ambos botones (Vaciar Carrito y Siguiente) */
+.action-button { /* Puedes aplicar esta clase en el HTML si quieres heredar estilos */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Para que ocupen todo el ancho disponible */
+    margin-bottom: 10px; /* Espacio entre botones */
+    display: block; /* Para que cada botón ocupe su propia línea */
+}
+
+/* Estilo específico para el botón de "Siguiente" (verde) */
+.boton-continuar {
+    background-color: #28a745; /* Verde */
+    /* Hereda de .action-button si lo aplicas en el HTML, o repite las propiedades */
+    color: white; /* Asegúrate que el color de texto sea blanco */
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    text-align: center;
+    margin-top: 20px; /* Si es el primer botón después del resumen */
+    width: 100%;
+    display: block;
+}
+
+.boton-continuar:hover {
+    background-color: #218838; /* Verde más oscuro al pasar el ratón */
+}
+
+/* Estilo específico para el botón de "Vaciar Carrito" (rojo) */
+.vaciar-carrito-btn {
+    background-color: #dc3545; /* Rojo */
+    /* Hereda de .action-button si lo aplicas en el HTML, o repite las propiedades */
+    color: white; /* Asegúrate que el color de texto sea blanco */
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    text-align: center;
+    margin-top: 20px; /* Ajusta según el diseño, puede ser 0 o 10px si hay otro botón antes */
+    width: 100%;
+    display: block;
+}
+
+.vaciar-carrito-btn:hover {
+    background-color: #c82333; /* Rojo más oscuro al pasar el ratón */
+}
+
+
+/* Estilos para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .contenedor-compra {
+        padding: 20px;
+    }
+
+    .lista-items-carrito {
+        margin-bottom: 15px;
+    }
+
+    .item-carrito {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px; /* Reduce el gap para pantallas pequeñas */
+    }
+
+    .imagen-carrito {
+        margin-right: 0;
+        margin-bottom: 10px;
+        width: 100%;
+        height: auto;
+    }
+
+    .detalles-carrito {
+        width: 100%; /* Ocupa todo el ancho disponible */
+        text-align: left;
+    }
+
+    .cantidad-carrito {
+        margin-left: 0;
+        width: 100%; /* Ocupa todo el ancho para la cantidad */
+        justify-content: flex-start; /* Alinea a la izquierda en móvil */
+    }
+
+    .total-item {
+        width: 100%; /* Ocupa todo el ancho para el total */
+        text-align: left; /* Alinea a la izquierda en móvil */
+    }
+
+    .eliminar-item-btn {
+        margin-left: 0; /* Quita el margen izquierdo en móvil para que se alinee */
+        width: 100%; /* Ocupa todo el ancho */
+        margin-top: 10px; /* Añade un poco de espacio arriba */
+    }
+
+    .botones-pago {
+        justify-content: center;
+    }
+
+    .boton-continuar, .vaciar-carrito-btn { /* Aplica estilos para ambos botones en móvil */
+        font-size: 0.9em;
+        padding: 10px 15px;
+        margin-bottom: 5px; /* Menos espacio entre ellos en móvil */
+    }
+}

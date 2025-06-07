@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Mar de Moda</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="top-message" id="mensaje-oferta"></div>
+        <div class="header-content">
+            <div class="logo">
+                <a href="index.html">BOUTIQUE ONLINE MAR DE MODA</a>
+            </div>
+            <div class="nav-buttons">
+                <div id="auth-links-container">
+                    <a href="login.html" id="loginLink" class="btn">Iniciar Sesión</a>
+                    <a href="signup.html" id="registroLink" class="btn">Regístrate</a>
+                    <a href="perfil.html" id="userIconLink" class="cart-icon-link" style="display: none;">
+                        <i class="fas fa-user-circle"></i> <span id="userNameDisplay"></span>
+                    </a>
+                    <button id="logoutButton" class="btn" style="display: none;">Cerrar Sesión</button>
+                </div>
+                <a href="#" class="cart-icon-link header-cart-button">
+                    <i class="fas fa-shopping-cart"></i> <span>Carrito</span>
+                    <span id="carrito-count-header">(0)</span>
+                </a>
+            </div>
+        </div>
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="polos.html">Polos</a></li>
+                <li><a href="blusas.html">Blusas</a></li>
+                <li><a href="tops.html">Tops</a></li>
+                <li><a href="otros.html">Otros</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="registro-usuario">
+            <div class="formulario">
+                <h2>Registro de Usuario</h2><br>
+                <form id="registroForm">
+                    <label for="regNombre">Nombre:</label>
+                    <input type="text" id="regNombre" required><br>
+                
+                    <label for="regApellido">Apellido:</label>
+                    <input type="text" id="regApellido" required><br>
+                
+                    <label for="regEmail">Correo electrónico:</label>
+                    <input type="email" id="regEmail" required><br>
+                
+                    <label for="regPassword">Contraseña:</label>
+                    <div class="password-container">
+                        <input type="password" id="regPassword" required>
+                        <i class="fas fa-eye" id="toggleRegPassword"></i> </div>
+                
+                    <label for="regTelefono">Teléfono (opcional):</label>
+                    <input type="tel" id="regTelefono">
+                    <br>
+                    <br>
+                
+                    <button type="submit" class="btn">Aceptar</button>
+                </form>             
+            </div>
+            <div class="imagen-registro">
+                <img src="img/ropa.jpg" alt="Ropa colgada">
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Boutique Online Mar de Moda. Todos los derechos reservados.</p>
+        <div class="social-links">
+            <a href="https://wa.me" target="_blank" class="social-icon">
+                <span>WhatsApp</span>
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://www.tiktok.com" target="_blank" class="social-icon">
+                <span>TikTok</span>
+                <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://www.instagram.com" target="_blank" class="social-icon">
+                <span>Instagram</span>
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </footer>
+    <script src="js/auth.js"></script> 
+    <script src="script.js"></script> 
+</body>
+</html>

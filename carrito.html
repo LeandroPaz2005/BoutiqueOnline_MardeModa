@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprar - Boutique Online Mar de Moda</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="carrito.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="top-message" id="mensaje-oferta"></div>
+        <div class="header-content">
+            <div class="logo">
+                <a href="index.html">BOUTIQUE ONLINE MAR DE MODA</a>
+            </div>
+            <div class="nav-buttons">
+                <div id="auth-links-container">
+                    <a href="login.html" id="loginLink" class="btn">Iniciar Sesión</a>
+                    <a href="signup.html" id="registroLink" class="btn">Regístrate</a>
+
+                    <a href="perfil.html" id="userIconLink" class="cart-icon-link" style="display: none;">
+                        <i class="fas fa-user-circle"></i> <span id="userNameDisplay"></span>
+                    </a>
+                    <button id="logoutButton" class="btn" style="display: none;">Cerrar Sesión</button>
+                </div>
+                <a href="#" class="cart-icon-link header-cart-button">
+                    <i class="fas fa-shopping-cart"></i> <span>Carrito</span>
+                    <span id="carrito-count-header">(0)</span>
+                </a>
+            </div>
+        </div>
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="polos.html">Polos</a></li>
+                <li><a href="blusas.html">Blusas</a></li>
+                <li><a href="tops.html">Tops</a></li>
+                <li><a href="otros.html">Otros</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="pagina-comprar">
+        <div class="contenedor-compra">
+            <div class="barra-progreso">
+                <ul class="pasos-compra">
+                    <li class="paso activo">1. Carrito</li>
+                    <li class="paso">2. Identificación</li>
+                    <li class="paso">3. Entrega</li>
+                    <li class="paso">4. Pago</li>
+                </ul>
+            </div>
+
+            <h1 class="titulo-compra">1. Carrito</h1>
+
+            <div class="lista-items-carrito">
+                </div>
+
+            <div class="resumen-compra">
+                <div class="detalle-resumen">
+                    <p>Descuento:</p>
+                    <p>S/ 0.00</p>
+                </div>
+                <div class="detalle-resumen">
+                    <p>Subtotal:</p>
+                    <p>S/ 0.00</p>
+                </div>
+                <div class="detalle-resumen total">
+                    <p>Total:</p>
+                    <p>S/ 0.00</p>
+                </div>
+
+                <div class="metodos-pago">
+                    <h3>Métodos de pago disponibles:</h3>
+                    <div class="botones-pago">
+                        <button class="boton-pago">
+                            <i class="fas fa-credit-card"></i> <span>Tarjeta</span>
+                        </button>
+                        <button class="boton-pago">
+                            <i class="fas fa-money-bill-alt"></i> <span>Efectivo</span>
+                        </button>
+                    </div>
+                </div>
+
+                <button class="vaciar-carrito-btn">Vaciar Carrito</button>
+                <button class="boton-continuar">Siguiente</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 Boutique Online Mar de Moda. Todos los derechos reservados.</p>
+        <div class="social-links">
+            <a href="https://wa.me" target="_blank" class="social-icon">
+                <span>WhatsApp</span>
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://www.tiktok.com" target="_blank" class="social-icon">
+                <span>TikTok</span>
+                <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://www.instagram.com" target="_blank" class="social-icon">
+                <span>Instagram</span>
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="carrito.js"></script>
+</body>
+</html>

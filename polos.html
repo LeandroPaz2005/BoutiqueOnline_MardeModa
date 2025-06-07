@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polos</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    </head>
+<body>
+    <header>
+        <div class="top-message" id="mensaje-oferta"></div>
+        <div class="header-content">
+            <div class="logo">
+                <a href="index.html">BOUTIQUE ONLINE MAR DE MODA</a>
+            </div>
+            <div class="nav-buttons">
+                <div id="auth-links-container">
+                    <a href="login.html" id="loginLink" class="btn">Iniciar Sesión</a>
+                    <a href="signup.html" id="registroLink" class="btn">Regístrate</a>
+
+                    <a href="perfil.html" id="userIconLink" class="cart-icon-link" style="display: none;">
+                        <i class="fas fa-user-circle"></i> <span id="userNameDisplay"></span>
+                    </a>
+                    <button id="logoutButton" class="btn" style="display: none;">Cerrar Sesión</button>
+                </div>
+                <a href="#" class="cart-icon-link header-cart-button">
+                    <i class="fas fa-shopping-cart"></i> <span>Carrito</span>
+                    <span id="carrito-count-header">(0)</span>
+                </a>
+            </div>
+        </div>
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="polos.html">Polos</a></li>
+                <li><a href="blusas.html">Blusas</a></li>
+                <li><a href="tops.html">Tops</a></li>
+                <li><a href="otros.html">Otros</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="header-section">
+            <aside class="filtros">
+                <h3>FILTROS</h3>
+                <div>
+                    <h4>Precio</h4>
+                    <label for="precio0-100"><input type="checkbox" id="precio0-100"> S/0 - S/100</label><br>
+                    <label for="precio100-200"><input type="checkbox" id="precio100-200"> S/100 - S/200</label><br>
+                    <label for="precio200plus"><input type="checkbox" id="precio200plus"> S/200+</label>
+                </div>
+                <div>
+                    <h4>Talla</h4>
+                    <label for="tallaXS"><input type="checkbox" id="tallaXS"> XS</label><br>
+                    <label for="tallaS"><input type="checkbox" id="tallaS"> S</label><br>
+                    <label for="tallaM"><input type="checkbox" id="tallaM"> M</label><br>
+                    <label for="tallaL"><input type="checkbox" id="tallaL"> L</label><br>
+                    <label for="tallaXL"><input type="checkbox" id="tallaXL"> XL</label>
+                </div>
+                <div>
+                    <h4>Color</h4>
+                    <label for="colorVerde"><input type="checkbox" id="colorVerde"> Verde</label><br>
+                    <label for="colorRosado"><input type="checkbox" id="colorRosado"> Rosado</label><br>
+                    <label for="colorNegro"><input type="checkbox" id="colorNegro"> Negro</label><br>
+                    <label for="colorMarron"><input type="checkbox" id="colorMarron"> Marrón</label><br>
+                    <label for="colorAzul"><input type="checkbox" id="colorAzul"> Azul</label><br>
+                    <label for="colorBlanco"><input type="checkbox" id="colorBlanco"> Blanco</label>
+                </div>
+                <div>
+                    <h4>Material</h4>
+                    <label for="materialAlgodon"><input type="checkbox" id="materialAlgodon"> Algodón</label><br>
+                    <label for="materialSeda"><input type="checkbox" id="materialSeda"> Seda</label>
+                </div>
+            </aside>
+
+            <div class="right-column">
+                <section class="bienvenida">
+                    <div class="texto">
+                        <h2>POLOS</h2>
+                        <p>Descubre una colección de polos diseñados para brindar la comodidad y estilo en cualquier momento. Desde cortes clásicos hasta diseños modernos, cada prenda está hecha para realzar tu look sin esfuerzo. Ya sea para un día casual o una ocasión especial, encuentra el polo perfecto que se adapte a tu estilo y personalidad.</p>
+                    </div>
+                </section>
+
+                <section class="productos-container">
+                    <div class="productos">
+                        <div class="sort">
+                            <select>
+                                <option>Ordenar por</option>
+                                <option>Precio: Bajo a Alto</option>
+                                <option>Precio: Alto a Bajo</option>
+                            </select>
+                        </div>
+                        <div class="producto-grid">
+                            <div class="producto" data-talla="M" data-color="Verde" data-material="Algodón">
+                                <a href="detalle_producto.html?id=polo1">
+                                    <div class="imagen-container"> <img src="img/blusa1.jpg" alt="Polo verde">
+                                    </div>
+                                    <p>Polo verde<br>S/ 100</p>
+                                </a>
+                                <div class="producto-actions">
+                                    <button class="fav-btn"><i class="fas fa-heart"></i></button>
+                                    <button class="cart-btn">Agregar a <i class="fas fa-shopping-cart"></i></button>
+                                </div>
+                            </div>
+                            <div class="producto" data-talla="L" data-color="Celeste" data-material="Algodón">
+                                <a href="detalle_producto.html?id=polo2">
+                                    <div class="imagen-container"> <img src="img/blusa1.jpg" alt="Polo celeste">
+                                    </div>
+                                    <p>Polo celeste<br>S/ 110</p>
+                                </a>
+                                <div class="producto-actions">
+                                    <button class="fav-btn"><i class="fas fa-heart"></i></button>
+                                    <button class="cart-btn">Agregar a <i class="fas fa-shopping-cart"></i></button>
+                                </div>
+                            </div>
+                            <div class="producto" data-talla="M" data-color="Gris" data-material="Algodón">
+                                <a href="detalle_producto.html?id=polo3"> 
+                                    <div class="imagen-container"> <img src="img/blusa1.jpg" alt="Polo gris">
+                                    </div>
+                                    <p>Polo gris<br>S/ 120</p>
+                                </a>
+                                <div class="producto-actions">
+                                    <button class="fav-btn"><i class="fas fa-heart"></i></button>
+                                    <button class="cart-btn">Agregar a <i class="fas fa-shopping-cart"></i></button>
+                                </div>
+                            </div>
+                            <div class="producto" data-talla="XS,S" data-color="Amarillo" data-material="Algodón">
+                                <a href="detalle_producto.html?id=polo4">
+                                    <div class="imagen-container"> <img src="img/blusa1.jpg" alt="Polo amarillo">
+                                    </div>
+                                    <p>Polo amarillo<br>S/ 130</p>
+                                </a>
+                                <div class="producto-actions">
+                                    <button class="fav-btn"><i class="fas fa-heart"></i></button>
+                                    <button class="cart-btn">Agregar a <i class="fas fa-shopping-cart"></i></button>
+                                </div>
+                            </div>
+                            <div class="producto" data-talla="M,L" data-color="Rojo" data-material="Algodón">
+                                <a href="detalle_producto.html?id=polo5">
+                                    <div class="imagen-container"> <img src="img/blusa1.jpg" alt="Polo rojo">
+                                    </div>
+                                    <p>Polo rojo<br>S/ 140</p>
+                                </a>
+                                <div class="producto-actions">
+                                    <button class="fav-btn"><i class="fas fa-heart"></i></button>
+                                    <button class="cart-btn">Agregar a <i class="fas fa-shopping-cart"></i></button>
+                                </div>
+                            </div>
+                            <div class="producto" data-talla="L,XL" data-color="Azul" data-material="Algodón">
+                                <a href="detalle_producto.html?id=polo6">
+                                    <div class="imagen-container"> <img src="img/blusa1.jpg" alt="Polo azul">
+                                    </div>
+                                    <p>Polo azul<br>S/ 150</p>
+                                </a>
+                                <div class="producto-actions">
+                                    <button class="fav-btn"><i class="fas fa-heart"></i></button>
+                                    <button class="cart-btn">Agregar a <i class="fas fa-shopping-cart"></i></button>
+                                </div>
+                            </div>
+                            <div class="producto" data-talla="S,M" data-color="Negro" data-material="Algodón">
+                                <a href="detalle_producto.html?id=polo7">
+                                    <div class="imagen-container"> <img src="img/blusa1.jpg" alt="Polo negro">
+                                    </div>
+                                    <p>Polo negro<br>S/ 160</p>
+                                </a>
+                                <div class="producto-actions">
+                                    <button class="fav-btn"><i class="fas fa-heart"></i></button>
+                                    <button class="cart-btn">Agregar a <i class="fas fa-shopping-cart"></i></button>
+                                </div>
+                            </div>
+                            <div class="producto" data-talla="XS,S" data-color="Blanco" data-material="Algodón">
+                                <a href="detalle_producto.html?id=polo8"> 
+                                    <div class="imagen-container"> <img src="img/blusa1.jpg" alt="Polo blanco">
+                                    </div>
+                                    <p>Polo blanco<br>S/ 170</p>
+                                </a>
+                                <div class="producto-actions">
+                                    <button class="fav-btn"><i class="fas fa-heart"></i></button>
+                                    <button class="cart-btn">Agregar a <i class="fas fa-shopping-cart"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Boutique Online Mar de Moda. Todos los derechos reservados.</p>
+        <div class="social-links">
+            <a href="https://wa.me" target="_blank" class="social-icon">
+                <span>WhatsApp</span>
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://www.tiktok.com" target="_blank" class="social-icon">
+                <span>TikTok</span>
+                <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://www.instagram.com" target="_blank" class="social-icon">
+                <span>Instagram</span>
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
