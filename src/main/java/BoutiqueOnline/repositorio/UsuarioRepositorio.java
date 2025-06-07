@@ -4,6 +4,7 @@ package BoutiqueOnline.repositorio;
 import BoutiqueOnline.modelo.Usuario;
 import jakarta.persistence.metamodel.SingularAttribute;
 import java.io.Serializable;
+import java.util.Optional;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -12,8 +13,11 @@ import org.springframework.stereotype.Repository;
 public interface UsuarioRepositorio extends JpaRepository<Usuario, Long>{
 
 
-    
-    //metodo para encontrar el email
-    public Usuario findByEmail(String email);
-    
+    // Buscar usuario por correo
+    Usuario findByEmail(String email);
+
+    // Este ya existe por herencia, pero puedes redefinirlo si deseas
+    @Override
+    Optional<Usuario> findById(Long id);
+
 }

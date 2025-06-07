@@ -145,6 +145,10 @@ public class Usuario{
         this.ordenes = ordenes;
     }
 
+    public void setRoles(List<Rol> of) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 
     
 }

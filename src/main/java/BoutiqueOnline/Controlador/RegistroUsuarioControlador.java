@@ -2,7 +2,9 @@
 package BoutiqueOnline.Controlador;
 
 import BoutiqueOnline.DTO.UsuarioRegistroDTO;
+import BoutiqueOnline.modelo.Usuario;
 import BoutiqueOnline.servicio.UsuarioServicio;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,7 +21,7 @@ public class RegistroUsuarioControlador {
 
     //servicio encargado de la persistencia y validacion de usuario
     private UsuarioServicio usuarioServicio;
-
+   
     //constructor de dependenias para el servicio de usuario
     public RegistroUsuarioControlador(UsuarioServicio usuarioServicio) {
         super();

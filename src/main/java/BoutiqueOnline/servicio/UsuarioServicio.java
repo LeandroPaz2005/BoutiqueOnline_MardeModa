@@ -13,11 +13,23 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UsuarioServicio extends UserDetailsService{ //busqueda de un suario heredar
    
-    //metodo para guardar en la base de datos a parti de un DTO
-    public Usuario guardar(UsuarioRegistroDTO registroDTO);
+   //metodo para guardar 
+    public Usuario save(Usuario usuario);
+
+    //obtner un producto
+    public Optional<Usuario> get(Integer id);
+
+    //metodo para actualizar
+    public void update(Usuario usuario);
+
+    //metodo para eliminar
+    public void delete(Integer id);
 
     //para hacer una lista de usuario
     public List<Usuario> listarUsuario();
+    
+    //para guardar un usuarioDTO
+    Usuario guardar(UsuarioRegistroDTO registroDTO);
     //para listar por id
     public Optional<Usuario>listarId(Long id);
     //para eliminar usuario
