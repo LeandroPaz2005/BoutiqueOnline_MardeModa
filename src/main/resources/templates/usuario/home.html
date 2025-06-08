@@ -36,13 +36,26 @@
             </div>
         </header>
     <body>
-        
+
         <!-- Contenido principal -->
         <div class="container">
             <header class="jumbotron my-4">
                 <h1 class="display-4">Bienvenido a Boutique Mar de MOda</h1>
                 <p class="lead">Tu tienda de productos en línea</p>
             </header>
+            
+            
+            <!-- Barra de búsqueda -->
+            <div class="row mb-4">
+                <div class="col-md-6 offset-md-3">
+                    <form th:action="@{/home/buscar}" method="post" class="input-group">
+                        <input type="text" name="nombre" class="form-control" placeholder="Buscar productos..." aria-label="Buscar productos">
+                        <button class="btn btn-outline-secondary" type="submit">
+                        </button>
+                    </form>
+                </div>
+            </div>
+
 
             <!-- Mostrar productos -->
             <div class="row text-center">
