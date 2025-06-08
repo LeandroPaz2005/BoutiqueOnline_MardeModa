@@ -22,6 +22,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class UsuarioServicioImpl implements UsuarioServicio {
 
+    //crear objeto
+    @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
     @Autowired
@@ -88,7 +90,13 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 
     @Override
     public void delete(Integer id) {
-        usuarioRepositorio.deleteById(Long.valueOf(id)); // Convierte a Long
+        usuarioRepositorio.deleteById((id)); // Convierte a Long
     }
 
+    @Override
+    public Optional<Usuario> findById(Integer id) {
+        return usuarioRepositorio.findById(id);
+    }
+
+  
 }
