@@ -46,8 +46,10 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
+                        "/index",
+                        "/home",
+                        "/usuario/**",
                         "/",
-
                         "/registro/**",
                         "/productos/**", 
                         "/administrador/registro", 
