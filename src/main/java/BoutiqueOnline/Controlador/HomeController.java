@@ -28,6 +28,9 @@ public class HomeController {
     private final Logger log = LoggerFactory.getLogger(HomeController.class);
 
     @Autowired
+    public UsuarioServicio usuarioServicio;
+
+    @Autowired
     private ProductoServicio productoServicio; // Cambiado a ProductoServicio
 
     // Para almacenar los detalles de la orden
@@ -146,18 +149,18 @@ public class HomeController {
         model.addAttribute("orden", orden);
         return "usuario/carrito";
     }
-@GetMapping("/orden")
-public String orden(Model model) {
-    log.info("===== MÉTODO ORDEN EJECUTADO =====");
 
-  //Usuario usuario =UsuarioServicio.findById( Integer.parseInt(session.getAttribute("idusuario").toString())).get();
-		
-		model.addAttribute("cart", detalles);
-		model.addAttribute("orden", orden);
-	
+    @GetMapping("/orden")
+    public String orden(Model model) {
+        log.info("===== MÉTODO ORDEN EJECUTADO ====="); //mensaje en el terminanl
 
-    return "usuario/resumenorden";
-}
+        Usuario usuario=usuarioServicio.findById(4).get();
+  
+        model.addAttribute("cart", detalles);
+        model.addAttribute("orden", orden);
+        model.addAttribute("usuario", usuario);
 
+        return "usuario/resumenorden";
+    }
 
 }
