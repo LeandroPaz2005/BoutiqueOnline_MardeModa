@@ -15,8 +15,8 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, Integer>{
 
     // Buscar usuario por correo
     Usuario findByEmail(String email);
-
-    // Este ya existe por herencia, pero puedes redefinirlo si deseas
+    
+// Este ya existe por herencia, pero puedes redefinirlo si deseas
   
     Optional<Usuario> findById(Long id);
 
