@@ -2,15 +2,19 @@ package BoutiqueOnline.servicio;
 
 import BoutiqueOnline.modelo.Orden;
 import BoutiqueOnline.repositorio.OrdenRepositorio;
-import java.util.ArrayList;
-import java.util.List;
+import com.google.common.base.Strings;
+import com.google.common.primitives.Ints;
+import com.google.common.collect.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class OrdenServiceImp implements OrdenService {
 
-    //declar un objeto para inyectar el objeto
     @Autowired
     private OrdenRepositorio ordenRepositorio;
 
@@ -19,41 +23,23 @@ public class OrdenServiceImp implements OrdenService {
         return ordenRepositorio.save(orden);
     }
 
-    //implementacion del metodo
     @Override
     public List<Orden> findAll() {
-        return ordenRepositorio.findAll();
+        return ImmutableList.copyOf(ordenRepositorio.findAll());
     }
 
-    //metodo para generar el numero de orden
-    public String generarNumeroOrden(){
-    int numero=0;
-    String numeroConcatenado="";
-    
-    //obtner todas las ordenes 
-    List<Orden> ordenes=findAll();
-    
-    List<Integer> numeros= new ArrayList<Integer>();
-           
-    
-    ordenes.stream().forEach(o -> numeros.add(Integer.parseInt(o.getNumero())));
-    if(ordenes.isEmpty()){
-    numero=1;
-    }else{
-    numero=numeros.stream().max(Integer::compare).get();
-    numero++;
-    }
-    //pasarlo a una cadena
-    if(numero<10){///el primero numero seria un numero
-    numeroConcatenado="000000000"+String.valueOf(numero);
-    }else if(numero>100){
-     numeroConcatenado="00000000"+String.valueOf(numero);
-    }else if(numero>1000){
-     numeroConcatenado="0000000"+String.valueOf(numero);
-    }else if(numero>10000){
-     numeroConcatenado="000000"+String.valueOf(numero);
-    }
-    
-    return numeroConcatenado;
+    public String generarNumeroOrden() {
+        List<Orden> ordenes = findAll();
+
+        // transforma números de orden a enteros
+        Optional<Integer> max = ordenes.stream()
+                .map(o -> Ints.tryParse(o.getNumero()))
+                .filter(n -> n != null)
+                .max(Integer::compareTo);
+
+        int nuevoNumero = max.map(n -> n + 1).orElse(1);
+
+        // usar Strings.padStart de guava
+        return Strings.padStart(String.valueOf(nuevoNumero), 10, '0');
     }
 }

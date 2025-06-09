@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Boutique · Lista de Productos</title>
+
+        <!-- Tus estilos + Bootstrap -->
+        <link rel="stylesheet" th:href="@{/css/estilo2.css}">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+        <script th:src="@{/JS/script.js}"></script>
+        <style>
+            /* Mejora general para la tabla */
+            .table {
+                background-color: #fff;
+                border-collapse: collapse;
+                border-radius: 10px;
+                overflow: hidden;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            }
+
+            /* Cabecera elegante */
+            .table thead {
+                background-color: #a0004d;
+                color: white;
+                font-weight: bold;
+            }
+
+            /* Bordes más suaves */
+            .table td, .table th {
+                vertical-align: middle;
+                padding: 14px 12px;
+                border-color: #ddd;
+            }
+
+            /* Hover con suavidad */
+            .table-hover tbody tr:hover {
+                background-color: #fce4ec;
+                transition: background-color 0.3s ease;
+            }
+
+            /* Botones más definidos */
+            .btn-warning, .btn-danger {
+                padding: 6px 12px;
+                border-radius: 6px;
+                font-size: 0.9rem;
+            }
+
+            .btn-warning i, .btn-danger i {
+                margin-right: 4px;
+            }
+
+            /* Celda de descripción con efecto de corte elegante */
+            td[style*="text-overflow: ellipsis;"] {
+                max-width: 200px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            /* Centrado del texto en acciones */
+            td.text-center a.btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .table-responsive {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+        </style>
+    </head>
+    <body>
+
+        <header>
+            <div class="top-message" id="mensaje-oferta"></div>
+
+            <div class="header-content">
+                <div class="logo">
+                    <a th:href="@{/}">BOUTIQUE ONLINE MAR DE MODA</a>
+                </div>
+
+                <nav class="nav-buttons">
+                    <div class="admin-dropdown">
+                        <button class="admin-btn">
+                            Menú <i class="fas fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a th:href="@{/}">Dashboard</a>
+                            <a th:href="@{/productos/gestionProducto}">Producto</a>
+                            <a th:href="@{/categorias}">Categoría</a>
+                            <a th:href="@{/inventario}">Inventario</a>
+                            <a th:href="@{/administrador/gestionUsuario}">Usuario</a>
+                            <a th:href="@{/pedidos}">Pedidos</a>
+                            <a th:href="@{/logout}">Cerrar Sesión</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <!-- ============ MAIN ============ -->
+        <main class="container bg-white p-5 shadow-lg rounded mt-4 mb-5">
+
+            <div class="text-center">
+                <h1 class="mb-3">
+                    Boutique Online <span style="color: #a0004d;">Mar de Moda</span>
+                </h1>
+                <a class="h5 text-decoration-none" th:href="@{/productos/gestionProducto}" style="color: #a0004d;">
+                    Gestión de Productos
+                </a>
+            </div>
+
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="mt-4">
+                <ol class="breadcrumb bg-white px-0">
+                    <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Ver Productos</li>
+                </ol>
+            </nav>
+
+            <!-- Botón Crear Producto -->
+            <div class="text-end mb-4">
+                <a class="btn btn-primary" th:href="@{/productos/create}">
+                    <i class="fas fa-plus"></i> Crear Producto
+                </a>
+            </div>
+
+            <!-- Título Tabla -->
+            <h3 class="text-secondary text-center mb-4">Lista de Productos</h3>
+
+            <!-- Tabla de Productos -->
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle mx-auto">
+                    <thead class="thead-dark text-center">
+                        <tr>
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Inventario</th>
+                            <th>Precio (S/.)</th>
+                            <th colspan="2" style="width: 130px;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="producto : ${productos}">
+                            <td th:text="${producto.nombre}">Nombre</td>
+                            <td th:text="${producto.descripcion}" style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></td>
+                            <td class="text-center" th:text="${producto.cantidad}">0</td>
+                            <td class="text-end fw-bold" th:text="${#numbers.formatDecimal(producto.precio, 1, 'COMMA', 2, 'POINT')}">0.00</td>
+                            <td class="text-center">
+                                <a class="btn btn-sm btn-warning" th:href="@{/productos/edit/{id}(id=${producto.id})}" title="Editar">
+                                    <i class="fas fa-edit"></i> Editar
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a class="btn btn-sm btn-danger" th:href="@{/productos/delete/{id}(id=${producto.id})}"
+                                   onclick="return confirm('¿Eliminar este producto?');" title="Eliminar">
+                                    <i class="fas fa-trash"></i> Eliminar
+                                </a>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(productos)}">
+                            <td colspan="7" class="text-center text-muted py-4">
+                                No hay productos para mostrar.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <a href="/productos/reporte" class="btn btn-success mt-3">
+                <i class="fas fa-file-excel"></i> Descargar Reporte Excel
+            </a>        
+        </main>
+
+        <!-- ============ FOOTER ============ -->
+        <footer>
+            <p>© 2025 Boutique Online Mar de Moda. Todos los derechos reservados.</p>
+            <div class="social-links">
+                <a href="https://wa.me" target="_blank" class="social-icon">
+                    WhatsApp <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.tiktok.com" target="_blank" class="social-icon">
+                    TikTok <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="https://www.instagram.com" target="_blank" class="social-icon">
+                    Instagram <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </footer>
+
+    </body>
+</html>

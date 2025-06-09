@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Administrador - Boutique Mar de Moda</title>
+
+        <!-- Estilos y Scripts -->
+        <link rel="stylesheet" th:href="@{/css/estilo2.css}">
+        <script th:src="@{/JS/script.js}"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+      
+    </head>
+    <body>
+
+        <!-- ENCABEZADO -->
+        <header>
+            <div class="top-message" id="mensaje-oferta"></div>
+            <div class="header-content">
+                <div class="logo">
+                    <a th:href="@{/}">BOUTIQUE ONLINE MAR DE MODA</a>
+                </div>
+                <nav class="nav-buttons">
+                    <div class="admin-dropdown">
+                        <button class="admin-btn">Menú <i class="fas fa-caret-down"></i></button>
+                        <div class="dropdown-content">
+                            <a th:href="@{/}">Dashboard</a>
+                            <a th:href="@{/productos/gestionProducto}" >Producto</a>
+                            <a th:href="@{/categorias}">Categoría</a>
+                            <a th:href="@{/inventario}">Inventario</a>
+                            <a th:href="@{/administrador/gestionUsuario}">Usuario</a>
+                            <a th:href="@{/pedidos}">Pedidos</a>
+                            <a th:href="@{/logout}">Cerrar Sesión</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="admin-panel-container">
+            <div class="admin-header">
+                <h2>Panel de Administración</h2>
+                <p>Bienvenido, <span id="admin-username">administrador</span></p>
+            </div>
+
+            <div class="admin-card-grid">
+                <a th:href="@{/}" class="admin-card-link">
+                    <div class="admin-card">
+                        <i class="fas fa-tachometer-alt fa-3x" style="color:#a0004d;"></i>
+                        <h3>Dashboard</h3>
+                        <p>Resumen general y estadísticas del sistema.</p>
+                    </div>
+                </a>
+
+                <a th:href="@{/productos/gestionProducto}" class="admin-card-link">
+                    <div class="admin-card">
+                        <i class="fas fa-box-open fa-3x" style="color:#a0004d;"></i>
+                        <h3>Gestión Productos</h3>
+                        <p>Añadir, editar y eliminar productos del catálogo.</p>
+                    </div>
+                </a>
+
+                <a th:href="@{/categorias}" class="admin-card-link">
+                    <div class="admin-card">
+                        <i class="fas fa-tags fa-3x" style="color:#a0004d;"></i>
+                        <h3>Editar Categorías</h3>
+                        <p>Administrar las categorías de los productos.</p>
+                    </div>
+                </a>
+
+                <a th:href="@{/inventario}" class="admin-card-link">
+                    <div class="admin-card">
+                        <i class="fas fa-cubes fa-3x" style="color:#a0004d;"></i>
+                        <h3>Gestión Inventario</h3>
+                        <p>Control del stock y seguimiento del inventario.</p>
+                    </div>
+                </a>
+
+                <a th:href="@{/pedidos}" class="admin-card-link">
+                    <div class="admin-card">
+                        <i class="fas fa-shopping-cart fa-3x" style="color:#a0004d;"></i>
+                        <h3>Gestión Pedidos</h3>
+                        <p>Ver, procesar y gestionar los pedidos de los clientes.</p>
+                    </div>
+                </a>
+
+                <a th:href="@{/administrador/usuarios}" class="admin-card-link">
+                    <div class="admin-card">
+                        <i class="fas fa-users fa-3x" style="color:#a0004d;"></i>
+                        <h3>Gestión Usuarios</h3>
+                        <p>Administrar las cuentas de los usuarios del sitio.</p>
+                    </div>
+                </a>
+            </div>
+        </main>
+
+        <!-- PIE DE PÁGINA -->
+        <footer>
+            <p>© 2025 Boutique Online Mar de Moda. Todos los derechos reservados.</p>
+            <div class="social-links">
+                <a href="https://wa.me" target="_blank" class="social-icon">
+                    <span>WhatsApp</span>
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.tiktok.com" target="_blank" class="social-icon">
+                    <span>TikTok</span>
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="https://www.instagram.com" target="_blank" class="social-icon">
+                    <span>Instagram</span>
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </footer>
+    </body>
+</html>
