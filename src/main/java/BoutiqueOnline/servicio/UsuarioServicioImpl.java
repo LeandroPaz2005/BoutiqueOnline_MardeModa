@@ -47,7 +47,11 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 
     @Override
     public List<Usuario> listarUsuario() {
+
         return ImmutableList.copyOf(usuarioRepositorio.findAll()); //evitar modificación externa con guava
+
+        return (List<Usuario>)usuarioRepositorio.findAll();
+
     }
 
     @Override
@@ -69,6 +73,8 @@ public class UsuarioServicioImpl implements UsuarioServicio {
                 .map(role -> new SimpleGrantedAuthority(role.nombre()))
                 .collect(Collectors.toList());
     }
+
+    //metodo del crud para guardar el usuario
 
     @Override
     public Usuario save(Usuario usuario) {
@@ -101,3 +107,7 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         return usuarioRepositorio.findById(id);
     }
 }
+
+}
+
+
