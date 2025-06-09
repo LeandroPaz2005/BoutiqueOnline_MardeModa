@@ -15,7 +15,7 @@ public interface UsuarioServicio extends UserDetailsService{ //busqueda de un su
     
     //añadir el metodo del repositorio
     Optional<Usuario> findById(Integer id);
-   
+ 
    //metodo para guardar 
     public Usuario save(Usuario usuario);
 

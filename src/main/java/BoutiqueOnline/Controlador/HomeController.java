@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -178,11 +179,14 @@ public class HomeController {
      * con fecha, numero de pedido, los detalles
      */
     @GetMapping("/saveOrder")
-    public String saveOrden() {
+    public String saveOrden(Authentication authentication) {
         Date fechaCreacion = new Date();
         orden.setFechaCreacion(fechaCreacion);
         orden.setNumero(ordenService.generarNumeroOrden());
         //guardar datos del usaurio tambien
+        String email=authentication.getName();
+        
+        
         Usuario usuario = usuarioServicio.findById(4).get();
 
         orden.setUsuario(usuario);
