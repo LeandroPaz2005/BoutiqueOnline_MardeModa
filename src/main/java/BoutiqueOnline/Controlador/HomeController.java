@@ -1,5 +1,6 @@
 package BoutiqueOnline.Controlador;
 
+import BoutiqueOnline.Reportes.ReportePDFServicio;
 import BoutiqueOnline.modelo.DetalleOrden;
 import BoutiqueOnline.modelo.Orden;
 import BoutiqueOnline.modelo.Producto;
@@ -8,6 +9,9 @@ import BoutiqueOnline.servicio.DetalleOrdenService;
 import BoutiqueOnline.servicio.OrdenService;
 import BoutiqueOnline.servicio.ProductoServicio;
 import BoutiqueOnline.servicio.UsuarioServicio;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,6 +47,10 @@ public class HomeController {
 
     @Autowired
     private DetalleOrdenService detalleOrdenService;
+
+    //implemntar un objeto de servicioPDF
+    @Autowired
+    private ReportePDFServicio reportePDF;
 
     // Para almacenar los detalles de la orden
     List<DetalleOrden> detalles = new ArrayList<DetalleOrden>();
@@ -161,11 +169,27 @@ public class HomeController {
         return "usuario/carrito";
     }
 
+    @GetMapping("/reporteCarrito/pdf")
+    public void generarPdfCarrito(HttpServletResponse response, Authentication authentication) throws IOException {
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=carrito.pdf");
+
+        /*
+        String email = authentication.getName();
+        Usuario usuario = usuarioServicio.findByEmail(email).get(); // asegúrate que tienes este método
+        */
+        //por mientras hasta ver como lo manejo 
+        Usuario usuario = usuarioServicio.findById(14).get();
+        
+        ByteArrayInputStream pdf = reportePDF.generarPdfCarrito(detalles, usuario);
+        org.apache.commons.io.IOUtils.copy(pdf, response.getOutputStream());
+    }
+
     @GetMapping("/orden")
     public String orden(Model model) {
         log.info("===== MÉTODO ORDEN EJECUTADO ====="); //mensaje en el terminanl
 
-        Usuario usuario = usuarioServicio.findById(4).get();
+        Usuario usuario = usuarioServicio.findById(14).get();
 
         model.addAttribute("cart", detalles);
         model.addAttribute("orden", orden);
@@ -174,9 +198,8 @@ public class HomeController {
         return "usuario/resumenorden";
     }
 
-     /**
-     * Guardar orden de usaurio 
-     * con fecha, numero de pedido, los detalles
+    /**
+     * Guardar orden de usaurio con fecha, numero de pedido, los detalles
      */
     @GetMapping("/saveOrder")
     public String saveOrden(Authentication authentication) {
@@ -184,9 +207,8 @@ public class HomeController {
         orden.setFechaCreacion(fechaCreacion);
         orden.setNumero(ordenService.generarNumeroOrden());
         //guardar datos del usaurio tambien
-        String email=authentication.getName();
-        
-        
+        String email = authentication.getName();
+
         Usuario usuario = usuarioServicio.findById(4).get();
 
         orden.setUsuario(usuario);
@@ -198,23 +220,24 @@ public class HomeController {
             detalleOrdenService.save(dt);
         }
         //limpiar la lista y orden de productos
-        orden=new Orden();
+        orden = new Orden();
         detalles.clear();
-        
+
         return "redirect:/";
     }
-    
+
     /**
-     * Para buscar productos 
+     * Para buscar productos
+     *
      * @param nombre
-     * @return 
+     * @return
      */
     @PostMapping("/buscar")
-    public String buscarProducto(@RequestParam String nombre, Model model){
+    public String buscarProducto(@RequestParam String nombre, Model model) {
         log.info("Nombre del producto {}", nombre);
-        List<Producto> productos=productoServicio.findAll().stream().filter(p -> p.getNombre().contains(nombre)).collect(Collectors.toList());
+        List<Producto> productos = productoServicio.findAll().stream().filter(p -> p.getNombre().contains(nombre)).collect(Collectors.toList());
         model.addAttribute("productos", productos);
-        
-    return "usuario/home";
+
+        return "usuario/home";
     }
 }
