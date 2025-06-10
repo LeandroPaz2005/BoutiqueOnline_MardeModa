@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Carrito desplegable
-    const carritoIconLink = document.querySelector('.header-cart-button');
+    /*const carritoIconLink = document.querySelector('.header-cart-button');
     const carritoLateral = document.createElement('div');
     carritoLateral.id = 'carrito-lateral';
     document.body.appendChild(carritoLateral);
@@ -455,8 +455,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     actualizarContadorCarrito(); // Inicializar el contador al cargar la página
-    mostrarCarritoLateral(); // Mostrar el carrito al cargar la página (si hay items)
-
+    mostrarCarritoLateral(); // Mostrar el carrito al cargar la página (si hay items)*/
 
     // **INICIO - Código para el Filtrado de Productos (Integrado)**
     const filtros = document.querySelector('.filtros');

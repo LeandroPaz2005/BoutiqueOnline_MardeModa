@@ -7,25 +7,34 @@
 
         <!-- Estilos y Scripts -->
         <link rel="stylesheet" th:href="@{/css/estilo2.css}">
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+        <link rel="stylesheet" th:href="@{/css/estilosbase.css}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        
         <script th:src="@{/JS/script.js}"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
       
     </head>
     <body>
 
         <!-- ENCABEZADO -->
         <header>
-            <div class="top-message" id="mensaje-oferta"></div>
+            <div class="top-message" id="mensaje-oferta">
+                Envío GRATIS en pedidos superiores a S/. 150
+            </div>
             <div class="header-content">
                 <div class="logo">
                     <a th:href="@{/}">BOUTIQUE ONLINE MAR DE MODA</a>
                 </div>
+
                 <nav class="nav-buttons">
                     <div class="admin-dropdown">
-                        <button class="admin-btn">Menú <i class="fas fa-caret-down"></i></button>
+                        <button class="admin-btn" aria-haspopup="true" aria-expanded="false">
+                            Menú <i class="fas fa-caret-down"></i>
+                        </button>
                         <div class="dropdown-content">
                             <a th:href="@{/}">Dashboard</a>
-                            <a th:href="@{/productos/gestionProducto}" >Producto</a>
+                            <a th:href="@{/productos/gestionProducto}">Producto</a>
                             <a th:href="@{/categorias}">Categoría</a>
                             <a th:href="@{/inventario}">Inventario</a>
                             <a th:href="@{/administrador/gestionUsuario}">Usuario</a>
@@ -100,16 +109,13 @@
             <p>© 2025 Boutique Online Mar de Moda. Todos los derechos reservados.</p>
             <div class="social-links">
                 <a href="https://wa.me" target="_blank" class="social-icon">
-                    <span>WhatsApp</span>
-                    <i class="fab fa-whatsapp"></i>
+                    WhatsApp <i class="fab fa-whatsapp"></i>
                 </a>
                 <a href="https://www.tiktok.com" target="_blank" class="social-icon">
-                    <span>TikTok</span>
-                    <i class="fab fa-tiktok"></i>
+                    TikTok <i class="fab fa-tiktok"></i>
                 </a>
                 <a href="https://www.instagram.com" target="_blank" class="social-icon">
-                    <span>Instagram</span>
-                    <i class="fab fa-instagram"></i>
+                    Instagram <i class="fab fa-instagram"></i>
                 </a>
             </div>
         </footer>
