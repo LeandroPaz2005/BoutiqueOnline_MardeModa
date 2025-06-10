@@ -5,26 +5,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Administrador - Boutique Mar de Moda</title>
 
-        <!-- Estilos y Scripts -->
         <link rel="stylesheet" th:href="@{/css/estilo2.css}">
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+        <link rel="stylesheet" th:href="@{/css/estilosbase.css}">
+        <link rel="stylesheet" th:href="@{/css/gestionUsuario.css}">
+
+
         <script th:src="@{/JS/script.js}"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script th:src="@{/JS/gestionUsuario.js}"></script>
     </head>
+
     <body>
-        <!-- ENCABEZADO -->
         <header>
-            <div class="top-message" id="mensaje-oferta"></div>
+            <div class="top-message" id="mensaje-oferta">
+                Envío GRATIS en pedidos superiores a S/. 150
+            </div>
+
             <div class="header-content">
                 <div class="logo">
                     <a th:href="@{/}">BOUTIQUE ONLINE MAR DE MODA</a>
                 </div>
+
                 <nav class="nav-buttons">
                     <div class="admin-dropdown">
-                        <button class="admin-btn">Menú <i class="fas fa-caret-down"></i></button>
+                        <button class="admin-btn" aria-haspopup="true" aria-expanded="false">
+                            Menú <i class="fas fa-caret-down"></i>
+                        </button>
                         <div class="dropdown-content">
                             <a th:href="@{/}">Dashboard</a>
-                            <a th:href="@{/productos/gestionProducto}" >Producto</a>
+                            <a th:href="@{/productos/gestionProducto}">Producto</a>
                             <a th:href="@{/categorias}">Categoría</a>
                             <a th:href="@{/inventario}">Inventario</a>
                             <a th:href="@{/administrador/gestionUsuario}">Usuario</a>
@@ -35,53 +44,57 @@
                 </nav>
             </div>
         </header>
-        <div class="container mt-5">
-            <h2 class="text-center">Lista de Usuarios</h2>
-            <div class="mb-3 text-end">
-                <a th:href="@{/usuarios/create}" class="btn btn-primary">Agregar Usuario</a>
 
+        <div class="container mt-5 lista-usuarios">
+            <h2 class="text-center mb-4">Lista de Usuarios</h2>
+            <div class="mb-3 text-center d-flex justify-content-center gap-3 flex-wrap">
+                <a th:href="@{/usuarios/create}" class="btn btn-rosa">
+                    <i class="fas fa-user-plus"></i> Registrar Usuario
+                </a>
+                <a th:href="@{/usuarios/reporte}" class="btn btn-reporte">
+                    <i class="fas fa-file-download"></i> Generar Reporte
+                </a>
             </div>
-            <table class="table table-bordered table-striped">
-                <thead class="table-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Email</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="usuario : ${usuarios}">
-                        <td th:text="${usuario.id}"></td>
-                        <td th:text="${usuario.nombre}"></td>
-                        <td th:text="${usuario.apellido}"></td>
-                        <td th:text="${usuario.email}"></td>
-                        <td>
-                            <a th:href="@{/usuarios/edit/{id}(id=${usuario.id})}" class="btn btn-warning btn-sm">Editar</a>
-                            <a th:href="@{/usuarios/delete/{id}(id=${usuario.id})}" class="btn btn-danger btn-sm"
-                               onclick="return confirm('¿Está seguro de eliminar este usuario?')">Eliminar</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+
+
+            <div class="table-responsive">
+                <table class="table table-bordered custom-table">
+                    <thead>
+                        <tr>
+                            <th class="text-dark">ID</th>
+                            <th class="text-dark">Nombre</th>
+                            <th class="text-dark">Apellido</th>
+                            <th class="text-dark">Email</th>
+                            <th class="text-dark">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="usuario : ${usuarios}">
+                            <td th:text="${usuario.id}" data-label="ID"></td>
+                            <td th:text="${usuario.nombre}" data-label="Nombre"></td>
+                            <td th:text="${usuario.apellido}" data-label="Apellido"></td>
+                            <td th:text="${usuario.email}" data-label="Email"></td>
+                            <td data-label="Acciones">
+                                <a th:href="@{/usuarios/edit/{id}(id=${usuario.id})}" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-edit"></i> Editar
+                                </a>
+                                <a th:href="@{/usuarios/delete/{id}(id=${usuario.id})}" class="btn btn-danger btn-sm"
+                                   onclick="return confirm('¿Está seguro de eliminar este usuario?')">
+                                    <i class="fas fa-trash-alt"></i> Eliminar
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <!-- PIE DE PÁGINA -->
+
         <footer>
-            <p>© 2025 Boutique Online Mar de Moda. Todos los derechos reservados.</p>
+            <p>&copy; 2025 Boutique Online Mar de Moda. Todos los derechos reservados.</p>
             <div class="social-links">
-                <a href="https://wa.me" target="_blank" class="social-icon">
-                    <span>WhatsApp</span>
-                    <i class="fab fa-whatsapp"></i>
-                </a>
-                <a href="https://www.tiktok.com" target="_blank" class="social-icon">
-                    <span>TikTok</span>
-                    <i class="fab fa-tiktok"></i>
-                </a>
-                <a href="https://www.instagram.com" target="_blank" class="social-icon">
-                    <span>Instagram</span>
-                    <i class="fab fa-instagram"></i>
-                </a>
+                <a href="https://wa.me" target="_blank" class="social-icon">WhatsApp <i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.tiktok.com" target="_blank" class="social-icon">TikTok <i class="fab fa-tiktok"></i></a>
+                <a href="https://www.instagram.com" target="_blank" class="social-icon">Instagram <i class="fab fa-instagram"></i></a>
             </div>
         </footer>
     </body>

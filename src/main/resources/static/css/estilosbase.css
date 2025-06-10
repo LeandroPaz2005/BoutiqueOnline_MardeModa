@@ -1,0 +1,490 @@
+/* Estilos Generales para el Body */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Estilos del Header */
+.top-message {
+    background-color: #a0004d;
+    color: white;
+    text-align: center;
+    padding: 5px 0;
+    font-size: 0.85em;
+    position: relative;
+    z-index: 10;
+}
+
+header {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo a {
+    color: #a0004d;
+    font-weight: bold;
+    font-size: 1.5em;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.logo a:hover {
+    color: #d1006a;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-buttons .btn {
+    background-color: #a0004d;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.nav-buttons .btn:hover {
+    background-color: #d1006a;
+}
+
+.nav-buttons .btn i {
+    margin-right: 5px;
+}
+
+/* Estilos del Dropdown (Menú Admin) */
+.admin-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.admin-btn {
+    background-color: #a0004d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.admin-btn i {
+    margin-left: 8px;
+}
+
+.admin-btn:hover {
+    background-color: #d1006a;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1000;
+    right: 0;
+    top: 100%;
+    border-radius: 5px;
+    border: 1px solid #f2c3d1;
+    padding: 8px 0;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.2s;
+}
+
+.dropdown-content a:hover {
+    background-color: #fce4ec;
+}
+
+.admin-dropdown.active .dropdown-content {
+    display: block;
+}
+
+/* Estilos del Footer */
+footer {
+    background-color: #a0004d; /* Color igual al top-message */
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: auto;
+}
+
+.social-links {
+    margin-top: 10px;
+}
+
+.social-links .social-icon {
+    color: white; /* Color blanco para los íconos/texto del footer */
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 1em;
+    transition: color 0.3s ease;
+}
+
+.social-links .social-icon:hover {
+    color: #d1006a;
+}
+
+.social-links .social-icon i {
+    margin-left: 5px;
+}
+
+/* Estilos Específicos del Contenido Principal (Main) */
+main.container {
+    flex-grow: 1;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+/* Ajustes de espaciado para los títulos y enlaces */
+.text-center h1 {
+    margin-bottom: 1.5rem !important;
+}
+
+/* ESTILOS DE LA TABLA */
+.table {
+    background-color: #fff;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.table thead {
+    background-color: #a0004d;
+    color: white;
+    font-weight: bold;
+}
+
+.table td, .table th {
+    vertical-align: middle;
+    padding: 14px 12px;
+    border-color: #ddd;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #fce4ec;
+    transition: background-color 0.3s ease;
+}
+
+/* Botones generales (incluyendo los de tabla) */
+.btn-warning, .btn-danger, .btn-primary, .btn-success {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-warning i, .btn-danger i, .btn-primary i, .btn-success i {
+    margin-right: 4px;
+}
+
+/* Celda de descripción con efecto de corte elegante */
+td[style*="text-overflow: ellipsis;"] {
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Imágenes dentro de la tabla */
+.table img {
+    max-width: 80px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* Estilo para el botón "Gestión de Productos" */
+.gestion-btn {
+    background-color: #a0004d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.gestion-btn:hover {
+    background-color: #d1006a;
+    color: white;
+}
+
+/* NUEVAS REGLAS PARA SEPARAR LOS TEXTOS DEL BREADCRUMB Y EL BOTÓN */
+.breadcrumb-item {
+    margin-bottom: 5px; /* Espacio entre los elementos de la lista */
+}
+    
+/* Ajustes para los enlaces dentro del breadcrumb */
+.breadcrumb-item a {
+    text-decoration: none; /* Esto quitará el subrayado */
+    color: #a0004d; /* Puedes elegir tu color de marca para los enlaces activos, o 'inherit' */
+}
+/* Para dar espacio después del "2. Ver Productos" y el botón "+ Crear Producto" */
+.breadcrumb {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan a la siguiente línea si no hay espacio */
+    align-items: center; /* Alinea verticalmente los items en el centro */
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0; /* Elimina el margen inferior por defecto si lo tiene */
+}
+/* Ajuste específico para el botón de crear producto si no está dentro de la lista */
+.btn-create-product-container {
+    margin-top: 15px; /* Espacio encima del botón Crear Producto */
+    margin-bottom: 15px; /* Espacio debajo del botón Crear Producto */
+    text-align: left; /* Alinea el botón a la izquierda, si es necesario */
+}
+/* Aseguramos que el botón de crear producto que está justo debajo de la lista tenga un margen adecuado */
+.breadcrumb + .btn-create-product-container {
+    margin-top: 15px;
+}
+    
+/* Quitar el separador de breadcrumb de Bootstrap */
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "/"; /* Esto añade el slash */
+    padding-right: 0.5rem; /* Espaciado a la derecha del slash */
+    padding-left: 0.5rem;  /* Espaciado a la izquierda del slash */
+    color: #6c757d; /* Color gris para el slash (puedes ajustar el color si quieres) */
+}
+    
+/* Quitar el subrayado o cualquier decoración del elemento activo del breadcrumb */
+.breadcrumb-item.active {
+    text-decoration: none; /* Asegura que no tenga subrayado */
+    color: #333; /* Cambia el color a un gris oscuro o el color que desees para el texto no enlazado */
+    /* Asegúrate de que no haya un 'border-bottom' u otra decoración si lo ves */
+    /* border-bottom: none; */
+}
+    
+/* Asegurar que el separador aparezca incluso antes del elemento activo */
+.breadcrumb-item.active::before {
+    content: "/"; /* Asegura que el slash esté presente */
+    padding-right: 0.5rem; /* Espaciado */
+    padding-left: 0.5rem; /* Espaciado */
+    color: #6c757d; /* Color del slash */
+}
+/* Media Queries para Responsividad */
+
+/* Pantallas pequeñas (teléfonos) */
+@media (max-width: 767px) {
+    .header-content {
+        flex-direction: column; /* Apila el logo y los botones en pantallas pequeñas */
+        align-items: center;
+        padding: 10px;
+    }
+
+    .logo {
+        margin-bottom: 10px; /* Espacio debajo del logo */
+    }
+
+    .nav-buttons {
+        flex-direction: column; /* Apila los botones de navegación */
+        width: 100%;
+        gap: 10px; /* Espacio entre botones */
+    }
+
+    .nav-buttons .btn, .admin-btn {
+        width: 100%; /* Haz que los botones ocupen todo el ancho */
+        text-align: center;
+        justify-content: center; /* Centra el contenido del botón */
+    }
+
+    .admin-dropdown {
+        width: 100%;
+    }
+
+    .dropdown-content {
+        min-width: unset; /* Elimina el ancho mínimo fijo */
+        width: 100%; /* Ocupa el ancho completo disponible */
+        right: auto; /* Desactiva el alineamiento a la derecha */
+        left: 0; /* Alinea a la izquierda */
+        text-align: center; /* Centra el texto en los elementos del dropdown */
+    }
+
+    .table thead {
+        display: none; /* Oculta el encabezado de la tabla en móviles */
+    }
+
+    .table, .table tbody, .table tr, .table td {
+        display: block; /* Muestra las filas y celdas como bloques */
+        width: 100%;
+    }
+
+    .table tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 10px;
+    }
+
+    .table td {
+        text-align: right; /* Alinea el contenido de la celda a la derecha */
+        padding-left: 50%; /* Espacio para la etiqueta */
+        position: relative;
+        border: none; /* Elimina los bordes de celda individuales */
+    }
+
+    .table td::before {
+        content: attr(data-label); /* Usa el atributo data-label para mostrar la etiqueta */
+        position: absolute;
+        left: 10px;
+        width: calc(50% - 20px);
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        color: #a0004d;
+    }
+
+    /* Ajustes específicos para las columnas de la tabla en móviles */
+    .table td:nth-of-type(1)::before { content: "Imagen"; }
+    .table td:nth-of-type(2)::before { content: "Nombre"; }
+    .table td:nth-of-type(3)::before { content: "Descripción"; }
+    .table td:nth-of-type(4)::before { content: "Inventario"; }
+    .table td:nth-of-type(5)::before { content: "Precio"; }
+    .table td:nth-of-type(6)::before { content: "Acciones"; }
+    .table td:nth-of-type(7)::before { content: ""; } /* No label for the last action column */
+
+    td[style*="text-overflow: ellipsis;"] {
+        max-width: none; /* Elimina la restricción de ancho para descripción */
+        white-space: normal; /* Permite que el texto se envuelva */
+        overflow: visible;
+        text-overflow: clip;
+    }
+
+    .table img {
+        max-width: 100px; /* Ajusta el tamaño de la imagen en móviles */
+        height: auto;
+    }
+
+    .btn-create-product-container {
+        text-align: center; /* Centra el botón de crear producto */
+    }
+    .gestion-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .breadcrumb {
+        align-items: center; /* Centra los items del breadcrumb */
+    }
+    
+    .text-center h1 {
+        font-size: 1.8em; /* Ajusta este valor según lo que mejor se vea en móviles */
+        line-height: 1.2; /* Para evitar que el texto se superponga si hay varias líneas */
+        margin-bottom: 1rem !important; /* Ajusta el margen si es necesario */
+    }
+}
+
+/* Pantallas medianas (tabletas) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .header-content {
+        padding: 10px 15px;
+    }
+
+    .nav-buttons {
+        gap: 10px;
+    }
+
+    .table td, .table th {
+        padding: 10px 8px; /* Reduce el padding de la tabla */
+    }
+
+    .table img {
+        max-width: 60px; /* Ajusta el tamaño de la imagen */
+    }
+}
+
+/* Pantallas grandes (escritorio - ya manejado en tus estilos base, pero se puede refinar) */
+@media (min-width: 992px) {
+    /* No se necesitan cambios drásticos, ya que tus estilos base están orientados a escritorio */
+    .header-content {
+        padding: 10px 20px;
+    }
+}
+    
+/* ======================================= */
+/* ESTILOS ESPECÍFICOS DE GESTIONPRODUCTO */
+/* ======================================= */
+
+.card-title {
+    color: #a0004d;
+    font-weight: bold;
+}
+
+/* Aumenta la especificidad para sobrescribir Bootstrap */
+/* Opción A: Combina la clase de Bootstrap con la tuya */
+.btn.btn-ver-producto { /* Fíjate que añadimos .btn */
+    background-color: #a0004d;
+    color: white;
+    border: 1px solid #a0004d;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn.btn-ver-producto:hover {
+    background-color: #d1006a;
+    border-color: #d1006a;
+    color: white;
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+/* REMOVIDO: .social-links a - ya está definido globalmente */
