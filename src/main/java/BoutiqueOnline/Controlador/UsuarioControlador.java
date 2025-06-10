@@ -1,8 +1,11 @@
 package BoutiqueOnline.Controlador;
 
+import BoutiqueOnline.Reportes.ReporteExcelServicio;
 import BoutiqueOnline.modelo.Rol;
 import BoutiqueOnline.modelo.Usuario;
 import BoutiqueOnline.servicio.UsuarioServicio;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,10 +13,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 @Controller
 @RequestMapping("/usuarios")
 public class UsuarioControlador {
+    
+    @Autowired
+    private ReporteExcelServicio reporteExcel;
 
     @Autowired
     private UsuarioServicio usuarioServicio;
@@ -78,6 +87,18 @@ public class UsuarioControlador {
     public String delete(@PathVariable Integer id) {
         usuarioServicio.delete(id);
         return "redirect:/usuarios/gestionUsuario";
+    }
+    
+        // Nuevo endpoint para reporte Excel
+    @GetMapping("/reporteUsuario")
+    public ResponseEntity<byte[]> generarReporteUsuarios() throws IOException {
+        List<Usuario> usuarios = usuarioServicio.listarUsuario();
+        ByteArrayInputStream excelStream = reporteExcel.generarReporteExcelUsuario(usuarios);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=reporte_usuarios.xlsx")
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(excelStream.readAllBytes());
     }
 
 }
