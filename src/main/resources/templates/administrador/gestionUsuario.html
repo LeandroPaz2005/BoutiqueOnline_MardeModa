@@ -16,28 +16,29 @@
     </head>
 
     <body>
+       
+         <!-- ENCABEZADO -->
         <header>
             <div class="top-message" id="mensaje-oferta">
                 Envío GRATIS en pedidos superiores a S/. 150
             </div>
-
             <div class="header-content">
                 <div class="logo">
-                    <a th:href="@{/}">BOUTIQUE ONLINE MAR DE MODA</a>
+                    <a th:href="@{/administrador/panelAdmin}">BOUTIQUE ONLINE MAR DE MODA</a>
                 </div>
-
                 <nav class="nav-buttons">
                     <div class="admin-dropdown">
                         <button class="admin-btn" aria-haspopup="true" aria-expanded="false">
                             Menú <i class="fas fa-caret-down"></i>
                         </button>
                         <div class="dropdown-content">
-                            <a th:href="@{/}">Dashboard</a>
-                            <a th:href="@{/productos/gestionProducto}">Producto</a>
-                            <a th:href="@{/categorias}">Categoría</a>
+                            <a th:href="@{/administrador/panelAdmin}">Panel Admin</a>
+                            <a th:href="@{/productos/gestionProducto}">Ver Productos</a>
+                            <a th:href="@{/productos/create}">Crear Producto</a>
+                            <a th:href="@{/categorias}">Categorías</a>
                             <a th:href="@{/inventario}">Inventario</a>
-                            <a th:href="@{/administrador/gestionUsuario}">Usuario</a>
-                            <a th:href="@{/pedidos}">Pedidos</a>
+                            <a th:href="@{/administrador/gestionUsuario}">Gestión Usuarios</a>
+                            <a th:href="@{/administrador/gestionOrdenes}">Pedidos</a>
                             <a th:href="@{/logout}">Cerrar Sesión</a>
                         </div>
                     </div>
@@ -46,12 +47,14 @@
         </header>
 
         <div class="container mt-5 lista-usuarios">
+     
+
             <h2 class="text-center mb-4">Lista de Usuarios</h2>
             <div class="mb-3 text-center d-flex justify-content-center gap-3 flex-wrap">
-                <a th:href="@{/usuarios/create}" class="btn btn-rosa">
+                <a th:href="@{/usuario/create}" class="btn btn-rosa">
                     <i class="fas fa-user-plus"></i> Registrar Usuario
                 </a>
-                <a th:href="@{/usuarios/reporteUsuario}" class="btn btn-reporte">
+                <a th:href="@{/usuario/reporteUsuario}" class="btn btn-reporte">
                     <i class="fas fa-file-download"></i> Generar Reporte
                 </a>
             </div>
@@ -75,10 +78,10 @@
                             <td th:text="${usuario.apellido}" data-label="Apellido"></td>
                             <td th:text="${usuario.email}" data-label="Email"></td>
                             <td data-label="Acciones">
-                                <a th:href="@{/usuarios/edit/{id}(id=${usuario.id})}" class="btn btn-warning btn-sm">
+                                <a th:href="@{/edit/{id}(id=${usuario.id})}" class="btn btn-warning btn-sm">
                                     <i class="fas fa-edit"></i> Editar
                                 </a>
-                                <a th:href="@{/usuarios/delete/{id}(id=${usuario.id})}" class="btn btn-danger btn-sm"
+                                <a th:href="@{/delete/{id}(id=${usuario.id})}" class="btn btn-danger btn-sm"
                                    onclick="return confirm('¿Está seguro de eliminar este usuario?')">
                                     <i class="fas fa-trash-alt"></i> Eliminar
                                 </a>

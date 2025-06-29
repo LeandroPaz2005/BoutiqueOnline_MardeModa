@@ -1,69 +1,77 @@
 
+
 package BoutiqueOnline.Controlador;
 
-import BoutiqueOnline.DTO.UsuarioRegistroDTO;
-import BoutiqueOnline.modelo.Producto;
+import BoutiqueOnline.Servicio.OrdenServicio;
+import BoutiqueOnline.Servicio.ProductoServicio;
+import BoutiqueOnline.modelo.Orden;
 import BoutiqueOnline.modelo.Usuario;
-import BoutiqueOnline.servicio.ProductoServicio;
-import BoutiqueOnline.servicio.UsuarioServicio;
-import java.util.List;
-import java.util.Optional;
-import javax.validation.Valid;
+import BoutiqueOnline.servicio.*;
+import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 
 @Controller
 @RequestMapping("/administrador")
 public class AdministradorControlador {
+   
+    private Logger logg=LoggerFactory.getLogger(AdministradorControlador.class);
     
     @Autowired
     private UsuarioServicio usuarioServicio;
     
     @Autowired
+     private OrdenServicio ordenServicio;
+    
+    @Autowired
     private ProductoServicio productoServicio;
     
-    //controlador para ver el registro Usuario
-    @GetMapping("/usuarios")
-    public String mostrarUsuario(Model model){
-        List<Usuario>usuarios=usuarioServicio.listarUsuario();
-        model.addAttribute("usuarios", usuarios);
+
+    @GetMapping("/panelAdmin")
+    public String mostrarVistaPrincipal(){
+    return "administrador/panel_Admin";
+    }
+    
+    @GetMapping("/")
+    public String inicio(){
+    return "redirect:/administrador/panelAdmin";
+    }
+    
+    @GetMapping("/gestionUsuario")
+    public String MostrarUsuario(Model model){
+        model.addAttribute("usuarios", usuarioServicio.findAll());
         return "administrador/gestionUsuario";
     }
-    //controlador para agregar usuario desde administrador
-    @GetMapping("/nuevoUsuario")
-    public String agregarUsuario(Model model){
-        model.addAttribute("usuarios",new Usuario());
-        return "form";
+    
+    @GetMapping("/gestionOrdenes")
+    public String GestionOrdenes(Model model){
+        model.addAttribute("ordenes", ordenServicio.findAll());
+        return"administrador/ordenes"; 
     }
-    //guardar nuebo usuario
-    @PostMapping("/guardar")
-    public String guardar(@Valid UsuarioRegistroDTO u,Model model){
-        usuarioServicio.guardar(u);
-        return "redirect:administrador/gestionUsuario";
-    }
-    //editar un usuario
-    @GetMapping("/editar/{id}")
-    public String editar(@PathVariable Long id,Model model){
-        Optional<Usuario>usuario=usuarioServicio.listarId(id);
-        model.addAttribute("usuario",usuario);
-        return "form";
-    }
-    @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable Long id,Model model){
-        usuarioServicio.eliminnar(id);
-        return "redirect:administrador/gestionUsuario";
-    }
-    /*control para ver los detalles de los productos
-    @GetMapping("/productos")
-    public String mostrarProductos(Model model){
-        List<Producto> productos=productoServicio.findAll();
-        model.addAttribute("productos", productos);
+    
+  
+    @GetMapping("/detalle/{id}")
+    public String DetalleOrdenes(Model model, @PathVariable Integer id){
+    logg.info("\nID de la orden: {}",id);
+        Orden orden=ordenServicio.findById(id).get();
         
-    return "productos/gestionProducto";
+        model.addAttribute("detalles", orden.getDetalle());
+    
+    return "administrador/detalleOrdenes";
+    }
+    
+    @ModelAttribute
+    public void agregarUsuarioAlModelo(Model model, HttpSession session){
+    if(session.getAttribute("usuario")!=null){
+    model.addAttribute("usuario", (Usuario)session.getAttribute("usuario"));
+    }
     }
 }
