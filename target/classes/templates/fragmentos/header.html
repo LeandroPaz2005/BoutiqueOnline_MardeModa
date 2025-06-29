@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+</head>
+<body>
+    <header th:fragment="header">
+        <div class="top-message" id="mensaje-oferta"></div>
+            <div class="header-content">
+                <div class="logo">
+                    <a th:href="@{/}">BOUTIQUE ONLINE MAR DE MODA</a>
+                </div>
+                <nav class="nav-buttons">
+                    <div class="admin-dropdown">
+                        <button class="admin-btn">
+                            Menú <i class="fas fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a th:href="@{/}">Dashboard</a>
+                            <a th:href="@{/productos/gestionProducto}">Producto</a>
+                            <a th:href="@{/categorias}">Categoría</a>
+                            <a th:href="@{/inventario}">Inventario</a>
+                            <a th:href="@{/administrador/gestionUsuario}">Usuario</a>
+                            <a th:href="@{/pedidos}">Pedidos</a>
+                            <a th:href="@{/logout}">Cerrar Sesión</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+    </header>
+</body>
+</html>

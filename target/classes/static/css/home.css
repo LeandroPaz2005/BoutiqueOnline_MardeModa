@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
+
+:root {
+  --rosa-principal: #a0004d;
+  --rosa-secundario: #d1006a;
+  --rosa-claro: #f2c3d1;
+  --rosa-degradado-1: #ff80ab;
+  --rosa-degradado-2: #ff4081;
+  --rosa-card: #e91e63;
+  --rosa-card-hover: #c2185b;
+}
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  background-color: #fdfcfd;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header */
+header {
+  background: #fff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.top-message {
+  background-color: var(--rosa-principal);
+  color: white;
+  padding: 8px;
+  text-align: center;
+  font-size: 0.95em;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 5%;
+}
+
+.logo a {
+  text-decoration: none;
+  color: var(--rosa-principal);
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+.nav-buttons .btn {
+  background-color: var(--rosa-principal);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-left: 10px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.nav-buttons .btn:hover {
+  background-color: var(--rosa-secundario);
+}
+/* Main */
+.login-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 5%;
+}
+
+.login-section {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}

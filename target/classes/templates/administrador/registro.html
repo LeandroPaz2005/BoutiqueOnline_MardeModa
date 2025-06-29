@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Registro - Boutique Mar de Moda</title>
+
+        <!-- Fuentes y Estilos -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet" />
+
+        <!-- CSS y JS -->
+        <link rel="stylesheet" th:href="@{/css/login.css}" />
+        <script th:src="@{/JS/registro.js}" defer></script>
+
+        <!-- Iconos -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    </head>
+    <body>
+        <header>
+            <div class="top-message">Bienvenidos a Boutique Online Mar de Moda</div>
+            <div class="header-content">
+                <div class="logo">
+                    <a th:href="@{/}">BOUTIQUE ONLINE MAR DE MODA</a>
+                </div>
+                <nav class="nav-buttons">
+                    <a th:href="@{/usuario/login}" class="btn">Iniciar Sesión</a>
+                    <a th:href="@{/carrito}" class="btn">Carrito</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="login-container">
+            <section class="login-section">
+                <div class="formulario">
+                    <h2>Crear Cuenta</h2>
+
+                    <div th:if="${param.success}" class="alert info">¡Registro exitoso! Ya puedes iniciar sesión.</div>
+                    <div th:if="${param.error}" class="alert error">Error al registrar. Verifica tus datos.</div>
+
+                    <form th:action="@{/usuario/procesarRegistro}" method="post" class="login-form">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" id="nombre" name="nombre" required />
+
+                        <label for="apellido">Apellido:</label>
+                        <input type="text" id="apellido" name="apellido" required />
+
+                        <label for="direccion">Direccion:</label>
+                        <input type="text" id="direccion" name="direccion" required />
+                        
+                        <label for="telefono">Telefono:</label>
+                        <input type="number" id="telefono" name="telefono" required />
+                        
+                        <label for="email">Correo electrónico:</label>
+                        <input type="text" id="email" name="email" required />
+                    
+
+                        <label for="password">Contraseña:</label>
+                        <div class="password-container">
+                            <input type="password" id="password" name="password" required />
+                            <i class="fas fa-eye" id="togglePassword"></i>
+                        </div>
+                    
+
+                        <button type="submit" class="login-btn">Aceptar</button>
+
+                        <div class="iniciar-sesion-link" style="margin-top: 15px; text-align: center">
+                            <a th:href="@{/usuario/login}" class="btn">¿Ya tienes cuenta? Inicia Sesión</a>
+                        </div>
+                    </form>
+
+
+                </div>
+                <div class="imagen-registro">
+                    <img src="/img/ropa.jpg" alt="Moda femenina" />
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Boutique Online Mar de Moda. Todos los derechos reservados.</p>
+            <div class="social-links">
+                <a href="https://wa.me" target="_blank" class="social-icon">WhatsApp <i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.tiktok.com" target="_blank" class="social-icon">TikTok <i class="fab fa-tiktok"></i></a>
+                <a href="https://www.instagram.com" target="_blank" class="social-icon">Instagram <i class="fab fa-instagram"></i></a>
+            </div>
+        </footer>
+    </body>
+</html>

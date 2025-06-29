@@ -3,6 +3,7 @@ package BoutiqueOnline.modelo;
 
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -22,8 +23,8 @@ public class Orden {
     private Usuario usuario;
     
     //relacion de uno a uno con detalle: un orden puede tener un detalle de orden
-    @OneToOne(mappedBy = "orden")
-    private DetalleOrden orden;
+    @OneToMany(mappedBy = "orden")
+    private List<DetalleOrden> detalle;
     
     public Orden() {
     }
@@ -85,13 +86,14 @@ public class Orden {
         this.usuario = usuario;
     }
 
-    public DetalleOrden getOrden() {
-        return orden;
+    public List<DetalleOrden> getDetalle() {
+        return detalle;
     }
 
-    public void setOrden(DetalleOrden orden) {
-        this.orden = orden;
+    public void setDetalle(List<DetalleOrden> detalle) {
+        this.detalle = detalle;
     }
+
 
     
     @Override

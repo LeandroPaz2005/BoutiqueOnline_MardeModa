@@ -1,23 +1,21 @@
 package BoutiqueOnline.Controlador;
 
-import BoutiqueOnline.Reportes.ReporteExcelServicio;
+import BoutiqueOnline.Servicio.ProductoServicio;
+import BoutiqueOnline.Servicio.UploadFileService;
+import BoutiqueOnline.Servicio.UsuarioServicio;
 import BoutiqueOnline.modelo.Producto;
 import BoutiqueOnline.modelo.Usuario;
-import BoutiqueOnline.servicio.ProductoServicio;
-import BoutiqueOnline.servicio.UploadFileService;
-import java.io.ByteArrayInputStream;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,46 +32,56 @@ public class ProductoControlador {
     private ProductoServicio productoServicio;
 
     @Autowired
-    private UploadFileService upload;
-
+    private UploadFileService uplaod;
+    
     @Autowired
-    private ReporteExcelServicio reporteExcel;
+    private UsuarioServicio usuarioServicio;
 
-    @GetMapping("/gestionProducto")
-    public String VistaProducto(Model model) {
-        List<Producto> productos = productoServicio.findAll();
-        model.addAttribute("productos", productos);
-
+    //mostrrar la visat de GestionProducto
+    @GetMapping("/MostrarProducto")
+    public String MostrarProductoUsuario(Model model) {
+        List<Producto> producto = productoServicio.findAll();
+        model.addAttribute("productos", producto);
+        return "usuario/home";
+    }
+     @GetMapping("/RegistroProductos")
+    public String MostrarProductoAdmin(Model model) {
+        List<Producto> producto = productoServicio.findAll();
+        model.addAttribute("productos", producto);
         return "productos/gestionProducto";
     }
 
-    @GetMapping("/show")
+    //mostrar la vista de productos la tabla 
+    @GetMapping("/gestionProducto")
     public String show(Model model) {
         model.addAttribute("productos", productoServicio.findAll());
         return "productos/show";
     }
 
+    //visat de crear prodcutos
     @GetMapping("/create")
     public String create() {
         return "productos/create";
     }
 
     @PostMapping("/save")
-    public String save(Producto producto, @RequestParam("img") MultipartFile file) throws IOException {
-        LOGGER.info("Este es el objeto producto {} ", producto);
-        Usuario u = new Usuario(2, "", "", "", "", "");
+    public String save(Producto producto, @RequestParam("img") MultipartFile file, HttpSession session) throws IOException {
+        LOGGER.info("\nEste es el objeto producto {}: ", producto);
+        
+        Usuario u = usuarioServicio.findById(Integer.parseInt(session.getAttribute("idusuario").toString())).get();
+
         producto.setUsuario(u);
 
-        //logica para subir la imagen
-        if (producto.getId() == null) {//cuando la imagen se sube por primera vez
-            String nombreImagen = upload.saveImages(file);
+        //subir la imagen en el servidor y el nombre
+        if (producto.getId() == null) {//cuando se crea un producto
+            String nombreImagen = uplaod.saveImage(file);
             producto.setImagen(nombreImagen);
-        } else {//para editar imagnes
+        } else {
 
         }
 
         productoServicio.save(producto);
-        return "redirect:/productos/show";
+        return "redirect:/productos/gestionProducto";
     }
 
     @GetMapping("/edit/{id}")
@@ -82,59 +90,52 @@ public class ProductoControlador {
         Optional<Producto> optionalProducto = productoServicio.get(id);
         producto = optionalProducto.get();
 
-        LOGGER.info("Producto buscado: {}", producto);
+        LOGGER.info("\nProducto buscado: {}", producto);
         model.addAttribute("producto", producto);
 
         return "productos/edit";
     }
 
     @PostMapping("/update")
-    public String updale(Producto producto, @RequestParam("img") MultipartFile file) throws IOException {
+    public String update(Producto producto, @RequestParam("img") MultipartFile file) throws IOException {
+        if (file.isEmpty()) {
+            Producto p = new Producto();
+            p = productoServicio.get(producto.getId()).get();
+            producto.setImagen(p.getImagen());
+        } else {//cuando se edita tambien la imgan
+            Producto p = new Producto();
+            p = productoServicio.get(producto.getId()).get();
 
-        Producto p = new Producto();
-        p = productoServicio.get(producto.getId()).get();
-
-        if (file.isEmpty()) {//cuando se edita la misma imagen y se carga esa imagen
-            producto.setImagen((p.getImagen()));
-        } else {//cuando queremos editar la imagen
-            //para eliminar cuando no sea la imagen por defecto
-            if (!p.getImagen().equals("default.jpg")) {
-                upload.deleteImagen(p.getImagen());
+            //eliminar cuando no sea por defecto
+            if (p.getImagen().equals("default.jpg")) {
+                uplaod.deleteImagen(p.getImagen());
             }
 
-            producto.setUsuario(p.getUsuario());
-            String nombreImagen = upload.saveImages(file);
+            String nombreImagen = uplaod.saveImage(file);
             producto.setImagen(nombreImagen);
         }
-
         productoServicio.update(producto);
-        return "redirect:/productos/show";
+        return "redirect:/productos/gestionProducto";
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
-
         Producto p = new Producto();
         p = productoServicio.get(id).get();
 
-        //para eliminar cuando no sea la imagen por defecto
-        if (!p.getImagen().equals("default.jpg")) {
-            upload.deleteImagen(p.getImagen());
+        //eliminar cuando no sea por defecto
+        if (p.getImagen().equals("default.jpg")) {
+            uplaod.deleteImagen(p.getImagen());
         }
 
         productoServicio.delete(id);
-        return "redirect:/productos/show";
+        return "redirect:/productos/gestionProducto";
+    } 
+    
+    @ModelAttribute
+    public void agregarUsuarioAlModelo(Model model, HttpSession session){
+    if(session.getAttribute("usuario")!=null){
+    model.addAttribute("usuario", (Usuario) session.getAttribute("usuario"));
     }
-
-    //endpoint para producto 
-    @GetMapping("/reporte")
-    public ResponseEntity<byte[]> generarReporte() throws IOException {
-        List<Producto> productos = productoServicio.findAll();
-        ByteArrayInputStream excelStream = reporteExcel.generarReporteExcel(productos);
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=reporte_productos.xlsx")
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(excelStream.readAllBytes());
     }
 }

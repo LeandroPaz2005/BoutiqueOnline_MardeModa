@@ -1,0 +1,145 @@
+.btn-rosa {
+    background-color: #e53935;
+    color: white;
+    font-weight: 600;
+    padding: 6px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+}
+
+.btn-rosa:hover {
+    background-color: #c62828;
+    transform: scale(1.05);
+}
+
+/* Botón para generar reporte */
+.btn-reporte {
+    background-color: #17a2b8;
+    color: white;
+    font-weight: 600;
+    padding: 6px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+}
+
+.btn-reporte:hover {
+    background-color: #138496;
+    transform: scale(1.05);
+}
+
+
+.lista-usuarios h2 {
+    font-size: 2rem;
+    text-align: center;
+    color: var(--rosa-principal);
+    font-weight: bold;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.lista-usuarios h2::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: var(--rosa-degradado-2);
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: #fff;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.table thead {
+    background: linear-gradient(90deg, var(--rosa-principal), var(--rosa-degradado-2));
+}
+
+.table thead th {
+    color: #000; /* Cambiado a negro */
+    font-weight: 600;
+    padding: 15px;
+    text-align: center;
+    border-bottom: 2px solid #eee;
+}
+
+.table tbody td {
+    padding: 14px 18px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    color: #333;
+}
+
+.table tbody tr:hover {
+    background-color: #fff0f5;
+    transition: 0.3s;
+}
+
+/* Botones */
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-primary {
+    background-color: var(--rosa-principal);
+    border: none;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--rosa-degradado-2);
+    transform: scale(1.05);
+}
+
+.btn-warning {
+    background-color: #fbc02d;
+    color: #212121;
+}
+
+.btn-warning:hover {
+    background-color: #f9a825;
+}
+
+.btn-danger {
+    background-color: #e53935;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c62828;
+}
+
+/* Botón extra: reporte */
+.btn-info {
+    background-color: #17a2b8;
+    color: white;
+    border: none;
+}
+
+.btn-info:hover {
+    background-color: #138496;
+    transform: scale(1.05);
+}

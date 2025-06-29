@@ -1,104 +1,133 @@
 package BoutiqueOnline.Controlador;
 
-import BoutiqueOnline.Reportes.ReporteExcelServicio;
-import BoutiqueOnline.modelo.Rol;
+import BoutiqueOnline.Servicio.OrdenServicio;
+import BoutiqueOnline.Servicio.ProductoServicio;
+import BoutiqueOnline.Servicio.UsuarioServicio;
+import BoutiqueOnline.modelo.Orden;
 import BoutiqueOnline.modelo.Usuario;
-import BoutiqueOnline.servicio.UsuarioServicio;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/usuarios")
+@RequestMapping("/usuario")
 public class UsuarioControlador {
-    
+
+    private final Logger logger = LoggerFactory.getLogger(HomeControlador.class);
+
     @Autowired
-    private ReporteExcelServicio reporteExcel;
+    private ProductoServicio productoServicio;
 
     @Autowired
     private UsuarioServicio usuarioServicio;
 
-    // Vista principal de gestión de usuarios
-    @GetMapping("/gestionUsuario")
-    public String vistaUsuario(Model model) {
-        model.addAttribute("usuarios", usuarioServicio.listarUsuario());
-        return "administrador/gestionUsuario";
+    @Autowired
+    private OrdenServicio ordenServicio;
+
+    BCryptPasswordEncoder passEncode = new BCryptPasswordEncoder();
+
+    @GetMapping("/registro")
+    public String Registro() {
+
+        return "administrador/registro";
     }
 
-    // Mostrar formulario para crear usuario
-    @GetMapping("/create")
-    public String create(Model model) {
-        model.addAttribute("usuario", new Usuario());
-        return "usuario/create";
-    }
-    /*para asignar roles
-    @GetMapping("/create")
-    public String create(@RequestParam(name = "tipo", required = false) String tipo, Model model) {
-        Usuario usuario = new Usuario();
-
-        if ("admin".equalsIgnoreCase(tipo)) {
-            usuario.setRoles(List.of(new Rol("ROL_ADMIN")));
-            model.addAttribute("esAdmin", true);
-        } else {
-            model.addAttribute("esAdmin", false);
-        }
-
-        model.addAttribute("usuario", usuario);
-        return "usuario/create";
-    }*/
-
-    // Guardar nuevo usuario
-    @PostMapping("/save")
-    public String save(@ModelAttribute Usuario usuario) {
+    @PostMapping("/procesarRegistro")
+    public String save(Usuario usuario) {
+        logger.info("\nUsuario registrado: {}", usuario);
+        usuario.setTipo("USER");
+        usuario.setPassword(passEncode.encode(usuario.getPassword()));
         usuarioServicio.save(usuario);
-        return "redirect:/usuarios/gestionUsuario";
+        return "redirect:/";
     }
 
-    // Editar usuario por ID
-    @GetMapping("/edit/{id}")
-    public String edit(@PathVariable Integer id, Model model) {
-        Optional<Usuario> optionalUsuario = usuarioServicio.get(id);
-        if (optionalUsuario.isPresent()) {
-            model.addAttribute("usuario", optionalUsuario.get());
-            return "usuario/edit";
+    @GetMapping("/login")
+    public String login() {
+
+        return "administrador/login";
+    }
+
+    @PostMapping("/acceder")
+    public String acceder(Usuario usuario, HttpSession session) {
+        logger.info("\nAcceso: {}", usuario);
+
+        Optional<Usuario> user = usuarioServicio.findByEmail(usuario.getEmail());
+
+        if (user.isPresent()) {
+            Usuario usuarioEncontrado = user.get();
+            logger.info("\nUsuario de bd: {}", usuarioEncontrado.getId());
+
+            // Guarda el objeto completo
+            session.setAttribute("idusuario", usuarioEncontrado.getId());
+            session.setAttribute("usuario", usuarioEncontrado); // ← Esto faltaba
+
+            if ("ADMIN".equals(usuarioEncontrado.getTipo())) {
+                return "redirect:/administrador/panelAdmin";
+            } else {
+                return "redirect:/";
+            }
         } else {
-            return "redirect:/usuarios/gestionUsuario"; // Usuario no encontrado
+            logger.info("Usuario no existe");
+            return "redirect:/usuario/login?error"; // muestra mensaje de error si quieres
         }
     }
 
-    // Actualizar usuario
-    @PostMapping("/update")
-    public String update(@ModelAttribute Usuario usuario) {
-        usuarioServicio.update(usuario);
-        return "redirect:/usuarios/gestionUsuario";
+    @GetMapping("/compras")
+    public String obtnerCompras(Model model, HttpSession session) {
+        model.addAttribute("session", session.getAttribute("idusuario"));
+
+        Usuario usuario = usuarioServicio.findById(Integer.parseInt(session.getAttribute("idusuario").toString())).get();
+        List<Orden> ordenes = ordenServicio.findByUsuario(usuario);
+        model.addAttribute("ordenes", ordenes);
+
+        return "usuario/compras";
     }
 
-    //  Eliminar usuario
-    @GetMapping("/delete/{id}")
-    public String delete(@PathVariable Integer id) {
-        usuarioServicio.delete(id);
-        return "redirect:/usuarios/gestionUsuario";
-    }
-    
-        // Nuevo endpoint para reporte Excel
-    @GetMapping("/reporteUsuario")
-    public ResponseEntity<byte[]> generarReporteUsuarios() throws IOException {
-        List<Usuario> usuarios = usuarioServicio.listarUsuario();
-        ByteArrayInputStream excelStream = reporteExcel.generarReporteExcelUsuario(usuarios);
+    @GetMapping("/detalle/{id}")
+    public String detalleCompra(@PathVariable Integer id, HttpSession session, Model model) {
 
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=reporte_usuarios.xlsx")
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(excelStream.readAllBytes());
+        logger.info("\nID de la orden: {}", id);
+        Optional<Orden> orden = ordenServicio.findById(id);
+
+        model.addAttribute("detalles", orden.get().getDetalle());
+
+        //sesion
+        model.addAttribute("session", session.getAttribute("idusuario"));
+
+        return "usuario/detalleCompra";
+    }
+
+    @GetMapping("/cerrar")
+    public String CerrarSesion(HttpSession session) {
+        session.removeAttribute("usuario");
+        session.removeAttribute("idusuario");
+        return "redirect:/";
+    }
+
+    //modificar para que se puede editar el perfil
+    @GetMapping("/perfil")
+    public String perfil(Model model, HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        model.addAttribute("usuario", usuario);
+        return "usuario/perfil"; // debes crear esta vista
+    }
+
+    @ModelAttribute
+    public void agregarUsuarioAlModelo(Model model, HttpSession session) {
+        if (session.getAttribute("usuario") != null) {
+            model.addAttribute("usuario", (Usuario) session.getAttribute("usuario"));
+        }
     }
 
 }

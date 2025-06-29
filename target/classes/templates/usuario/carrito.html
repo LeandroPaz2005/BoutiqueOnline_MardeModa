@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Carrito - Boutique Mar de Moda</title>
+
+        <!-- Estilos y Scripts -->
+        <link rel="stylesheet" th:href="@{/css/estilo2.css}">
+        <script th:src="@{/JS/script.js}"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+
+        <!-- ENCABEZADO -->
+        <header>
+            <div class="top-message" id="mensaje-oferta">
+                Envío GRATIS en pedidos superiores a S/. 150
+            </div>
+            <div class="header-content">
+                <div class="logo">
+                    <a th:href="@{/}">BOUTIQUE ONLINE MAR DE MODA</a>
+                </div>
+
+                <nav class="nav-buttons">
+                    <div class="admin-dropdown">
+                        <button class="admin-btn">Menú <i class="fas fa-caret-down"></i></button>
+                        <div class="dropdown-content">
+                            <a th:href="@{/}">Inicio</a>
+                            <a th:href="@{/getCart}">Mi Carrito</a>
+                            <a th:href="@{/order}">Resumen de Orden</a>
+                            <a th:href="@{/usuario/compras}">Mis Compras</a>
+                            <a th:href="@{/usuario/perfil}">Mi Perfil</a>
+                            <a th:href="@{/usuario/cerrar}">Cerrar Sesión</a>
+                        </div>
+                    </div>
+                </nav>
+
+                <div th:if="${usuario != null}" class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <span th:text="${usuario.nombre}">Usuario</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Contenido principal -->
+        <div class="container py-5">
+            <div class="mb-4">
+                <h1 class="fw-bold">Mi Carrito <small class="text-muted fs-5">Boutique Mar de Moda</small></h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-light p-2 rounded">
+                        <li class="breadcrumb-item"><a th:href="@{/productos/MostrarProducto}">Seguir Comprando</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Carrito</li>
+                    </ol>
+                </nav>
+            </div>
+
+            <!-- Tarjeta del carrito -->
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Tabla de productos en carrito -->
+                        <div class="col-lg-9 mb-3">
+                            <div class="table-responsive">
+                                <table class="table align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Producto</th>
+                                            <th>Precio</th>
+                                            <th>Cantidad</th>
+                                            <th>Total</th>
+                                            <th>Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="dorden : ${cart}">
+                                            <td th:text="${dorden.nombre}">Producto</td>
+                                            <td>S/. <span th:text="${dorden.precio}">0.00</span></td>
+                                            <td th:text="${dorden.cantidad}">1</td>
+                                            <td>S/. <span th:text="${dorden.total}">0.00</span></td>
+                                            <td>
+                                                <a th:href="@{/delete/cart/{id}(id=${dorden.producto.id})}" class="btn btn-outline-danger btn-sm">
+                                                    Quitar
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Resumen del pedido -->
+                        <div class="col-lg-3">
+                            <div class="card border-0 bg-light p-3 shadow-sm">
+                                <h4 class="mb-3">Resumen</h4>
+                                <ul class="list-group list-group-flush mb-3">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                        <strong>Subtotal:</strong>
+                                        <span class="text-end">S/. <strong th:text="${orden.total}">0.00</strong></span>
+                                    </li>
+                                </ul>
+                                <a th:href="@{/order}" class="btn btn-dark w-100">
+                                    Ver Orden
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PIE DE PÁGINA -->
+        <footer>
+            <p>© 2025 Boutique Online Mar de Moda. Todos los derechos reservados.</p>
+            <div class="social-links">
+                <a href="https://wa.me" target="_blank" class="social-icon">
+                    <span>WhatsApp</span>
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.tiktok.com" target="_blank" class="social-icon">
+                    <span>TikTok</span>
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="https://www.instagram.com" target="_blank" class="social-icon">
+                    <span>Instagram</span>
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </footer>
+    </body>
+</html>
