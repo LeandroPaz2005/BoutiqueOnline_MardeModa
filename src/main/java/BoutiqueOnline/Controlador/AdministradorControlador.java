@@ -1,11 +1,12 @@
 
+
 package BoutiqueOnline.Controlador;
 
 import BoutiqueOnline.Servicio.OrdenServicio;
 import BoutiqueOnline.Servicio.ProductoServicio;
-import BoutiqueOnline.Servicio.UsuarioServicio;
 import BoutiqueOnline.modelo.Orden;
 import BoutiqueOnline.modelo.Usuario;
+import BoutiqueOnline.servicio.*;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
 @Controller
 @RequestMapping("/administrador")
 public class AdministradorControlador {
@@ -27,7 +29,7 @@ public class AdministradorControlador {
     private UsuarioServicio usuarioServicio;
     
     @Autowired
-    private OrdenServicio ordenServicio;
+     private OrdenServicio ordenServicio;
     
     @Autowired
     private ProductoServicio productoServicio;
@@ -52,10 +54,10 @@ public class AdministradorControlador {
     @GetMapping("/gestionOrdenes")
     public String GestionOrdenes(Model model){
         model.addAttribute("ordenes", ordenServicio.findAll());
-        
-    return "administrador/ordenes";
+        return"administrador/ordenes"; 
     }
     
+  
     @GetMapping("/detalle/{id}")
     public String DetalleOrdenes(Model model, @PathVariable Integer id){
     logg.info("\nID de la orden: {}",id);
