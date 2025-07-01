@@ -2,10 +2,12 @@ package BoutiqueOnline.Controlador;
 
 import BoutiqueOnline.Servicio.OrdenServicio;
 import BoutiqueOnline.Servicio.ProductoServicio;
-import BoutiqueOnline.Servicio.UsuarioServicio;
+import BoutiqueOnline.Servicio.UploadFileService;
 import BoutiqueOnline.modelo.Orden;
 import BoutiqueOnline.modelo.Usuario;
+import BoutiqueOnline.servicio.UsuarioServicio;
 import jakarta.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/usuario")
@@ -35,6 +39,9 @@ public class UsuarioControlador {
     @Autowired
     private OrdenServicio ordenServicio;
 
+    @Autowired
+    private UploadFileService uploadFileService;
+
     BCryptPasswordEncoder passEncode = new BCryptPasswordEncoder();
 
     @GetMapping("/registro")
@@ -44,11 +51,17 @@ public class UsuarioControlador {
     }
 
     @PostMapping("/procesarRegistro")
-    public String save(Usuario usuario) {
+    public String save(Usuario usuario, HttpSession session) {
         logger.info("\nUsuario registrado: {}", usuario);
         usuario.setTipo("USER");
         usuario.setPassword(passEncode.encode(usuario.getPassword()));
         usuarioServicio.save(usuario);
+
+        //evitar sobrescribir la sesion si ya hay alguien logeado 
+        if (session.getAttribute("usuario") == null) {
+            session.setAttribute("usuario", usuario);
+            session.setAttribute("idusuario", usuario.getId());
+        }
         return "redirect:/";
     }
 
@@ -87,7 +100,7 @@ public class UsuarioControlador {
     public String obtnerCompras(Model model, HttpSession session) {
         model.addAttribute("session", session.getAttribute("idusuario"));
 
-        Usuario usuario = usuarioServicio.findById(Integer.parseInt(session.getAttribute("idusuario").toString())).get();
+        Usuario usuario = usuarioServicio.finsById(Integer.parseInt(session.getAttribute("idusuario").toString())).get();
         List<Orden> ordenes = ordenServicio.findByUsuario(usuario);
         model.addAttribute("ordenes", ordenes);
 
@@ -121,6 +134,47 @@ public class UsuarioControlador {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         model.addAttribute("usuario", usuario);
         return "usuario/perfil"; // debes crear esta vista
+    }
+
+    @GetMapping("/perfil/editar")
+    public String editarPerfil(HttpSession session, Model model) {
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        model.addAttribute("usuario", usuario);
+        return "usuario/perfil-edit"; 
+    }
+
+    @PostMapping("/perfil/actualizar")
+    public String actualizarPerfil(@ModelAttribute("usuario") Usuario usuario,
+            @RequestParam("imagen") MultipartFile imagen,
+            HttpSession session) throws IOException {
+
+        // Obtener usuario actual (por seguridad)
+        Usuario usuarioActual = usuarioServicio.finsById(usuario.getId()).orElse(null);
+
+        // Actualizar campos
+        usuarioActual.setNombre(usuario.getNombre());
+        usuarioActual.setApellido(usuario.getApellido());
+        usuarioActual.setEmail(usuario.getEmail());
+        usuarioActual.setTelefono(usuario.getTelefono());
+        usuarioActual.setDireccion(usuario.getDireccion());
+
+        // Foto de perfil
+        if (!imagen.isEmpty()) {
+            // Eliminar imagen anterior si no es default
+            if (usuarioActual.getFoto() != null && !usuarioActual.getFoto().equals("default.jpg")) {
+                uploadFileService.deleteImagen("usuarios", usuarioActual.getFoto());
+            }
+
+            String nombreImagen = uploadFileService.saveImage(imagen, "usuarios");
+            usuarioActual.setFoto(nombreImagen);
+        }
+
+        usuarioServicio.save(usuarioActual);
+
+        // Actualizar sesión si es el usuario activo
+        session.setAttribute("usuario", usuarioActual);
+
+        return "redirect:/usuario/perfil";
     }
 
     @ModelAttribute

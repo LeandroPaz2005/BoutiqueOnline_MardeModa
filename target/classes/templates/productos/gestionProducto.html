@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Gestión de Productos - Boutique Mar de Moda</title>
+
+        <!-- Estilos -->
+        <link rel="stylesheet" th:href="@{/css/estilo2.css}">
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+        <link rel="stylesheet" th:href="@{/css/estilosbase.css}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <script th:src="@{/JS/script.js}"></script>
+    </head>
+
+    <body>
+
+        <!-- ENCABEZADO -->
+        <header>
+            <div class="top-message" id="mensaje-oferta">
+                Envío GRATIS en pedidos superiores a S/. 150
+            </div>
+            <div class="header-content">
+                <div class="logo">
+                    <a th:href="@{/administrador/panelAdmin}">BOUTIQUE ONLINE MAR DE MODA</a>
+                </div>
+
+                <nav class="nav-buttons">
+                    <div class="admin-dropdown">
+                        <button class="admin-btn">Menú <i class="fas fa-caret-down"></i></button>
+                        <div class="dropdown-content">
+                            <a th:href="@{/administrador/panelAdmin}">Inicio Admin</a>
+                            <a th:href="@{/productos/RegistroProductos}">Agregar Producto</a>
+                            <a th:href="@{/productos/gestionProducto}">Gestión de Productos</a>
+                            <a th:href="@{/categorias}">Categorías</a>
+                            <a th:href="@{/inventario}">Inventario</a>
+                            <a th:href="@{/administrador/gestionOrdenes}">Pedidos</a>
+                            <a th:href="@{/administrador/gestionUsuario}">Usuarios</a>
+                            <a th:href="@{/usuario/cerrar}">Cerrar Sesión</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <!-- CONTENIDO 
+        <main class="container bg-white p-5 shadow-lg rounded mt-4 mb-5">
+            <h2 class="text-center mb-4 fw-bold" style="color: #a0004d;">Gestión de Productos</h2>
+
+        <!-- Botón superior 
+        <div class="text-center mb-4">
+            <a class="btn btn-outline-primary" th:href="@{/productos/show}">
+                <i class="fas fa-list"></i> Ver Todos los Productos
+            </a>
+        </div>
+--!>
+        <!-- Lista de productos -->
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" th:each="producto : ${productos}">
+                <div class="card h-100 shadow-sm border-0">
+                    <img th:src="@{/images/productos/{img}(img=${producto.imagen})}" class="card-img-top" alt="Imagen del producto">
+                    <div class="card-body text-center">
+                        <h5 class="card-title" th:text="${producto.nombre}">Nombre del producto</h5>
+                    </div>
+                    <div class="card-footer text-center bg-transparent border-top-0">
+                        <a th:href="@{/productoHome/{id}(id=${producto.id})}" class="btn btn-outline-success btn-sm">
+                            <i class="fas fa-eye"></i> Ver producto
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Validación: no hay productos -->
+        <div th:if="${productos == null or #lists.isEmpty(productos)}" class="alert alert-info text-center mt-4">
+            <i class="fas fa-info-circle"></i> No hay productos disponibles para mostrar.
+        </div>
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="mt-5">
+        <p class="text-center">© 2025 Boutique Online Mar de Moda. Todos los derechos reservados.</p>
+        <div class="social-links text-center mt-2">
+            <a href="https://wa.me" target="_blank" class="social-icon me-3">
+                WhatsApp <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://www.tiktok.com" target="_blank" class="social-icon me-3">
+                TikTok <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://www.instagram.com" target="_blank" class="social-icon">
+                Instagram <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

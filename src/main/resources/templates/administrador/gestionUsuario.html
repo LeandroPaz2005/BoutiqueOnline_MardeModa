@@ -16,8 +16,8 @@
     </head>
 
     <body>
-       
-         <!-- ENCABEZADO -->
+
+        <!-- ENCABEZADO -->
         <header>
             <div class="top-message" id="mensaje-oferta">
                 Envío GRATIS en pedidos superiores a S/. 150
@@ -47,11 +47,11 @@
         </header>
 
         <div class="container mt-5 lista-usuarios">
-     
+
 
             <h2 class="text-center mb-4">Lista de Usuarios</h2>
             <div class="mb-3 text-center d-flex justify-content-center gap-3 flex-wrap">
-                <a th:href="@{/usuario/create}" class="btn btn-rosa">
+                <a th:href="@{/administrador/usuario/nuevo}" class="btn btn-rosa">
                     <i class="fas fa-user-plus"></i> Registrar Usuario
                 </a>
                 <a th:href="@{/usuario/reporteUsuario}" class="btn btn-reporte">
@@ -78,13 +78,15 @@
                             <td th:text="${usuario.apellido}" data-label="Apellido"></td>
                             <td th:text="${usuario.email}" data-label="Email"></td>
                             <td data-label="Acciones">
-                                <a th:href="@{/edit/{id}(id=${usuario.id})}" class="btn btn-warning btn-sm">
+                                <a th:href="@{/administrador/usuario/editarUsuario/{id}(id=${usuario.id})}" class="btn btn-warning btn-sm">
                                     <i class="fas fa-edit"></i> Editar
                                 </a>
-                                <a th:href="@{/delete/{id}(id=${usuario.id})}" class="btn btn-danger btn-sm"
+                                <a th:href="@{/administrador/usuario/eliminarUsuario/{id}(id=${usuario.id})}" class="btn btn-danger btn-sm"
                                    onclick="return confirm('¿Está seguro de eliminar este usuario?')">
                                     <i class="fas fa-trash-alt"></i> Eliminar
                                 </a>
+
+
                             </td>
                         </tr>
                     </tbody>

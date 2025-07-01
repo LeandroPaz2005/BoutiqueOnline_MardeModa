@@ -38,7 +38,7 @@
                             <a th:href="@{/inventario}">Inventario</a>
                             <a th:href="@{/administrador/gestionUsuario}">Gestión Usuarios</a>
                             <a th:href="@{/administrador/gestionOrdenes}">Pedidos</a>
-                            <a th:href="@{/logout}">Cerrar Sesión</a>
+                            <a th:href="@{/usuario/cerrar}">Cerrar Sesión</a>
                         </div>
                     </div>
                 </nav>
@@ -88,7 +88,7 @@
                     <tbody>
                         <tr th:each="producto : ${productos}">
                             <td class="text-center">
-                                <img th:src="@{/images/{img}(img=${producto.imagen})}" alt="Imagen del producto" width="70" height="70" class="img-thumbnail"/>
+                                <img th:src="@{/images/productos/{img}(img=${producto.imagen})}" alt="Imagen del producto" width="70" height="70" class="img-thumbnail"/>
                             </td>
                             <td th:text="${producto.nombre}">Nombre</td>
                             <td th:text="${producto.descripcion}" style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></td>

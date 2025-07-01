@@ -3,11 +3,11 @@ package BoutiqueOnline.Controlador;
 import BoutiqueOnline.Servicio.DetalleOrdenServicio;
 import BoutiqueOnline.Servicio.OrdenServicio;
 import BoutiqueOnline.Servicio.ProductoServicio;
-import BoutiqueOnline.Servicio.UsuarioServicio;
 import BoutiqueOnline.modelo.DetalleOrden;
 import BoutiqueOnline.modelo.Orden;
 import BoutiqueOnline.modelo.Producto;
 import BoutiqueOnline.modelo.Usuario;
+import BoutiqueOnline.servicio.UsuarioServicio;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
@@ -139,7 +139,7 @@ public class HomeControlador {
         }
         
         int idUsuario=Integer.parseInt(idUsuarioAttr.toString());
-        Usuario usuario=usuarioServicio.findById(idUsuario).orElse(null);
+        Usuario usuario=usuarioServicio.finsById(idUsuario).orElse(null);
         
         if(usuario==null){ //usuario no  existe
         return "redirect:/usuario/login";
@@ -159,7 +159,7 @@ public class HomeControlador {
         orden.setFechaCreacion(fechaCreacion);
         orden.setNumero(ordenServicio.generarNumeroOrden());
         //usario que guarda el orden
-        Usuario usuario = usuarioServicio.findById(Integer.parseInt(session.getAttribute("idusuario").toString())).get();
+        Usuario usuario = usuarioServicio.finsById(Integer.parseInt((session.getAttribute("idusuario").toString()))).get();
 
         orden.setUsuario(usuario);
         ordenServicio.save(orden);
