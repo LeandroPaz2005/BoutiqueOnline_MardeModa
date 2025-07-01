@@ -42,7 +42,7 @@
                             <a th:href="@{/inventario}">Inventario</a>
                             <a th:href="@{/administrador/gestionUsuario}">Gestión Usuarios</a>
                             <a th:href="@{/administrador/gestionOrdenes}">Pedidos</a>
-                            <a th:href="@{/logout}">Cerrar Sesión</a>
+                            <a th:href="@{/usuario/cerrar}">Cerrar Sesión</a>
                         </div>
                     </div>
                 </nav>
@@ -53,7 +53,7 @@
         <section class="form-container">
             <h2>Editar Usuario</h2>
 
-            <form th:action="@{/actualizar}" th:object="${usuario}" method="post" class="formulario-usuario">
+            <form th:action="@{/administrador/usuario/actualizar}" th:object="${usuario}" method="post" class="formulario-usuario">
                 <input type="hidden" th:field="*{id}" />
 
                 <div class="campo">
@@ -87,7 +87,7 @@
 
                 <div class="acciones">
                     <button type="submit" class="btn-guardar">Actualizar</button>
-                    <a th:href="@{/usuario/gestionUsuario}" class="btn-cancelar">Cancelar</a>
+                    <a th:href="@{/administrador/gestionUsuario}" class="btn-cancelar">Cancelar</a>
                 </div>
             </form>
 

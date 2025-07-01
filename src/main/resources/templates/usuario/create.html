@@ -22,7 +22,7 @@
 
         <!-- ENCABEZADO -->
         <header>
-          
+
             <div class="header-content">
                 <div class="logo">
                     <a th:href="@{/administrador/panelAdmin}">BOUTIQUE ONLINE MAR DE MODA</a>
@@ -40,7 +40,7 @@
                             <a th:href="@{/inventario}">Inventario</a>
                             <a th:href="@{/administrador/gestionUsuario}">Gestión Usuarios</a>
                             <a th:href="@{/administrador/gestionOrdenes}">Pedidos</a>
-                            <a th:href="@{/logout}">Cerrar Sesión</a>
+                            <a th:href="@{/usuario/cerrar}">Cerrar Sesión</a>
                         </div>
                     </div>
                 </nav>
@@ -49,7 +49,7 @@
 
         <section class="form-container">
             <h2>Registrar Nuevo Usuario</h2>
-            <form th:action="@{/usuario/guardar}" th:object="${usuario}" method="post" class="formulario-usuario">
+            <form th:action="@{/administrador/RegistroUsuario}" th:object="${usuarios}" method="post" class="formulario-usuario">
 
                 <div class="campo">
                     <label for="nombre">Nombre:</label>
@@ -79,11 +79,19 @@
                     <label for="telefono">Teléfono:</label>
                     <input type="text" id="telefono" th:field="*{telefono}">
                 </div>
+                <div class="campo">
+                    <label>Rol:</label>
+                    <select th:field="*{tipo}">
+                        <option value="USER" selected>Usuario</option>
+                        <option value="ADMIN">Administrador</option>
+                    </select>
+                </div>
 
                 <div class="acciones">
                     <button type="submit" class="btn-guardar">Guardar</button>
-                    <a th:href="@{/usuario/gestionUsuario}" class="btn-cancelar">Cancelar</a>
+                    <a th:href="@{/administrador/gestionUsuario}" class="btn-cancelar">Cancelar</a>
                 </div>
+
             </form>
 
         </section>

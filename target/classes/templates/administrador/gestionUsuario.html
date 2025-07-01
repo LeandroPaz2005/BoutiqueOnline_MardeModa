@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Administrador - Boutique Mar de Moda</title>
+
+        <link rel="stylesheet" th:href="@{/css/estilo2.css}">
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+        <link rel="stylesheet" th:href="@{/css/estilosbase.css}">
+        <link rel="stylesheet" th:href="@{/css/gestionUsuario.css}">
+
+
+        <script th:src="@{/JS/script.js}"></script>
+        <script th:src="@{/JS/gestionUsuario.js}"></script>
+    </head>
+
+    <body>
+
+        <!-- ENCABEZADO -->
+        <header>
+            <div class="top-message" id="mensaje-oferta">
+                Envío GRATIS en pedidos superiores a S/. 150
+            </div>
+            <div class="header-content">
+                <div class="logo">
+                    <a th:href="@{/administrador/panelAdmin}">BOUTIQUE ONLINE MAR DE MODA</a>
+                </div>
+                <nav class="nav-buttons">
+                    <div class="admin-dropdown">
+                        <button class="admin-btn" aria-haspopup="true" aria-expanded="false">
+                            Menú <i class="fas fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a th:href="@{/administrador/panelAdmin}">Panel Admin</a>
+                            <a th:href="@{/productos/gestionProducto}">Ver Productos</a>
+                            <a th:href="@{/productos/create}">Crear Producto</a>
+                            <a th:href="@{/categorias}">Categorías</a>
+                            <a th:href="@{/inventario}">Inventario</a>
+                            <a th:href="@{/administrador/gestionUsuario}">Gestión Usuarios</a>
+                            <a th:href="@{/administrador/gestionOrdenes}">Pedidos</a>
+                            <a th:href="@{/logout}">Cerrar Sesión</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <div class="container mt-5 lista-usuarios">
+
+
+            <h2 class="text-center mb-4">Lista de Usuarios</h2>
+            <div class="mb-3 text-center d-flex justify-content-center gap-3 flex-wrap">
+                <a th:href="@{/administrador/usuario/nuevo}" class="btn btn-rosa">
+                    <i class="fas fa-user-plus"></i> Registrar Usuario
+                </a>
+                <a th:href="@{/usuario/reporteUsuario}" class="btn btn-reporte">
+                    <i class="fas fa-file-download"></i> Generar Reporte
+                </a>
+            </div>
+
+
+            <div class="table-responsive">
+                <table class="table table-bordered custom-table">
+                    <thead>
+                        <tr>
+                            <th class="text-dark">ID</th>
+                            <th class="text-dark">Nombre</th>
+                            <th class="text-dark">Apellido</th>
+                            <th class="text-dark">Email</th>
+                            <th class="text-dark">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="usuario : ${usuarios}">
+                            <td th:text="${usuario.id}" data-label="ID"></td>
+                            <td th:text="${usuario.nombre}" data-label="Nombre"></td>
+                            <td th:text="${usuario.apellido}" data-label="Apellido"></td>
+                            <td th:text="${usuario.email}" data-label="Email"></td>
+                            <td data-label="Acciones">
+                                <a th:href="@{/administrador/usuario/editarUsuario/{id}(id=${usuario.id})}" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-edit"></i> Editar
+                                </a>
+                                <a th:href="@{/administrador/usuario/eliminarUsuario/{id}(id=${usuario.id})}" class="btn btn-danger btn-sm"
+                                   onclick="return confirm('¿Está seguro de eliminar este usuario?')">
+                                    <i class="fas fa-trash-alt"></i> Eliminar
+                                </a>
+
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Boutique Online Mar de Moda. Todos los derechos reservados.</p>
+            <div class="social-links">
+                <a href="https://wa.me" target="_blank" class="social-icon">WhatsApp <i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.tiktok.com" target="_blank" class="social-icon">TikTok <i class="fab fa-tiktok"></i></a>
+                <a href="https://www.instagram.com" target="_blank" class="social-icon">Instagram <i class="fab fa-instagram"></i></a>
+            </div>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Administrador - Boutique Mar de Moda</title>
+
+        <!-- Estilos y Scripts -->
+        <link rel="stylesheet" th:href="@{/css/estilo2.css}">
+        <script th:src="@{/JS/script.js}"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <!-- ENCABEZADO -->
+        <header>
+            <div class="top-message" id="mensaje-oferta">
+                Envío GRATIS en pedidos superiores a S/. 150
+            </div>
+            <div class="header-content">
+                <div class="logo">
+                    <a th:href="@{/administrador/panelAdmin}">BOUTIQUE ONLINE MAR DE MODA</a>
+                </div>
+                <nav class="nav-buttons">
+                    <div class="admin-dropdown">
+                        <button class="admin-btn" aria-haspopup="true" aria-expanded="false">
+                            Menú <i class="fas fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a th:href="@{/administrador/panelAdmin}">Panel Admin</a>
+                            <a th:href="@{/productos/gestionProducto}">Ver Productos</a>
+                            <a th:href="@{/productos/create}">Crear Producto</a>
+                            <a th:href="@{/categorias}">Categorías</a>
+                            <a th:href="@{/inventario}">Inventario</a>
+                            <a th:href="@{/administrador/gestionUsuario}">Gestión Usuarios</a>
+                            <a th:href="@{/administrador/gestionOrdenes}">Pedidos</a>
+                            <a th:href="@{/logout}">Cerrar Sesión</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+    <body>
+        <div class="container py-5">
+            <h2>Mis Compras</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Número</th>
+                        <th>Fecha</th>
+                        <th>Total</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="orden : ${ordenes}">
+                        <td th:text="${orden.numero}"></td>
+                        <td th:text="${#dates.format(orden.fechaCreacion, 'dd/MM/yyyy')}"></td>
+                        <td th:text="${orden.total}"></td>
+                        <td>
+                            <a th:href="@{/administrador/detalle/{id} (id=${orden.id}) }" class="btn btn-sm btn-info">Ver Detalle</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </body>
+
+    <!-- PIE DE PÁGINA -->
+    <footer>
+        <p>© 2025 Boutique Online Mar de Moda. Todos los derechos reservados.</p>
+        <div class="social-links">
+            <a href="https://wa.me" target="_blank" class="social-icon">
+                <span>WhatsApp</span>
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://www.tiktok.com" target="_blank" class="social-icon">
+                <span>TikTok</span>
+                <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://www.instagram.com" target="_blank" class="social-icon">
+                <span>Instagram</span>
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </footer>
+</body>
+</html>

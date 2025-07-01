@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Editar Producto - Boutique Mar de Moda</title>
+
+        <!-- Estilos -->
+        <link rel="stylesheet" th:href="@{/css/estilo2.css}">
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+        <link rel="stylesheet" th:href="@{/css/estilosbase.css}">
+
+        <!-- Bootstrap CDN --> 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Script -->
+        <script th:src="@{/JS/script.js}"></script>
+
+    </head>
+
+    <body>
+        <!-- ENCABEZADO -->
+        <header>
+            <div class="top-message" id="mensaje-oferta">
+                Envío GRATIS en pedidos superiores a S/. 150
+            </div>
+            <div class="header-content">
+                <div class="logo">
+                    <a th:href="@{/administrador/panelAdmin}">BOUTIQUE ONLINE MAR DE MODA</a>
+                </div>
+                <nav class="nav-buttons">
+                    <div class="admin-dropdown">
+                        <button class="admin-btn" aria-haspopup="true" aria-expanded="false">
+                            Menú <i class="fas fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a th:href="@{/administrador/panelAdmin}">Panel Admin</a>
+                            <a th:href="@{/productos/gestionProducto}">Ver Productos</a>
+                            <a th:href="@{/productos/create}">Crear Producto</a>
+                            <a th:href="@{/categorias}">Categorías</a>
+                            <a th:href="@{/inventario}">Inventario</a>
+                            <a th:href="@{/administrador/gestionUsuario}">Gestión Usuarios</a>
+                            <a th:href="@{/administrador/gestionOrdenes}">Pedidos</a>
+                            <a th:href="@{/usuario/cerrar}">Cerrar Sesión</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="container bg-white p-5 shadow-lg rounded mt-4 mb-5">
+            <!-- Título y Migas de Pan -->
+            <h1 class="mb-4 text-center text-uppercase font-weight-bold" style="color:#a0004d;">
+                <a th:href="@{/productos/gestionProducto}" class="text-decoration-none" style="color:#a0004d;">
+                    Gestión de Productos - Editar Producto
+                </a>
+            </h1>
+
+            <ol class="breadcrumb bg-white px-0">
+                <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
+                <li class="breadcrumb-item active">Editar Producto</li>
+            </ol>
+
+            <!-- Formulario de Edición -->
+            <h3 class="text-secondary mt-4 mb-4">Formulario de Actualización de Producto</h3>
+
+            <form th:action="@{/productos/update}" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                <input type="hidden" name="id" th:value="${producto.id}" />
+
+                <div class="form-group mb-4">
+                    <label for="nombre" class="form-label font-weight-bold">Nombre del Producto</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre"
+                           th:value="${producto.nombre}" required autocomplete="off"
+                           placeholder="Ingrese el nombre del producto">
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="descripcion" class="form-label font-weight-bold">Descripción</label>
+                    <textarea class="form-control" id="descripcion" name="descripcion" rows="4"
+                              placeholder="Ingrese la descripción del producto" required autocomplete="off"
+                              th:text="${producto.descripcion}"></textarea>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="cantidad" class="form-label font-weight-bold">Cantidad</label>
+                    <input type="number" class="form-control" id="cantidad" name="cantidad" min="0"
+                           th:value="${producto.cantidad}" required autocomplete="off"
+                           placeholder="Ingrese la cantidad disponible">
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="precio" class="form-label font-weight-bold">Precio (S/.)</label>
+                    <input type="number" class="form-control" step="0.01" min="0" id="precio" name="precio"
+                           th:value="${producto.precio}" required autocomplete="off"
+                           placeholder="Ingrese el precio del producto">
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="img" class="form-label font-weight-bold">Imagen del Producto: </label>
+                    <input type="file" class="form-control-file" id="img" name="img">
+                </div>
+                <div class="form-group mt-5">
+                    <!-- Botón GUARDAR CAMBIOS -->
+                    <button type="submit" class="btn btn-lg btn-success px-4">
+                        <i class="fas fa-save"></i> Guardar Cambios
+                    </button>
+
+                    <!-- Botón CANCELAR, vuelve a la lista -->
+                    <a th:href="@{/productos/gestionProducto}" class="btn btn-lg btn-secondary px-4 ml-3">
+                        <i class="fas fa-arrow-left"></i> Cancelar
+                    </a>
+                </div>
+
+
+            </form>
+        </div>
+
+        <!-- PIE DE PÁGINA -->
+        <footer>
+            <p>© 2025 Boutique Online Mar de Moda. Todos los derechos reservados.</p>
+            <div class="social-links">
+                <a href="https://wa.me" target="_blank" class="social-icon">
+                    WhatsApp <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.tiktok.com" target="_blank" class="social-icon">
+                    TikTok <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="https://www.instagram.com" target="_blank" class="social-icon">
+                    Instagram <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </footer>
+
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>

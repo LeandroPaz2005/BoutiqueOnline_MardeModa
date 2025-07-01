@@ -2,9 +2,9 @@ package BoutiqueOnline.Controlador;
 
 import BoutiqueOnline.Servicio.ProductoServicio;
 import BoutiqueOnline.Servicio.UploadFileService;
-import BoutiqueOnline.Servicio.UsuarioServicio;
 import BoutiqueOnline.modelo.Producto;
 import BoutiqueOnline.modelo.Usuario;
+import BoutiqueOnline.servicio.UsuarioServicio;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
@@ -68,13 +68,13 @@ public class ProductoControlador {
     public String save(Producto producto, @RequestParam("img") MultipartFile file, HttpSession session) throws IOException {
         LOGGER.info("\nEste es el objeto producto {}: ", producto);
         
-        Usuario u = usuarioServicio.findById(Integer.parseInt(session.getAttribute("idusuario").toString())).get();
+        Usuario u = usuarioServicio.finsById(Integer.parseInt(session.getAttribute("idusuario").toString())).get();
 
         producto.setUsuario(u);
 
         //subir la imagen en el servidor y el nombre
         if (producto.getId() == null) {//cuando se crea un producto
-            String nombreImagen = uplaod.saveImage(file);
+            String nombreImagen = uplaod.saveImage(file, "productos");
             producto.setImagen(nombreImagen);
         } else {
 
@@ -108,10 +108,10 @@ public class ProductoControlador {
 
             //eliminar cuando no sea por defecto
             if (p.getImagen().equals("default.jpg")) {
-                uplaod.deleteImagen(p.getImagen());
+                uplaod.deleteImagen("productos", p.getImagen());
             }
 
-            String nombreImagen = uplaod.saveImage(file);
+            String nombreImagen = uplaod.saveImage(file, "productos");
             producto.setImagen(nombreImagen);
         }
         productoServicio.update(producto);
@@ -125,7 +125,7 @@ public class ProductoControlador {
 
         //eliminar cuando no sea por defecto
         if (p.getImagen().equals("default.jpg")) {
-            uplaod.deleteImagen(p.getImagen());
+            uplaod.deleteImagen("productos", p.getImagen());
         }
 
         productoServicio.delete(id);

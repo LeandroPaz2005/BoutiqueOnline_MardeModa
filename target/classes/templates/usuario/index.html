@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Boutique Mar de Moda</title>
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+        <script th:src="@{/JS/script.js}"></script>
+        <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css}">
+    </head>
+    <body class="home">
+
+        <header>
+            <div id="mensaje-oferta" class="top-message"></div>
+            <div class="header-content">
+                <div class="logo">
+                    <a th:href="@{/usuario/inicio}">BOUTIQUE ONLINE MAR DE MODA</a>
+                </div>
+
+                <div class="nav-buttons">
+                    <!-- SI NO hay sesión -->
+                    <div th:if="${usuario == null}">
+                        <a th:href="@{/usuario/login}" class="btn">Iniciar Sesión</a>
+                        <a th:href="@{/usuario/registro}" class="btn">Regístrate</a>
+                    </div>
+
+                    <!-- SI HAY sesión -->
+                    <div th:if="${usuario != null}" class="user-logged">
+                        <a th:href="@{/usuario/perfil}" class="btn">Mi Perfil</a>
+                        <a th:href="@{/usuario/compras}" class="btn">Mis Compras</a>
+                        <a th:href="@{/getCart}" class="btn">Ver Carrito</a>
+                          <a th:href="@{/usuario/cerrar}" class="btn">Cerrar Session</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MENÚ DE NAVEGACIÓN -->
+            <nav class="navbar">
+                <ul class="nav-links">
+                    <li><a th:href="@{/productos/MostrarProducto}">Productos</a></li>
+                    <li><a th:href="@{/productos/MostrarProducto}">Catálogo</a></li>
+                    <li><a th:href="@{/productos/MostrarProducto}">Comprar</a></li>
+                    <li><a th:href="@{/buscar}" class="btn">Buscar</a></li>
+                </ul>
+            </nav>
+        </header>
+
+
+
+        <main>
+            <section class="slider-promociones">
+                <div class="slideshow-container promocionesSlider" id="promocionesSlider">
+                    <div class="slide promociones-slide fade">
+                        <div class="numbertext">1 / 4</div>
+                        <img th:src="@{/img/11.jpeg}" alt="Promoción 1">
+                        <div class="text">Promoción Especial 1</div>
+                    </div>
+                    <div class="slide promociones-slide fade">
+                        <div class="numbertext">2 / 4</div>
+                        <img th:src="@{/img/2.jpeg}" alt="Promoción 2">
+                        <div class="text">Promoción Imperdible 2</div>
+                    </div>
+                    <div class="slide promociones-slide fade">
+                        <div class="numbertext">3 / 4</div>
+                        <img th:src="@{/img/3.jpeg}" alt="Promoción 3">
+                        <div class="text">Grandes Descuentos 3</div>
+                    </div>
+                    <div class="slide promociones-slide fade">
+                        <div class="numbertext">4 / 4</div>
+                        <img th:src="@{/img/4.jpeg}" alt="Promoción 4">
+                        <div class="text">Oferta de Verano 4</div>
+                    </div>
+                    <button class="prev" onclick="changeSlide('promocionesSlider', -1)">&#10094;</button>
+                    <button class="next" onclick="changeSlide('promocionesSlider', 1)">&#10095;</button>
+                </div>
+                <div class="dots-container" style="text-align:center">
+                    <span class="dot active" onclick="currentSlide('promocionesSlider', 1)"></span>
+                    <span class="dot" onclick="currentSlide('promocionesSlider', 2)"></span>
+                    <span class="dot" onclick="currentSlide('promocionesSlider', 3)"></span>
+                    <span class="dot" onclick="currentSlide('promocionesSlider', 4)"></span>
+                </div>
+            </section>
+
+            <section class="bienvenida container py-5 d-flex flex-column flex-md-row align-items-center justify-content-between">
+                <!-- Texto de bienvenida -->
+                <div class="texto col-md-6 mb-4 mb-md-0">
+                    <!-- Mensaje personalizado si el usuario ha iniciado sesión -->
+                    <h2 class="bienvenida-titulo" th:if="${usuario != null}">
+                        ¡Bienvenido/a, <span class="usuario-nombre" th:text="${usuario.nombre}"></span> a <span class="marca">MAR DE MODA</span>!
+                    </h2>
+
+                    <!-- Mensaje general si no hay sesión -->
+                    <h2 class="bienvenida-titulo" th:unless="${usuario != null}">
+                        ¡Bienvenidos a <span class="marca">MAR DE MODA</span>!
+                    </h2>
+
+                    <p class="lead mt-3">
+                        Tu destino para encontrar la ropa femenina perfecta. En <strong>MAR DE MODA</strong>, nos especializamos en polos, blusas y tops que combinan estilo y comodidad.
+                    </p>
+
+                    <p>
+                        Explora nuestra colección y renueva tu guardarropa con prendas pensadas para ti.
+                    </p>
+
+                    <a th:href="@{/productos/MostrarProducto}" class="btn btn-primary mt-3">Ver Catálogo</a>
+                </div>
+
+                <!-- Imagen de portada -->
+                <div class="imagen col-md-5 text-center">
+                    <img th:src="@{/img/portada.jpg}" alt="Ropa colgada en perchero" class="img-fluid rounded shadow" />
+                </div>
+            </section>
+
+
+            <section class="productos-destacados">
+                <h3>Nuestros Productos Destacados</h3>
+                <div class="slideshow-container productosSlider" id="productosSlider">
+                    <div class="slide destacados-slide fade" th:each="i : ${#numbers.sequence(1,10)}">
+                        <div class="numbertext" th:text="${i} + ' / 10'"></div>
+                        <img th:src="@{/img/6.jpeg}" th:alt="'Producto ' + ${i}">
+                        <div class="text" th:text="'Producto ' + ${i} + '<br>S/ ' + (90 + ${i} * 5)"></div>
+                    </div>
+                    <button class="prev" onclick="changeSlide('productosSlider', -1)">&#10094;</button>
+                    <button class="next" onclick="changeSlide('productosSlider', 1)">&#10095;</button>
+                </div>
+                <div class="dots-container" style="text-align:center">
+                    <span class="dot" th:each="i : ${#numbers.sequence(1,10)}" th:classappend="${i==1} ? ' active'" th:onclick="'currentSlide(\'productosSlider\', ' + ${i} + ')'"></span>
+                </div>
+            </section>
+
+            <!-- Sección de productos destacados en cards -->
+            <section class="productos-destacados">
+                <h3>Nuestros Productos Destacados</h3>
+                <div class="productos-grid">
+                    <div class="card" th:each="i : ${#numbers.sequence(1,6)}">
+                        <img th:src="@{/img/9.jpeg}" alt="Producto" class="card-img">
+                        <div class="card-body">
+                            <h4 th:text="'Producto ' + ${i}"></h4>
+                            <p th:text="'S/ ' + (80 + ${i} * 7)"></p>
+                            <a th:href="@{/producto/detalle}" class="btn-card">Ver más</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="banner-promocional">
+                <div class="banner-content">
+                    <h2>¡Nueva Colección de Verano!</h2>
+                    <p>Descubre las últimas tendencias en vestidos, blusas y más. ¡Colores vibrantes y estilos frescos te esperan!</p>
+                    <a th:href="@{/blusas}" class="btn">Ver Colección</a>
+                </div>
+            </section>
+
+
+            <section class="sobre-nosotros">
+                <h3>Sobre Mar de Moda</h3>
+                <p>En Mar de Moda, nuestra pasión es ayudarte a expresar tu individualidad a través de la ropa. Seleccionamos cuidadosamente cada prenda, priorizando la calidad, el diseño y la comodidad. Creemos que la moda debe ser accesible y divertida, y nos esforzamos por ofrecerte una experiencia de compra online excepcional.</p>
+                <p>Síguenos en nuestras redes sociales para estar al tanto de las últimas novedades y promociones.</p>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2025 Boutique Online Mar de Moda. Todos los derechos reservados.</p>
+            <div class="social-links">
+                <a th:href="@{https://wa.me}" target="_blank" class="social-icon">
+                    <span>WhatsApp</span>
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a th:href="@{https://www.tiktok.com}" target="_blank" class="social-icon">
+                    <span>TikTok</span>
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <a th:href="@{https://www.instagram.com}" target="_blank" class="social-icon">
+                    <span>Instagram</span>
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </footer>
+    </body>
+
+</html>
