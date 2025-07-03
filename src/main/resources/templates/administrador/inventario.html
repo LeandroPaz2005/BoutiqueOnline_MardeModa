@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Inventario - Boutique Mar de Moda</title>
+
+        <link rel="stylesheet" th:href="@{/css/estilo2.css}">
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+        <link rel="stylesheet" th:href="@{/css/estilosbase.css}">
+        <link rel="stylesheet" th:href="@{/css/gestionUsuario.css}">
+
+
+        <script th:src="@{/JS/script.js}"></script>
+        <script th:src="@{/JS/gestionUsuario.js}"></script>
+        <style>
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 1rem;
+            }
+            th, td {
+                padding: 8px;
+                border: 1px solid #ccc;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+            h2 {
+                margin-bottom: 1rem;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <!-- ENCABEZADO -->
+        <header>
+            <div class="top-message" id="mensaje-oferta">
+                Envío GRATIS en pedidos superiores a S/. 150
+            </div>
+            <div class="header-content">
+                <div class="logo">
+                    <a th:href="@{/administrador/panelAdmin}">BOUTIQUE ONLINE MAR DE MODA</a>
+                </div>
+                <nav class="nav-buttons">
+                    <div class="admin-dropdown">
+                        <button class="admin-btn" aria-haspopup="true" aria-expanded="false">
+                            Menú <i class="fas fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a th:href="@{/administrador/panelAdmin}">Panel Admin</a>
+                            <a th:href="@{/productos/gestionProducto}">Ver Productos</a>
+                            <a th:href="@{/productos/create}">Crear Producto</a>
+                            <a th:href="@{/categorias}">Categorías</a>
+                            <a th:href="@{/administrador/inventario}">Inventario</a>
+                            <a th:href="@{/administrador/gestionUsuario}">Gestión Usuarios</a>
+                            <a th:href="@{/administrador/gestionOrdenes}">Pedidos</a>
+                            <a th:href="@{/logout}">Cerrar Sesión</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+    <body>
+
+        <h2>Detalle de Inventario</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Stock</th>
+                    <th>Unidades Vendidas</th>
+                    <th>Precio</th>
+                    <th>Ingresos Totales</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="producto : ${productos}">
+                    <td th:text="${producto.nombre}"></td>
+                    <td th:text="${producto.cantidad}"></td>
+                    <td th:text="${producto.unidadesVendidas}"></td>
+                    <td th:text="${producto.precio}"></td>
+                    <td th:text="${#numbers.formatDecimal(producto.unidadesVendidas * producto.precio, 1, 'COMMA', 2, 'POINT')}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+    <footer>
+        <p>&copy; 2025 Boutique Online Mar de Moda. Todos los derechos reservados.</p>
+        <div class="social-links">
+            <a href="https://wa.me" target="_blank" class="social-icon">WhatsApp <i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.tiktok.com" target="_blank" class="social-icon">TikTok <i class="fab fa-tiktok"></i></a>
+            <a href="https://www.instagram.com" target="_blank" class="social-icon">Instagram <i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+</body>
+</html>

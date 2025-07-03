@@ -13,8 +13,8 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
-     
-     <!-- ENCABEZADO -->
+
+        <!-- ENCABEZADO -->
         <header>
             <div class="top-message" id="mensaje-oferta"></div>
             <div class="header-content">
@@ -46,6 +46,17 @@
                 <li class="breadcrumb-item"><a th:href="@{/usuario/compras}">Compras</a></li>
                 <li class="breadcrumb-item active">Detalle de Compra</li>
             </ol>
+            <!-- Datos del Usuario que hizo la orden -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5>Cliente:</h5>
+                    <p><strong>Nombre:</strong> <span th:text="${orden.usuario.nombre} + ' ' + ${orden.usuario.apellido}"></span></p>
+                    <p><strong>Correo:</strong> <span th:text="${orden.usuario.email}"></span></p>
+                    <p><strong>Fecha de la Orden:</strong> <span th:text="${#dates.format(orden.fechaCreacion, 'dd/MM/yyyy HH:mm')}"></span></p>
+                    <p><strong>Total de la Orden:</strong> S/. <span th:text="${orden.total}"></span></p>
+                </div>
+            </div>
+
 
             <!-- Blog Post -->
             <div class="card mb-4">

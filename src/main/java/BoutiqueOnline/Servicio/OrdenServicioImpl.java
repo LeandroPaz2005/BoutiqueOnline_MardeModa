@@ -2,7 +2,9 @@
 package BoutiqueOnline.Servicio;
 
 import BoutiqueOnline.Repositorio.OrdenRepositorio;
+import BoutiqueOnline.Repositorio.ProductoRepository;
 import BoutiqueOnline.modelo.Orden;
+import BoutiqueOnline.modelo.Producto;
 import BoutiqueOnline.modelo.Usuario;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +18,34 @@ public class OrdenServicioImpl implements OrdenServicio{
     @Autowired
     private OrdenRepositorio ordenRespositorio;
     
+    @Autowired
+    private ProductoRepository productoRepositorio;
+    
     @Override
     public Orden save(Orden orden) {
-        return ordenRespositorio.save(orden);
+        Orden ordenGuardada=ordenRespositorio.save(orden);
+        
+        //Restar stcok de cada producto vendido
+        if(ordenGuardada.getDetalle()!=null){
+        ordenGuardada.getDetalle().forEach(detalle ->{
+            Producto producto=detalle.getProducto();
+            
+            //verificar que haya stock suficiente 
+            if(producto.getCantidad()>= detalle.getCantidad()){
+            producto.setCantidad((int) (producto.getCantidad()-detalle.getCantidad()));
+            }else{
+            //en caso que no haya stock suficiente lazar una excepcion
+            producto.setCantidad(0);
+            }
+            
+            //Incrementar unidades vendidad
+            producto.setUnidadesVendidas(producto.getUnidadesVendidas()+(int) detalle.getCantidad());
+            
+            productoRepositorio.save(producto);
+        });
+        }
+        
+        return ordenGuardada;
     }
 
     @Override

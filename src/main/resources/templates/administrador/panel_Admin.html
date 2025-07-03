@@ -33,7 +33,7 @@
                             <a th:href="@{/productos/RegistroProductos}">Agregar Producto</a>
                             <a th:href="@{/productos/gestionProducto}">Gestión de Productos</a>
                             <a th:href="@{/categorias}">Gestión de Categorías</a>
-                            <a th:href="@{/inventario}">Inventario</a>
+                            <a th:href="@{/administrador/inventario}">Inventario</a>
                             <a th:href="@{/administrador/gestionOrdenes}">Pedidos</a>
                             <a th:href="@{/administrador/gestionUsuario}">Usuarios</a>
                             <a th:href="@{/usuario/cerrar}">Cerrar Sesión</a>
@@ -55,10 +55,10 @@
 
                     <!-- Dashboard -->
                     <div class="col-12 col-md-6 col-lg-4">
-                        <a th:href="@{/administrador/panelAdmin}" class="admin-card-link text-decoration-none">
+                        <a th:href="@{/administrador/dashboard}" class="admin-card-link text-decoration-none">
                             <div class="admin-card text-center p-4 shadow-sm rounded">
                                 <i class="fas fa-home fa-3x mb-3" style="color:#a0004d;"></i>
-                                <h4>Ir al Inicio</h4>
+                                <h4>Dashboard</h4>
                                 <p>Regresa al sitio público como usuario.</p>
                             </div>
                         </a>
@@ -99,7 +99,7 @@
 
                     <!-- Inventario -->
                     <div class="col-12 col-md-6 col-lg-4">
-                        <a th:href="@{/inventario}" class="admin-card-link text-decoration-none">
+                        <a th:href="@{/administradro/inventario}" class="admin-card-link text-decoration-none">
                             <div class="admin-card text-center p-4 shadow-sm rounded">
                                 <i class="fas fa-warehouse fa-3x mb-3" style="color:#a0004d;"></i>
                                 <h4>Inventario</h4>

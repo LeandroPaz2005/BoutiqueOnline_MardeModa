@@ -38,5 +38,21 @@ public class ProductoServicioImple implements ProductoServicio{
     public List<Producto> findAll() {
         return productoRepositorio.findAll();
     }
+    // metodos para calcular el dasboard
+    public int totalStock(){
+    return productoRepositorio.findAll()
+            .stream()
+            .mapToInt(Producto::getCantidad)
+            .sum();
+    }
+    public int totalVendidos(){
+    return productoRepositorio.findAll()
+            .stream()
+            .mapToInt(Producto:: getUnidadesVendidas)
+            .sum();
+    }
     
+    public int totalProductos(){
+    return (int) productoRepositorio.count();
+    }
 }
