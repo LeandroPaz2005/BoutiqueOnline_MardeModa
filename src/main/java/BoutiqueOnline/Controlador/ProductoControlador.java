@@ -5,9 +5,12 @@ import BoutiqueOnline.Servicio.UploadFileService;
 import BoutiqueOnline.modelo.Producto;
 import BoutiqueOnline.modelo.Usuario;
 import BoutiqueOnline.servicio.UsuarioServicio;
+import BoutiqueOnline.util.ListarProductosExcel;
+import BoutiqueOnline.util.ListarProductosPdf;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/productos")
@@ -131,6 +135,18 @@ public class ProductoControlador {
         productoServicio.delete(id);
         return "redirect:/productos/gestionProducto";
     } 
+    
+    @GetMapping("/reporteExcel")
+    public ModelAndView generarExcel(){
+    List<Producto> productos=productoServicio.findAll();
+    return new ModelAndView(new ListarProductosExcel(), Map.of("productos",productos));
+    }
+         
+    @GetMapping("/reportePDF")
+    public ModelAndView generarPDF(){
+    List<Producto> productos = productoServicio.findAll();
+    return new ModelAndView(new ListarProductosPdf(), Map.of("productos", productos));
+    }
     
     @ModelAttribute
     public void agregarUsuarioAlModelo(Model model, HttpSession session){
