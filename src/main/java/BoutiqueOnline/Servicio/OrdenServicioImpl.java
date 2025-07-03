@@ -23,6 +23,12 @@ public class OrdenServicioImpl implements OrdenServicio{
     
     @Override
     public Orden save(Orden orden) {
+        //asignar estado por defecto
+        if(orden.getEstado()==null || orden.getEstado().trim().isEmpty()){
+        orden.setEstado("NUEVO");
+        }
+        
+        
         Orden ordenGuardada=ordenRespositorio.save(orden);
         
         //Restar stcok de cada producto vendido

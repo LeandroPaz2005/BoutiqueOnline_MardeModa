@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,10 @@ public class ProductoControlador {
     //mostrrar la visat de GestionProducto
     @GetMapping("/MostrarProducto")
     public String MostrarProductoUsuario(Model model) {
-        List<Producto> producto = productoServicio.findAll();
+        List<Producto> producto = productoServicio.findAll()
+                .stream()
+                .filter(p -> p.getCantidad()>0)
+                .collect(Collectors.toList());
         model.addAttribute("productos", producto);
         return "usuario/home";
     }

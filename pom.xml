@@ -143,6 +143,19 @@
             <version>2.2.3</version>
             <type>jar</type>
         </dependency>
+        <!--dependencia para usar MercadoPago como pasarela de pago-->
+        <dependency>
+            <groupId>com.mercadopago</groupId>
+            <artifactId>sdk-java</artifactId>
+            <version>1.11.8</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.mercadopago</groupId>
+            <artifactId>dx-java</artifactId>
+            <version>1.8.0</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <build>

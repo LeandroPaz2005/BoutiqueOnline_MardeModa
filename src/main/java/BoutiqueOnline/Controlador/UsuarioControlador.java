@@ -7,6 +7,9 @@ import BoutiqueOnline.modelo.Orden;
 import BoutiqueOnline.modelo.Usuario;
 import BoutiqueOnline.servicio.UsuarioServicio;
 import BoutiqueOnline.util.FacturaPDFUtil;
+import com.mercadopago.MercadoPago;
+import com.mercadopago.resources.Preference;
+import com.mercadopago.resources.datastructures.preference.*;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
@@ -99,6 +102,7 @@ public class UsuarioControlador {
         }
     }
 
+    //==metodos para las compras===
     @GetMapping("/compras")
     public String obtnerCompras(Model model, HttpSession session) {
         model.addAttribute("session", session.getAttribute("idusuario"));
@@ -127,6 +131,54 @@ public class UsuarioControlador {
         return "usuario/detalleCompra";
     }
 
+    //metodo para el pago
+    @GetMapping("/pagar/{id}")
+    public void pagarOrden(@PathVariable("id") Integer id, HttpServletResponse response) throws Exception {
+        Optional<Orden> ordenOpt=ordenServicio.findById(id);
+    
+    if(ordenOpt.isPresent()){
+    response.sendRedirect("/usuario/compras");
+    return;
+    }
+    Orden orden=ordenOpt.get();
+    
+    //configurar MercadoPago
+        MercadoPago.SDK.setAccessToken("TEST -xxxxxxxxxxxxxxxxxxxxxxx");
+    
+        //crear un item de la orden
+        Item item=new Item()
+                .setTitle("ORDEN N°" +orden.getNumero())
+                .setQuantity(1)
+                .setCurrencyId("PEN")
+                .setUnitPrice((float)orden.getTotal());
+        
+        
+        Preference preference=new Preference();
+        preference.appendItem(item);
+        preference.setBackUrls(new BackUrls()
+                .setSuccess("http:/localhost:8081/usuario/pagoExitoso"+orden.getId())
+                .setFailure("http:/localhost:8081/usuario/compras")
+                .setPending("http://localhost:8081/usuario/compras"));
+        
+        preference.setAutoReturn(Preference.AutoReturn.approved);
+        preference.save();
+        
+        response.sendRedirect(preference.getInitPoint());      
+    
+    }
+    
+    @GetMapping("/pagoExitoso/{id}")
+    public String pagoExitoso(@PathVariable("id") Integer id){
+    Optional<Orden> ordenOpt=ordenServicio.findById(id);
+    if(ordenOpt.isPresent()){
+    Orden orden=ordenOpt.get();
+    orden.setEstado("PAGADO");
+    ordenServicio.save(orden);
+    }
+        return "redirect:/usuario/compras";
+    }
+
+    
     // Método para generar y descargar la factura en PDF
     @GetMapping("/factura/{id}")
     public void exportaFactura(@PathVariable Integer id, HttpServletResponse response) {

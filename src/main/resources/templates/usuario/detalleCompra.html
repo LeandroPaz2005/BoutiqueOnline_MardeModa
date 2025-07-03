@@ -83,9 +83,30 @@
                         </div>
                     </div>
                 </div>
-                <a th:href="@{'/usuario/factura/' + ${orden.id}}" class="btn btn-primary" target="_blank">
+                <!-- Mostrar botón de pago solo si el estado no es PAGADO -->
+                <div th:if="${orden.estado != 'PAGADO'}" class="mb-3">
+                    <a th:href="@{/usuario/pagar/{id}(id=${orden.id})}" class="btn btn-success">
+                        Pagar con MercadoPago
+                    </a>
+                </div>
+
+                <!-- Mostrar estado si ya fue pagado -->
+                <div th:if="${orden.estado == 'PAGADO'}" class="mb-3">
+                    <span class="badge bg-success fs-5">Compra pagada</span>
+                </div>
+
+                <div class="mt-3">
+                    <h4>Total: S/. <span th:text="${orden.total}"></span></h4>
+                    <h5>Estado: <span th:text="${orden.estado}"></span></h5>
+                </div>
+
+
+                <!-- Botón para descargar la factura (opcional que solo aparezca si está pagado) -->
+                <a th:if="${orden.estado == 'PAGADO'}"
+                   th:href="@{'/usuario/factura/' + ${orden.id}}" class="btn btn-primary" target="_blank">
                     Descargar Factura PDF
                 </a>
+
             </div>
         </div>
         <!-- /.container -->
