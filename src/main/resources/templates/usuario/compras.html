@@ -53,6 +53,7 @@
                         <th>Número</th>
                         <th>Fecha</th>
                         <th>Total</th>
+                        <th>Estado</th>
                         <th>Acción</th>
                     </tr>
                 </thead>
@@ -61,6 +62,7 @@
                         <td th:text="${orden.numero}"></td>
                         <td th:text="${#dates.format(orden.fechaCreacion, 'dd/MM/yyyy')}"></td>
                         <td th:text="${orden.total}"></td>
+                        <td th:text="${orden.estado}"></td> 
                         <td>
                             <a th:href="@{/usuario/detalle/{id} (id=${orden.id}) }" class="btn btn-sm btn-info">Ver Detalle</a>
                         </td>
