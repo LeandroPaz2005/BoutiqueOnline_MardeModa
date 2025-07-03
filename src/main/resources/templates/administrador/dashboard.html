@@ -9,6 +9,7 @@
         <link rel="stylesheet" th:href="@{/css/styles.css}">
         <link rel="stylesheet" th:href="@{/css/estilosbase.css}">
         <link rel="stylesheet" th:href="@{/css/gestionUsuario.css}">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
         <script th:src="@{/JS/script.js}"></script>
@@ -69,6 +70,21 @@
             .enlaces a:hover {
                 background-color: #2980b9;
             }
+            .dashboard-visual {
+                max-width: 800px;
+                margin: 40px auto;
+                padding: 20px;
+            }
+
+            .alert-danger {
+                font-size: 16px;
+                padding: 20px;
+            }
+
+            canvas {
+                display: block;
+                margin: 0 auto;
+            }
         </style>
     </head>
 
@@ -128,8 +144,69 @@
             <a href="/productos/gestionProducto">️ Productos</a>
             <a href="/administrador/gestionOrdenes"> Órdenes</a>
         </div>
+        <h1 class="text-center">STOCK DE PRODUCTOS</h1>
+
+        <div class="dashboard-container">
+            <!-- Alerta Stock Bajo -->
+            <div th:if="${productosBajoStock.size() > 0}" class="alert alert-danger text-center">
+                <h2><i class="fas fa-exclamation-triangle"></i> Productos con stock bajo</h2>
+                <ul class="list-unstyled">
+                    <li th:each="prod : ${productosBajoStock}">
+                        <strong th:text="${prod.nombre}"></strong> – Stock:
+                        <span th:text="${prod.cantidad}"></span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Gráfico -->
+            <div class="card shadow-sm mt-4">
+                <div class="card-body">
+                    <h1 class="text-center mb-4">Resumen Visual</h1>
+                    <canvas id="dashboardChart" style="max-width: 600px; height: 400px;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart.js CDN -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <!-- Script del gráfico (tipo doughnut) -->
+        <script th:inline="javascript">
+            const totalProductos = [[${totalProductos
+            }
+            ]];
+            const totalStock = [[${totalStock
+            }
+            ]];
+            const totalVendidos = [[${totalVendidos
+            }
+            ]];
+            const ctx = document.getElementById('dashboardChart').getContext('2d');
+            new Chart(ctx, {
+            type: 'doughnut',
+                    data: {
+                    labels: ['Productos', 'Stock Total', 'Vendidos'],
+                            datasets: [{
+                            data: [totalProductos, totalStock, totalVendidos],
+                                    backgroundColor: ['#17a2b8', '#28a745', '#007bff'],
+                                    borderColor: '#ffffff',
+                                    borderWidth: 2
+                            }]
+                    },
+                    options: {
+                    responsive: true,
+                            plugins: {
+                            legend: {
+                            position: 'bottom'
+                            }
+                            }
+                    }
+            });
+        </script>
+
 
     </body>
+
 
     <footer>
         <p>&copy; 2025 Boutique Online Mar de Moda. Todos los derechos reservados.</p>
