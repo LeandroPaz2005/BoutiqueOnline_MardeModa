@@ -15,6 +15,8 @@ public class Producto {
     private String imagen;
     private double precio;
     private int cantidad;
+    
+    private int unidadesVendidas=0;
     //relacion de uno a muchos: un producto  puede tener muchos usuarios
     @ManyToOne
     private Usuario usuario;
@@ -35,6 +37,14 @@ public class Producto {
     public Producto(String nombre, double precio) {
         this.nombre = nombre;
         this.precio = precio;
+    }
+
+    public int getUnidadesVendidas() {
+        return unidadesVendidas;
+    }
+
+    public void setUnidadesVendidas(int unidadesVendidas) {
+        this.unidadesVendidas = unidadesVendidas;
     }
 
     

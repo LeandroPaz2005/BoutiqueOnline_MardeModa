@@ -2,6 +2,7 @@
 package BoutiqueOnline.modelo;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,8 +24,8 @@ public class Orden {
     private Usuario usuario;
     
     //relacion de uno a uno con detalle: un orden puede tener un detalle de orden
-    @OneToMany(mappedBy = "orden")
-    private List<DetalleOrden> detalle;
+    @OneToMany(mappedBy = "orden", cascade=CascadeType.ALL)
+    private List<DetalleOrden> detalle = new ArrayList<>();
     
     public Orden() {
     }

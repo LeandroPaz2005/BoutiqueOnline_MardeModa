@@ -162,8 +162,10 @@ public class HomeControlador {
         Usuario usuario = usuarioServicio.finsById(Integer.parseInt((session.getAttribute("idusuario").toString()))).get();
 
         orden.setUsuario(usuario);
+        orden.setDetalle(detalles);
         ordenServicio.save(orden);
-
+        
+        
         //guardar detalles del orden 
         for (DetalleOrden dt : detalles) {
             dt.setOrden(orden);

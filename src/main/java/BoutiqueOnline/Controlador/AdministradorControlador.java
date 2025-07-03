@@ -3,7 +3,9 @@ package BoutiqueOnline.Controlador;
 import BoutiqueOnline.Repositorio.UsuarioRepositorio;
 import BoutiqueOnline.Servicio.OrdenServicio;
 import BoutiqueOnline.Servicio.ProductoServicio;
+import BoutiqueOnline.Servicio.ProductoServicioImple;
 import BoutiqueOnline.modelo.Orden;
+import BoutiqueOnline.modelo.Producto;
 import BoutiqueOnline.modelo.Usuario;
 import BoutiqueOnline.servicio.*;
 import BoutiqueOnline.util.ListarUsuariosExcel;
@@ -37,6 +39,9 @@ public class AdministradorControlador {
 
     @Autowired
     private ProductoServicio productoServicio;
+    
+    @Autowired
+    private ProductoServicioImple productoServicioImpl;
 
     @Autowired
     private UsuarioRepositorio usuariorepositorio;
@@ -129,11 +134,32 @@ public class AdministradorControlador {
         logg.info("\nID de la orden: {}", id);
         Orden orden = ordenServicio.findById(id).get();
 
+        if(orden==null){
+        return "redirect:/administrador/panelAdmin";
+        }
+        model.addAttribute("orden", orden);
         model.addAttribute("detalles", orden.getDetalle());
 
         return "administrador/detalleOrdenes";
     }
 
+    //Invenatrio de productos
+    @GetMapping("/inventario")
+    public String mostrarInventario(Model model){
+    List<Producto> prodcutos=productoServicio.findAll();
+    model.addAttribute("productos", prodcutos);
+    return "administrador/inventario";
+    }
+    //para el dashboard
+    @GetMapping("/dashboard")
+    public String verDashboard(Model model){
+    model.addAttribute("totalProductos", productoServicioImpl.totalProductos());
+    model.addAttribute("totalStock", productoServicioImpl.totalStock());
+    model.addAttribute("totalVendidos", productoServicioImpl.totalVendidos());
+    
+    return "administrador/dashboard";
+    }
+    
     @ModelAttribute
     public void agregarUsuarioAlModelo(Model model, HttpSession session) {
         if (session.getAttribute("usuario") != null) {
