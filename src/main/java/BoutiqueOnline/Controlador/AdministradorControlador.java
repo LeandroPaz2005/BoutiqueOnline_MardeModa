@@ -6,7 +6,10 @@ import BoutiqueOnline.Servicio.ProductoServicio;
 import BoutiqueOnline.modelo.Orden;
 import BoutiqueOnline.modelo.Usuario;
 import BoutiqueOnline.servicio.*;
+import BoutiqueOnline.util.ListarUsuariosExcel;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/administrador")
@@ -36,8 +40,8 @@ public class AdministradorControlador {
 
     @Autowired
     private UsuarioRepositorio usuariorepositorio;
-    
-      private final Logger logger = LoggerFactory.getLogger(HomeControlador.class);
+
+    private final Logger logger = LoggerFactory.getLogger(HomeControlador.class);
 
     BCryptPasswordEncoder passEncode = new BCryptPasswordEncoder();
 
@@ -67,21 +71,20 @@ public class AdministradorControlador {
     }
 
     @PostMapping("/RegistroUsuario")
-    public String save(@ModelAttribute("usuarios")Usuario usuario, HttpSession session) {
+    public String save(@ModelAttribute("usuarios") Usuario usuario, HttpSession session) {
         logger.info("\nUsuario recibido del formulario create: {}", usuario);
-        
+
         usuario.setId(null);
-        
+
         usuario.setPassword(passEncode.encode(usuario.getPassword()));
-       //rol por defecto
-       if(usuario.getTipo()==null || usuario.getTipo().isEmpty()){
-       usuario.setTipo("USER");
-       }
-       
-       usuarioServicio.save(usuario);
+        //rol por defecto
+        if (usuario.getTipo() == null || usuario.getTipo().isEmpty()) {
+            usuario.setTipo("USER");
+        }
+
+        usuarioServicio.save(usuario);
         return "redirect:/administrador/gestionUsuario";
     }
-    
 
     //Formulario para editar usuario
     @GetMapping("/usuario/editarUsuario/{id}")
@@ -104,6 +107,14 @@ public class AdministradorControlador {
     public String actualizarUsuario(@ModelAttribute("usuario") Usuario usuario) {
         usuarioServicio.save(usuario);
         return "redirect:/administrador/gestionUsuario";
+    }
+
+    //gerenar el excel de usuario
+    @GetMapping("/exportarExcel")
+    public ModelAndView exportarUsuarioExcel() {
+        List<Usuario> listarUsuario = usuarioServicio.findAll();
+        return new ModelAndView(new ListarUsuariosExcel(), Map.of("usuarios", listarUsuario));
+
     }
 
     //===== MOSTRAR DETALLES DE PEDIDIOS======

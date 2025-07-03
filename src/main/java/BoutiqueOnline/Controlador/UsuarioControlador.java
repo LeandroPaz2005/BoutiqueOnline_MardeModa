@@ -6,8 +6,11 @@ import BoutiqueOnline.Servicio.UploadFileService;
 import BoutiqueOnline.modelo.Orden;
 import BoutiqueOnline.modelo.Usuario;
 import BoutiqueOnline.servicio.UsuarioServicio;
+import BoutiqueOnline.util.FacturaPDFUtil;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -113,12 +116,48 @@ public class UsuarioControlador {
         logger.info("\nID de la orden: {}", id);
         Optional<Orden> orden = ordenServicio.findById(id);
 
-        model.addAttribute("detalles", orden.get().getDetalle());
+        if (orden.isPresent()) {
+            model.addAttribute("orden", orden.get());
+            model.addAttribute("detalles", orden.get().getDetalle());
+        }
 
         //sesion
         model.addAttribute("session", session.getAttribute("idusuario"));
 
         return "usuario/detalleCompra";
+    }
+
+    // Método para generar y descargar la factura en PDF
+    @GetMapping("/factura/{id}")
+    public void exportaFactura(@PathVariable Integer id, HttpServletResponse response) {
+        try {
+            Optional<Orden> ordenOpt = ordenServicio.findById(id);
+
+            if (ordenOpt.isEmpty()) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Orden no encontrada");
+                return;
+            }
+
+            Orden orden = ordenOpt.get();
+
+            // Configuración del tipo de contenido de la respuesta
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "attachment; filename=factura_" + orden.getId() + ".pdf");
+
+            // Obtener el OutputStream del response y generar el PDF
+            try (OutputStream out = response.getOutputStream()) {
+                FacturaPDFUtil.exportarFacturaPDF(orden, out);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Si ocurre error interno, notificar al cliente
+            try {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al generar la factura");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     @GetMapping("/cerrar")
@@ -140,7 +179,7 @@ public class UsuarioControlador {
     public String editarPerfil(HttpSession session, Model model) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         model.addAttribute("usuario", usuario);
-        return "usuario/perfil-edit"; 
+        return "usuario/perfil-edit";
     }
 
     @PostMapping("/perfil/actualizar")
