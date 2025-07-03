@@ -1,4 +1,3 @@
-
 package BoutiqueOnline.modelo;
 
 import jakarta.persistence.*;
@@ -6,9 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
 @Entity
-@Table(name="ordenes")
+@Table(name = "ordenes")
 public class Orden {
 
     @Id
@@ -18,15 +16,17 @@ public class Orden {
     private Date fechaCreacion;
     private Date fechaRecibida;
     private double total;
+    private String estado;
 
     //relacion de mucho a uno: muchos usuarios pueden tener una orden
     @ManyToOne
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
-    
+
     //relacion de uno a uno con detalle: un orden puede tener un detalle de orden
-    @OneToMany(mappedBy = "orden", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL)
     private List<DetalleOrden> detalle = new ArrayList<>();
-    
+
     public Orden() {
     }
 
@@ -37,6 +37,14 @@ public class Orden {
         this.fechaCreacion = fechaCreacion;
         this.fechaRecibida = fechaRecibida;
         this.total = total;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public Integer getId() {
@@ -95,8 +103,25 @@ public class Orden {
         this.detalle = detalle;
     }
 
+    //metodo para los estados de los productos
+    public String getClaseEstado() {
+        if (estado == null) {
+            return "badge bg-secondary";
+        }
 
-    
+        switch (estado.toUpperCase()) {
+            case "ENTREGADO":
+                return "badge bg-success";
+            case "PENDIENTE":
+                return "badge bg-warning text-dark";
+            case "NUEVO":
+                return "badge bg-primary";
+            default:
+                return "badge bg-secondary";
+        }
+
+    }
+
     @Override
     public String toString() {
         return "Orden del pedido"
@@ -107,4 +132,5 @@ public class Orden {
                 + "Total:" + total;
     }
 
+   
 }

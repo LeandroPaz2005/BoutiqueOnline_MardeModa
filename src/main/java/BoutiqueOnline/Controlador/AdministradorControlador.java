@@ -12,6 +12,7 @@ import BoutiqueOnline.util.ListarUsuariosExcel;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -39,7 +41,7 @@ public class AdministradorControlador {
 
     @Autowired
     private ProductoServicio productoServicio;
-    
+
     @Autowired
     private ProductoServicioImple productoServicioImpl;
 
@@ -134,8 +136,8 @@ public class AdministradorControlador {
         logg.info("\nID de la orden: {}", id);
         Orden orden = ordenServicio.findById(id).get();
 
-        if(orden==null){
-        return "redirect:/administrador/panelAdmin";
+        if (orden == null) {
+            return "redirect:/administrador/panelAdmin";
         }
         model.addAttribute("orden", orden);
         model.addAttribute("detalles", orden.getDetalle());
@@ -145,21 +147,56 @@ public class AdministradorControlador {
 
     //Invenatrio de productos
     @GetMapping("/inventario")
-    public String mostrarInventario(Model model){
-    List<Producto> prodcutos=productoServicio.findAll();
-    model.addAttribute("productos", prodcutos);
-    return "administrador/inventario";
+    public String mostrarInventario(Model model) {
+        List<Producto> prodcutos = productoServicio.findAll();
+        model.addAttribute("productos", prodcutos);
+        return "administrador/inventario";
     }
+
     //para el dashboard
     @GetMapping("/dashboard")
-    public String verDashboard(Model model){
-    model.addAttribute("totalProductos", productoServicioImpl.totalProductos());
-    model.addAttribute("totalStock", productoServicioImpl.totalStock());
-    model.addAttribute("totalVendidos", productoServicioImpl.totalVendidos());
-    
-    return "administrador/dashboard";
+    public String verDashboard(Model model) {
+        model.addAttribute("totalProductos", productoServicioImpl.totalProductos());
+        model.addAttribute("totalStock", productoServicioImpl.totalStock());
+        model.addAttribute("totalVendidos", productoServicioImpl.totalVendidos());
+
+        //alerta de productps con stock bajo
+        List<Producto> productosBajoStock = productoServicioImpl.findAll().stream()
+                .filter(p -> p.getCantidad() <= 5)
+                .toList();
+
+        model.addAttribute("productosBajoStock", productosBajoStock);
+
+        return "administrador/dashboard";
     }
-    
+
+    //ver notoficaciones de estado de productos
+    @GetMapping("/notificaciones")
+    public String verNotificaciones(Model model) {
+        List<Orden> ordenes = ordenServicio.findAll();
+
+        for (Orden orden : ordenes) {
+            logger.info("\nOrden ID: {} \nestado: {}", orden.getId(), orden.getEstado());
+        }
+        model.addAttribute("ordenes", ordenes);
+        return "administrador/notificaciones";
+    }
+
+    //asiganar estado desde el Admin
+    @PostMapping("/actualizarEstado")
+    public String actualizarEstado(@RequestParam("idOrden") Integer idOrden,
+            @RequestParam("nuevoEstado") String nuevoEstado) {
+
+        Optional<Orden> ordenOpt = ordenServicio.findById(idOrden);
+        if (ordenOpt.isPresent()) {
+            Orden orden = ordenOpt.get();
+            orden.setEstado(nuevoEstado);
+            ordenServicio.save(orden);
+        }
+        return "redirect:/administrador/notificaciones";
+
+    }
+
     @ModelAttribute
     public void agregarUsuarioAlModelo(Model model, HttpSession session) {
         if (session.getAttribute("usuario") != null) {
