@@ -101,4 +101,10 @@ CONEXION A  BASE DE DATOS
 - Git y GitHub
 =======
 
->>>>>>> desarrollador1/backend/karol
+##Integrantes
+- Bakchend Karol
+- Backend Victor
+- Backend Victor
+- Frontend Sandro
+- Frontend Maddiel
+- Frontend Claudia
