@@ -19,114 +19,80 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 5000);
     }
 
-    // --- INICIO: Lógica de Autenticación en el Header (NUEVO) ---
-    const authLinksContainer = document.getElementById('auth-links-container');
-    const userIconLink = document.getElementById('userIconLink');
-    const userNameDisplay = document.getElementById('userNameDisplay');
-    const loginLink = document.getElementById('loginLink');
-    const registroLink = document.getElementById('registroLink');
-    const logoutButton = document.getElementById('logoutButton'); // Este botón también puede estar en auth.js, pero lo manejamos aquí para actualizar la UI del header
+    // --- INICIO: Lógica de Autenticación en el Header ---
+    // Asegúrate de que estos IDs existen en tu HTML (actualmente no están en el index que me mostraste)
+    // Los divs auth-buttons y user-logged-controls ya se manejan con Thymeleaf,
+    // pero si tienes lógica JS adicional para ellos, deberías asegurarte que los elementos existan.
+    // En tu HTML actual, la visibilidad de los botones de login/registro y el menú de usuario
+    // ya la controla Thymeleaf con th:if="${usuario == null}" y th:if="${usuario != null}".
+    // Las siguientes líneas de JS solo tendrían efecto si también hay elementos con esos IDs.
+    const authLinksContainer = document.getElementById('auth-links-container'); // No existe en tu HTML
+    const userIconLink = document.getElementById('userIconLink'); // No existe en tu HTML
+    const userNameDisplay = document.getElementById('userNameDisplay'); // No existe en tu HTML (el nombre está dentro de .user-info)
+    const loginLink = document.getElementById('loginLink'); // No existe en tu HTML (es un <a> con clase btn)
+    const registroLink = document.getElementById('registroLink'); // No existe en tu HTML (es un <a> con clase btn)
+    const logoutButton = document.getElementById('logoutButton'); // No existe en tu HTML (el enlace de cerrar sesión está dentro del dropdown)
 
     function checkUserStatusAndRenderHeader() {
+        // Esta función depende de que tengas una forma de almacenar el estado del usuario en el cliente,
+        // como localStorage, si no se maneja solo a nivel de servidor con Thymeleaf.
+        // Si el estado de ${usuario} solo viene del servidor, esta función de JS no hará nada.
         const usuarioLogeado = JSON.parse(localStorage.getItem('usuarioLogeado'));
 
-        // Agregamos console.log para depurar (mantenlos por ahora)
         console.log('script.js: checkUserStatusAndRenderHeader se ejecutó.');
         console.log('script.js: Valor de usuarioLogeado en localStorage:', usuarioLogeado);
 
-        if (usuarioLogeado) {
-            console.log('script.js: Usuario logeado. Nombre:', usuarioLogeado.nombre);
-            // Usuario logeado: mostrar icono de usuario y botón de cerrar sesión
-            if (userIconLink) { // <--- Añadir este IF
-                userIconLink.style.display = 'inline-block';
-                userIconLink.href = 'perfil.html'; // Solo si userIconLink existe
-                console.log('script.js: userIconLink mostrado.');
-            }
-            if (userNameDisplay) { // <--- Añadir este IF
-                userNameDisplay.textContent = usuarioLogeado.nombre;
-                console.log('script.js: userNameDisplay actualizado.');
-            }
-            if (logoutButton) { // <--- Añadir este IF
-                logoutButton.style.display = 'inline-block';
-                console.log('script.js: logoutButton mostrado.');
-            }
-
-            // Ocultar enlaces de login/registro
-            if (loginLink) {
-                loginLink.style.display = 'none';
-                console.log('script.js: loginLink ocultado.');
-            }
-            if (registroLink) {
-                registroLink.style.display = 'none';
-                console.log('script.js: registroLink ocultado.');
-            }
-        } else {
-            console.log('script.js: No hay usuario logeado.');
-            // No hay usuario logeado: mostrar botones de login/registro
-            if (userIconLink) { // <--- Añadir este IF
-                userIconLink.style.display = 'none';
-                console.log('script.js: userIconLink ocultado.');
-            }
-            if (userNameDisplay) { // <--- Añadir este IF
-                userNameDisplay.textContent = '';
-                console.log('script.js: userNameDisplay limpiado.');
-            }
-            if (logoutButton) { // <--- Añadir este IF
-                logoutButton.style.display = 'none';
-                console.log('script.js: logoutButton ocultado.');
-            }
-
-            // Mostrar enlaces de login/registro
-            if (loginLink) {
-                loginLink.style.display = 'inline-block';
-                console.log('script.js: loginLink mostrado.');
-            }
-            if (registroLink) {
-                registroLink.style.display = 'inline-block';
-                console.log('script.js: registroLink mostrado.');
-            }
-        }
+        // La lógica de mostrar/ocultar los botones de login/registro y el menú de usuario
+        // ya se maneja directamente en tu HTML con `th:if` y `th:unless`.
+        // Si aún quieres controlarlo con JS basado en localStorage, necesitarías que los elementos
+        // tengan IDs únicos para poder seleccionarlos y manipular su `style.display`.
+        // Por ahora, tu HTML es el que tiene la última palabra aquí.
     }
 
-    // Llamar a esta función al cargar la página para inicializar el estado del header
     checkUserStatusAndRenderHeader();
+    window.addEventListener('storage', checkUserStatusAndRenderHeader); // Escuchar cambios en localStorage
 
-    // Re-evaluar el estado del usuario cada vez que la página gane foco (por si se logeó/deslogeó en otra pestaña)
-    window.addEventListener('storage', checkUserStatusAndRenderHeader);
-
-    // Si el botón de logout está en el header y quieres que actualice el header de inmediato:
+    // Si el botón de logout tiene un ID específico y se maneja con JS para eliminar del localStorage
+    // y redirigir, este bloque es relevante. Si no, se puede quitar.
+    /*
     if (logoutButton) {
         logoutButton.addEventListener('click', function(e) {
             e.preventDefault();
-            localStorage.removeItem('usuarioLogeado'); // Eliminar la sesión
-            checkUserStatusAndRenderHeader(); // Actualizar la interfaz del header
-            window.location.href = 'index.html'; // Redirigir al index o a la página de login
+            localStorage.removeItem('usuarioLogeado');
+            checkUserStatusAndRenderHeader();
+            window.location.href = 'index.html';
         });
     }
-    // --- FIN: Lógica de Autenticación en el Header ---
-
-    // Función genérica para inicializar sliders (se mantiene igual)
+    */
+    // Función para sliders reutilizable
     function initializeSlider(sliderId, interval = 5000) {
         const sliderContainer = document.getElementById(sliderId);
         if (!sliderContainer) return;
 
         const slides = sliderContainer.getElementsByClassName("slide");
         const dotsContainer = sliderContainer.nextElementSibling;
-        const dots = dotsContainer ? dotsContainer.previousElementSibling.getElementsByClassName("dot") : []; // Ajuste para encontrar los dots
+        const dots = dotsContainer ? dotsContainer.getElementsByClassName("dot") : [];
+
         let slideIndex = 0;
         let timeoutId;
 
         function showSlide(n) {
             for (let i = 0; i < slides.length; i++) {
                 slides[i].style.display = "none";
+                slides[i].classList.remove("active-slide");
             }
             for (let i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
+                dots[i].classList.remove("active");
             }
+
             slideIndex = (n + slides.length) % slides.length;
-            slides[slideIndex].style.display = "block";
-            if (dots.length > 0) {
-                dots[slideIndex].className += " active";
+
+            if (slides[slideIndex]) {
+                slides[slideIndex].style.display = "block";
+                slides[slideIndex].classList.add("active-slide");
+            }
+            if (dots[slideIndex]) {
+                dots[slideIndex].classList.add("active");
             }
         }
 
@@ -135,91 +101,53 @@ document.addEventListener("DOMContentLoaded", function () {
             timeoutId = setTimeout(nextSlide, interval);
         }
 
-        function changeSlide(n) {
+        // Nombres de funciones accesibles globalmente
+        const capitalized = sliderId.charAt(0).toUpperCase() + sliderId.slice(1);
+
+        window[`change${capitalized}Slide`] = function(n) {
             clearTimeout(timeoutId);
             showSlide(slideIndex + n);
             timeoutId = setTimeout(nextSlide, interval);
-        }
+        };
 
-        function currentSlide(n) {
+        window[`current${capitalized}Slide`] = function(n) {
             clearTimeout(timeoutId);
             showSlide(n - 1);
             timeoutId = setTimeout(nextSlide, interval);
-        }
+        };
 
         showSlide(0);
         timeoutId = setTimeout(nextSlide, interval);
-
-        // Exportar funciones globalmente si se necesitan en botones fuera de este script
-        // Esto es útil si tienes botones de flecha o dots fuera de este DOMContentLoaded
-        if (sliderId === 'mainSlider') {
-            window.changeMainSlide = changeSlide;
-            window.currentMainSlide = currentSlide;
-        } else if (sliderId === 'productosSlider') {
-            window.changeProductosSlide = changeSlide;
-            window.currentProductosSlide = currentSlide;
-        } else if (sliderId === 'promocionesSlider') {
-            window.changePromocionesSlide = changeSlide;
-            window.currentPromocionesSlide = currentSlide;
-        }
-
-
-        if (dotsContainer && dots.length === 0 && slides.length > 0) {
-            for (let i = 0; i < slides.length; i++) {
-                const dot = document.createElement('span');
-                dot.classList.add('dot');
-                dot.onclick = () => {
-                    if (sliderId === 'mainSlider') window.currentMainSlide(i + 1);
-                    else if (sliderId === 'productosSlider') window.currentProductosSlide(i + 1);
-                    else if (sliderId === 'promocionesSlider') window.currentPromocionesSlide(i + 1);
-                };
-                dotsContainer.appendChild(dot);
-            }
-            const newDots = dotsContainer.getElementsByClassName("dot");
-            if (newDots.length > 0 && slides.length > 0) {
-                newDots[0].classList.add('active');
-            }
-        }
     }
 
-    initializeSlider('mainSlider', 5000);
-    initializeSlider('productosSlider', 3000);
-    initializeSlider('promocionesSlider', 4000);
+    // Inicializar sliders
+    initializeSlider("promocionesSlider", 4000);
+    initializeSlider("productosSlider", 3000);
+
 
     // TogglePassword
-    // Asegúrate de que los IDs de los inputs sean correctos en login.html y signup.html
-    const togglePasswordLogin = document.getElementById("togglePassword"); // En login.html y signup.html este es el mismo ID
-    const passwordInputLogin = document.getElementById("loginPassword"); // En login.html
-    const passwordInputReg = document.getElementById("regPassword"); // En signup.html
+    function setupPasswordToggle(passwordInputId, toggleIconId) {
+        const passwordInput = document.getElementById(passwordInputId);
+        const togglePasswordIcon = document.getElementById(toggleIconId);
 
-    if (togglePasswordLogin && passwordInputLogin) {
-        togglePasswordLogin.addEventListener("click", function () {
-            const type = passwordInputLogin.getAttribute("type") === "password" ? "text" : "password";
-            passwordInputLogin.setAttribute("type", type);
-            this.classList.toggle("fa-eye-slash");
-        });
+        if (passwordInput && togglePasswordIcon) {
+            togglePasswordIcon.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
+        }
     }
 
-    // Para el formulario de registro, si tiene un togglePassword distinto
-    const togglePasswordReg = document.getElementById("togglePasswordReg"); // Si usas un ID diferente en registro
-    if (togglePasswordReg && passwordInputReg) {
-        togglePasswordReg.addEventListener("click", function () {
-            const type = passwordInputReg.getAttribute("type") === "password" ? "text" : "password";
-            passwordInputReg.setAttribute("type", type);
-            this.classList.toggle("fa-eye-slash");
-        });
-    } else if (togglePasswordLogin && passwordInputReg && !passwordInputLogin) { // Si solo hay un togglePassword y estás en la página de registro
-        togglePasswordLogin.addEventListener("click", function () {
-            const type = passwordInputReg.getAttribute("type") === "password" ? "text" : "password";
-            passwordInputReg.setAttribute("type", type);
-            this.classList.toggle("fa-eye-slash");
-        });
-    }
+    // Aplicar la funcionalidad a los diferentes formularios
+    // Asegúrate de que los IDs 'password' y 'togglePassword' existan en tus formularios
+    setupPasswordToggle('password', 'togglePassword');
 
 
-    // Ordenar por (se mantiene igual)
+    // Ordenar por (se mantiene igual, asumiendo que tienes .sort select y .producto-grid en alguna página)
     const sortSelect = document.querySelector('.sort select');
-    const productGrid = document.querySelector('.producto-grid');
+    const productGrid = document.querySelector('.producto-grid'); // Nota: Tu HTML usa .productos-grid
 
     if (sortSelect && productGrid) {
         sortSelect.addEventListener('change', () => {
@@ -240,7 +168,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }
 
-            sortedProducts.forEach(product => productGrid.appendChild(product));
+            if (sortedProducts) { // Asegurarse de que sortedProducts no sea undefined
+                 sortedProducts.forEach(product => productGrid.appendChild(product));
+            }
         });
     }
 
@@ -260,313 +190,37 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Carrito desplegable
-    /*const carritoIconLink = document.querySelector('.header-cart-button');
-    const carritoLateral = document.createElement('div');
-    carritoLateral.id = 'carrito-lateral';
-    document.body.appendChild(carritoLateral);
-
-    const carritoItemsContainerLateral = document.createElement('div');
-    carritoItemsContainerLateral.id = 'carrito-items-lateral';
-    carritoLateral.appendChild(carritoItemsContainerLateral);
-
-    const totalPrecioLateralContainer = document.createElement('div');
-    totalPrecioLateralContainer.classList.add('total-lateral');
-    totalPrecioLateralContainer.innerHTML = 'Total: <span id="total-precio-lateral">S/ 0.00</span>';
-    carritoLateral.appendChild(totalPrecioLateralContainer);
-
-    const comprarButtonLateral = document.createElement('button');
-    comprarButtonLateral.textContent = 'Comprar';
-    comprarButtonLateral.classList.add('comprar-btn-lateral');
-    comprarButtonLateral.addEventListener('click', () => {
-        window.location.href = 'carrito.html';
-    });
-    carritoLateral.appendChild(comprarButtonLateral);
-
-    const vaciarButtonLateral = document.createElement('button');
-    vaciarButtonLateral.textContent = 'Vaciar Carrito';
-    vaciarButtonLateral.classList.add('vaciar-btn-lateral');
-
-    vaciarButtonLateral.addEventListener('click', () => {
-        localStorage.removeItem('carrito');
-        localStorage.removeItem('carritoCompraActualizada');
-
-        if (typeof vaciarCarritoCompleto === 'function') {
-            vaciarCarritoCompleto();
-        } else {
-            actualizarContadorCarrito();
-            mostrarCarritoLateral();
-        }
-    });
-    carritoLateral.appendChild(vaciarButtonLateral);
-
-    // Hacemos que estas funciones sean globales para que auth.js y otros scripts puedan llamarlas si es necesario.
-    // Esto es importante porque eliminarDelCarritoLateral y agregarAlCarrito pueden ser llamadas desde otros scripts.
-    window.actualizarContadorCarrito = function() {
-        let carrito = localStorage.getItem('carrito');
-        carrito = carrito ? JSON.parse(carrito) : [];
-        const contador = carrito.reduce((acc, item) => acc + (item.cantidad || 1), 0); // Contar por cantidad, no solo por item
-
-        const contadorElementHeader = carritoIconLink.querySelector('#carrito-count-header');
-        if (contadorElementHeader) {
-            contadorElementHeader.textContent = `(${contador})`;
-        }
-
-        const botonesCarrito = document.querySelectorAll('.producto .cart-btn');
-        botonesCarrito.forEach(boton => {
-            let contadorSpan = boton.querySelector('.carrito-contador');
-            // La lógica de mostrar/ocultar el contador en los botones de producto es más compleja
-            // si solo quieres mostrar el contador del producto específico en el botón.
-            // Si es un contador global del carrito en cada botón, el código está bien.
-            // Para fines de simplicidad, lo mantendremos como un contador global para el botón
-            // PERO ten en cuenta que un contador global por cada botón "añadir" no es lo más común.
-            // Normalmente, es solo el icono del header el que muestra el total.
-            // Si quieres un contador por producto, la lógica debe ser mucho más específica.
-            if (contador > 0) {
-                 if (!contadorSpan) {
-                     contadorSpan = document.createElement('span');
-                     contadorSpan.classList.add('carrito-contador');
-                     boton.appendChild(contadorSpan);
-                 }
-                 contadorSpan.textContent = contador;
-             } else if (contadorSpan) {
-                 contadorSpan.remove();
-             }
-        });
-    }
-
-    window.agregarAlCarrito = function(producto) {
-        let carrito = localStorage.getItem('carrito');
-        carrito = carrito ? JSON.parse(carrito) : [];
-
-        const itemId = producto.nombre.replace(/\s+/g, '-').toLowerCase() + '-' + (producto.talla ? producto.talla.replace(/\s+/g, '-').toLowerCase() : 'notalla');
-        const productoExistente = carrito.find(item => item.itemId === itemId);
-
-        if (productoExistente) {
-            productoExistente.cantidad = (productoExistente.cantidad || 1) + 1;
-        } else {
-            carrito.push({ ...producto, cantidad: 1, itemId: itemId });
-        }
-
-        localStorage.setItem('carrito', JSON.stringify(carrito));
-        alert(`Producto "${producto.nombre}" añadido al carrito.`);
-        actualizarContadorCarrito();
-        mostrarCarritoLateral();
-
-        if (typeof mostrarItemsEnCarritoCompra === 'function') {
-            mostrarItemsEnCarritoCompra();
-        }
-    }
-
-    window.mostrarCarritoLateral = function() {
-        const carritoItemsContainerLateral = document.getElementById('carrito-items-lateral');
-        carritoItemsContainerLateral.innerHTML = '';
-        let carrito = localStorage.getItem('carrito');
-        carrito = carrito ? JSON.parse(carrito) : [];
-        let totalGeneral = 0;
-
-        if (carrito.length === 0) {
-            carritoItemsContainerLateral.innerHTML = '<p class="empty-cart">No hay productos en el carrito.</p>';
-        } else {
-            carrito.forEach(item => {
-                const productoDiv = document.createElement('div');
-                productoDiv.classList.add('carrito-item-lateral');
-
-                const precioNumerico = parseFloat(item.precio.replace(/S\/ /, ''));
-                const totalItem = precioNumerico * (item.cantidad || 1);
-                totalGeneral += totalItem;
-
-                productoDiv.innerHTML = `
-                    <img src="${item.imagenSrc}" alt="${item.nombre}">
-                    <div class="item-details-lateral">
-                        <p class="item-nombre-lateral">${item.nombre}</p>
-                        ${item.talla ? `<p class="item-talla-lateral">Talla: ${item.talla.toUpperCase()}</p>` : ''}
-                        <p class="item-cantidad-lateral">Cantidad: ${item.cantidad || 1}</p>
-                        <p class="item-precio-total-lateral">Total: S/ ${totalItem.toFixed(2)}</p>
-                    </div>
-                    <button class="eliminar-item-lateral" data-item-id="${item.itemId}">
-                        <i class="fas fa-trash-alt"></i> Eliminar
-                    </button>
-                `;
-                carritoItemsContainerLateral.appendChild(productoDiv);
-            });
-
-            document.querySelectorAll('.eliminar-item-lateral').forEach(button => {
-                button.addEventListener('click', function() {
-                    const itemIdToRemove = this.dataset.itemId;
-                    eliminarDelCarritoLateral(itemIdToRemove);
-                });
-            });
-        }
-        document.getElementById('total-precio-lateral').textContent = `S/ ${totalGeneral.toFixed(2)}`;
-    }
-
-    window.eliminarDelCarritoLateral = function(itemIdToRemove) {
-        let carrito = localStorage.getItem('carrito');
-        carrito = carrito ? JSON.parse(carrito) : [];
-        carrito = carrito.filter(item => item.itemId !== itemIdToRemove);
-        localStorage.setItem('carrito', JSON.stringify(carrito));
-        actualizarContadorCarrito();
-        mostrarCarritoLateral();
-        if (typeof mostrarItemsEnCarritoCompra === 'function') {
-            mostrarItemsEnCarritoCompra();
-        }
-    }
-
-    carritoIconLink.addEventListener('click', (event) => {
-        event.preventDefault();
-        carritoLateral.classList.toggle('active');
-        mostrarCarritoLateral();
-    });
-
-    document.addEventListener('click', (event) => {
-        if (!carritoLateral.contains(event.target) && !carritoIconLink.contains(event.target)) {
-            carritoLateral.classList.remove('active');
-        }
-    });
-
-    const productosGrid = document.querySelector('.producto-grid');
-    if (productosGrid) {
-        productosGrid.addEventListener('click', (event) => {
-            if (event.target.closest('.cart-btn')) {
-                const productoDiv = event.target.closest('.producto');
-                if (productoDiv) {
-                    const imagenSrc = productoDiv.querySelector('img').src;
-                    // Asegúrate de obtener el nombre y precio correctamente del p
-                    const pElement = productoDiv.querySelector('p');
-                    const nombre = pElement.childNodes[0].textContent.trim(); // El nombre es el primer nodo de texto
-                    const precioText = pElement.textContent.match(/S\/ (\d+\.\d{2})|\d+/); // Regex para S/ XX.XX o S/ XX
-                    const precio = precioText ? precioText[0] : '';
-                    const tallaElement = productoDiv.querySelector('.product-tallas span'); // Si tienes un elemento de talla en el producto
-                    const talla = tallaElement ? tallaElement.textContent.trim() : null;
-
-                    const producto = { imagenSrc, nombre, precio, talla }; // Pasa también la talla
-                    agregarAlCarrito(producto);
-                }
+    // Mostrar con fade-in cuando entra al viewport
+    const observador = new IntersectionObserver((entradas) => {
+        entradas.forEach(entrada => {
+            if (entrada.isIntersecting) {
+                entrada.target.classList.add('visible');
             }
         });
-    }
-
-    carritoLateral.addEventListener('click', (event) => {
-        if (event.target.classList.contains('eliminar-item-lateral')) {
-            const itemIdToRemove = event.target.dataset.itemId; // Usar data-item-id
-            eliminarDelCarritoLateral(itemIdToRemove);
-        }
+    }, {
+        threshold: 0.1
     });
 
-    actualizarContadorCarrito(); // Inicializar el contador al cargar la página
-    mostrarCarritoLateral(); // Mostrar el carrito al cargar la página (si hay items)*/
-
-    // **INICIO - Código para el Filtrado de Productos (Integrado)**
-    const filtros = document.querySelector('.filtros');
-
-    if (filtros && productosGrid) {
-        const productosOriginales = Array.from(productosGrid.children); // Guarda la lista original de productos
-
-        filtros.addEventListener('change', function(event) {
-            if (event.target.type === 'checkbox') {
-                console.log('Checkbox cambiado:', event.target.parentNode.textContent.trim()); // Añade esta línea
-                filtrarProductos();
-            }
-        });
-
-        function filtrarProductos() {
-            const filtrosActivos = {
-                precio: obtenerFiltros('Precio'),
-                talla: obtenerFiltros('Talla'),
-                color: obtenerFiltros('Color'),
-                material: obtenerFiltros('Material')
-            };
-
-            // Limpiar el grid de productos antes de mostrar los filtrados
-            productosGrid.innerHTML = '';
-
-            productosOriginales.forEach(productoElement => {
-                const dataPrecioTexto = productoElement.querySelector('p').textContent.match(/S\/ (\d+\.?\d*)/); // Mejorar regex para decimales
-                const dataPrecio = dataPrecioTexto ? parseFloat(dataPrecioTexto[1]) : null;
-                
-                // Asegúrate de que tus productos HTML tengan data-talla, data-color, data-material
-                const dataTalla = productoElement.dataset.talla ? productoElement.dataset.talla.trim() : '';
-                const dataColor = productoElement.dataset.color ? productoElement.dataset.color.trim() : '';
-                const dataMaterial = productoElement.dataset.material ? productoElement.dataset.material.trim() : '';
-                
-                let mostrarProducto = true;
-
-                // Filtrar por Precio
-                if (filtrosActivos.precio.length > 0) {
-                    let cumplePrecio = false;
-                    if (dataPrecio !== null) {
-                        filtrosActivos.precio.forEach(rango => {
-                            if (rango === 'S/0 - S/100' && dataPrecio >= 0 && dataPrecio <= 100) {
-                                cumplePrecio = true;
-                            } else if (rango === 'S/100 - S/200' && dataPrecio > 100 && dataPrecio <= 200) {
-                                cumplePrecio = true;
-                            } else if (rango === 'S/200+' && dataPrecio > 200) {
-                                cumplePrecio = true;
-                            }
-                        });
-                    }
-                    if (!cumplePrecio) {
-                        mostrarProducto = false;
-                    }
-                }
-
-                // Filtrar por Talla
-                if (filtrosActivos.talla.length > 0) {
-                    const tallasProducto = dataTalla.split(',').map(t => t.trim()); // Divide y limpia espacios
-                    const cumpleTalla = filtrosActivos.talla.some(tallaFiltro => tallasProducto.includes(tallaFiltro));
-                    if (!cumpleTalla) {
-                        mostrarProducto = false;
-                    }
-                }
-
-                // Filtrar por Color
-                if (filtrosActivos.color.length > 0) {
-                    const coloresProducto = dataColor.split(',').map(c => c.trim()); // Divide y limpia espacios
-                    const cumpleColor = filtrosActivos.color.some(colorFiltro => coloresProducto.includes(colorFiltro));
-                    if (!cumpleColor) {
-                        mostrarProducto = false;
-                    }
-                }
-
-                // Filtrar por Material
-                if (filtrosActivos.material.length > 0) {
-                    const materialesProducto = dataMaterial.split(',').map(m => m.trim());
-                    const cumpleMaterial = filtrosActivos.material.some(materialFiltro => materialesProducto.includes(materialFiltro));
-                    if (!cumpleMaterial) {
-                        mostrarProducto = false;
-                    }
-                }
-
-                if (mostrarProducto) {
-                    productosGrid.appendChild(productoElement.cloneNode(true));
-                }
-            });
-
-            if (productosGrid.children.length === 0) {
-                productosGrid.innerHTML = '<p>No se encontraron productos con los filtros seleccionados.</p>';
-            }
-        }
-
-        function obtenerFiltros(categoria) {
-            const filtrosCategoria = [];
-            const divsConH4 = filtros.querySelectorAll('div h4');
-            divsConH4.forEach(h4 => {
-                if (h4.textContent.trim() === categoria) {
-                    const divPadre = h4.parentNode;
-                    if (divPadre) {
-                        const checkboxes = divPadre.querySelectorAll('input[type="checkbox"]:checked');
-                        checkboxes.forEach(checkbox => {
-                            // Obtiene el texto del label asociado al checkbox, que es el valor del filtro
-                            const label = divPadre.querySelector(`label[for="${checkbox.id}"]`);
-                            if (label) {
-                                filtrosCategoria.push(label.textContent.trim());
-                            }
-                        });
-                    }
-                }
-            });
-            return filtrosCategoria;
-        }
-    }
+    document.querySelectorAll('.fade-in-section').forEach(seccion => {
+        observador.observe(seccion);
+    });
 });
+    document.addEventListener("DOMContentLoaded", function () {
+        const menuButton = document.querySelector(".admin-btn");
+        const dropdownMenu = document.querySelector(".dropdown-content");
+
+        if (menuButton && dropdownMenu) {
+            menuButton.addEventListener("click", function (e) {
+                e.stopPropagation(); // evitar que se cierre inmediatamente
+                dropdownMenu.classList.toggle("show");
+            });
+
+            // Cerrar si se hace clic fuera
+            window.addEventListener("click", function () {
+                if (dropdownMenu.classList.contains("show")) {
+                    dropdownMenu.classList.remove("show");
+                }
+            });
+        }
+    });
+

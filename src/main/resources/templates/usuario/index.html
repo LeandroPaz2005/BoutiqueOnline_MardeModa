@@ -4,9 +4,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Boutique Mar de Moda</title>
-        <link rel="stylesheet" th:href="@{/css/styles.css}">
-        <script th:src="@{/JS/script.js}"></script>
         <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css}">
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+    
     </head>
     <body class="home">
 
@@ -14,27 +14,35 @@
             <div id="mensaje-oferta" class="top-message"></div>
             <div class="header-content">
                 <div class="logo">
-                    <a th:href="@{/usuario/inicio}">BOUTIQUE ONLINE MAR DE MODA</a>
+                    <a th:href="@{/}">BOUTIQUE ONLINE MAR DE MODA</a>
                 </div>
 
                 <div class="nav-buttons">
-                    <!-- SI NO hay sesión -->
-                    <div th:if="${usuario == null}">
+                    <div th:if="${usuario == null}" class="auth-buttons">
                         <a th:href="@{/usuario/login}" class="btn">Iniciar Sesión</a>
                         <a th:href="@{/usuario/registro}" class="btn">Regístrate</a>
                     </div>
 
-                    <!-- SI HAY sesión -->
-                    <div th:if="${usuario != null}" class="user-logged">
-                        <a th:href="@{/usuario/perfil}" class="btn">Mi Perfil</a>
-                        <a th:href="@{/usuario/compras}" class="btn">Mis Compras</a>
-                        <a th:href="@{/getCart}" class="btn">Ver Carrito</a>
-                          <a th:href="@{/usuario/cerrar}" class="btn">Cerrar Session</a>
+                    <div th:if="${usuario != null}" class="user-logged-controls">
+                        <div class="admin-dropdown"> <button class="admin-btn">Menú <i class="fas fa-caret-down"></i></button>
+                            <div class="dropdown-content">
+                                <a th:href="@{/}">Inicio</a>
+                                <a th:href="@{/getCart}">Mi Carrito</a>
+                                <a th:href="@{/order}">Resumen de Orden</a>
+                                <a th:href="@{/usuario/compras}">Mis Compras</a>
+                                <a th:href="@{/usuario/perfil}">Mi Perfil</a>
+                                <a th:href="@{/usuario/cerrar}">Cerrar Sesión</a>
+                            </div>
+                        </div>
+
+                        <div class="user-info">
+                            <i class="fas fa-user-circle"></i>
+                            <span th:text="${usuario.nombre}">Usuario</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- MENÚ DE NAVEGACIÓN -->
             <nav class="navbar">
                 <ul class="nav-links">
                     <li><a th:href="@{/productos/MostrarProducto}">Productos</a></li>
@@ -45,51 +53,47 @@
             </nav>
         </header>
 
-
-
         <main>
+            <!-- Promociones Slider -->
             <section class="slider-promociones">
                 <div class="slideshow-container promocionesSlider" id="promocionesSlider">
                     <div class="slide promociones-slide fade">
-                        <div class="numbertext">1 / 4</div>
-                        <img th:src="@{/img/11.jpeg}" alt="Promoción 1">
+                        <div class="numbertext"></div>
+                        <img src="/img/11.jpeg" alt="Promoción 1">
                         <div class="text">Promoción Especial 1</div>
                     </div>
                     <div class="slide promociones-slide fade">
                         <div class="numbertext">2 / 4</div>
-                        <img th:src="@{/img/2.jpeg}" alt="Promoción 2">
+                        <img src="/img/2.jpeg" alt="Promoción 2">
                         <div class="text">Promoción Imperdible 2</div>
                     </div>
                     <div class="slide promociones-slide fade">
                         <div class="numbertext">3 / 4</div>
-                        <img th:src="@{/img/3.jpeg}" alt="Promoción 3">
+                        <img src="/img/3.jpeg" alt="Promoción 3">
                         <div class="text">Grandes Descuentos 3</div>
                     </div>
                     <div class="slide promociones-slide fade">
                         <div class="numbertext">4 / 4</div>
-                        <img th:src="@{/img/4.jpeg}" alt="Promoción 4">
+                        <img src="/img/4.jpeg" alt="Promoción 4">
                         <div class="text">Oferta de Verano 4</div>
                     </div>
-                    <button class="prev" onclick="changeSlide('promocionesSlider', -1)">&#10094;</button>
-                    <button class="next" onclick="changeSlide('promocionesSlider', 1)">&#10095;</button>
+                    <button class="prev" onclick="changePromocionesSliderSlide(-1)">&#10094;</button>
+                    <button class="next" onclick="changePromocionesSliderSlide(1)">&#10095;</button>
                 </div>
                 <div class="dots-container" style="text-align:center">
-                    <span class="dot active" onclick="currentSlide('promocionesSlider', 1)"></span>
-                    <span class="dot" onclick="currentSlide('promocionesSlider', 2)"></span>
-                    <span class="dot" onclick="currentSlide('promocionesSlider', 3)"></span>
-                    <span class="dot" onclick="currentSlide('promocionesSlider', 4)"></span>
+                    <span class="dot active" onclick="currentPromocionesSliderSlide(1)"></span>
+                    <span class="dot" onclick="currentPromocionesSliderSlide(2)"></span>
+                    <span class="dot" onclick="currentPromocionesSliderSlide(3)"></span>
+                    <span class="dot" onclick="currentPromocionesSliderSlide(4)"></span>
                 </div>
             </section>
 
             <section class="bienvenida container py-5 d-flex flex-column flex-md-row align-items-center justify-content-between">
-                <!-- Texto de bienvenida -->
                 <div class="texto col-md-6 mb-4 mb-md-0">
-                    <!-- Mensaje personalizado si el usuario ha iniciado sesión -->
                     <h2 class="bienvenida-titulo" th:if="${usuario != null}">
                         ¡Bienvenido/a, <span class="usuario-nombre" th:text="${usuario.nombre}"></span> a <span class="marca">MAR DE MODA</span>!
                     </h2>
 
-                    <!-- Mensaje general si no hay sesión -->
                     <h2 class="bienvenida-titulo" th:unless="${usuario != null}">
                         ¡Bienvenidos a <span class="marca">MAR DE MODA</span>!
                     </h2>
@@ -105,30 +109,37 @@
                     <a th:href="@{/productos/MostrarProducto}" class="btn btn-primary mt-3">Ver Catálogo</a>
                 </div>
 
-                <!-- Imagen de portada -->
                 <div class="imagen col-md-5 text-center">
                     <img th:src="@{/img/portada.jpg}" alt="Ropa colgada en perchero" class="img-fluid rounded shadow" />
                 </div>
             </section>
-
-
-            <section class="productos-destacados">
-                <h3>Nuestros Productos Destacados</h3>
-                <div class="slideshow-container productosSlider" id="productosSlider">
-                    <div class="slide destacados-slide fade" th:each="i : ${#numbers.sequence(1,10)}">
-                        <div class="numbertext" th:text="${i} + ' / 10'"></div>
-                        <img th:src="@{/img/6.jpeg}" th:alt="'Producto ' + ${i}">
-                        <div class="text" th:text="'Producto ' + ${i} + '<br>S/ ' + (90 + ${i} * 5)"></div>
-                    </div>
-                    <button class="prev" onclick="changeSlide('productosSlider', -1)">&#10094;</button>
-                    <button class="next" onclick="changeSlide('productosSlider', 1)">&#10095;</button>
+            
+            <section class="fade-in-section beneficios">
+                <h2 class="titulo">¿Por qué elegir Mar de Moda?</h2>
+                <div class="contenedor-beneficios">
+                  <div class="beneficio">
+                    <i class="fas fa-truck"></i>
+                    <h3>Envíos Rápidos</h3>
+                    <p>Entregamos en todo el país en menos de 48 horas.</p>
+                  </div>
+                  <div class="beneficio">
+                    <i class="fas fa-credit-card"></i>
+                    <h3>Pago Seguro</h3>
+                    <p>Aceptamos tarjetas, Yape y transferencia bancaria.</p>
+                  </div>
+                  <div class="beneficio">
+                    <i class="fas fa-star"></i>
+                    <h3>Alta Calidad</h3>
+                    <p>Prendas seleccionadas con altos estándares de calidad.</p>
+                  </div>
+                  <div class="beneficio">
+                    <i class="fas fa-headset"></i>
+                    <h3>Atención Personalizada</h3>
+                    <p>Resolvemos tus dudas vía WhatsApp o Instagram.</p>
+                  </div>
                 </div>
-                <div class="dots-container" style="text-align:center">
-                    <span class="dot" th:each="i : ${#numbers.sequence(1,10)}" th:classappend="${i==1} ? ' active'" th:onclick="'currentSlide(\'productosSlider\', ' + ${i} + ')'"></span>
-                </div>
-            </section>
+              </section>
 
-            <!-- Sección de productos destacados en cards -->
             <section class="productos-destacados">
                 <h3>Nuestros Productos Destacados</h3>
                 <div class="productos-grid">
@@ -176,6 +187,6 @@
                 </a>
             </div>
         </footer>
-    </body>
-
+        <script src="/JS/script.js"></script>
+        </body>
 </html>

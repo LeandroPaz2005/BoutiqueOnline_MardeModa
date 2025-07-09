@@ -14,32 +14,44 @@ body {
     flex-direction: column;
     min-height: 100vh;
 }
+
+/* --- ESTILOS PARA EL SLIDER (si aplica a ambos sliders) --- */
+/* Asegurarse de que los slides están ocultos por defecto y se muestren con JS */
 .slide {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease-in-out, visibility 0.5s;
-  position: absolute;
-  width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out, visibility 0.5s;
+    position: absolute; /* Importante para que ocupen el mismo espacio y el JS los cambie */
+    width: 100%;
+    /* Altura explícita o min-height para que el contenedor no colapse */
+    min-height: 300px; /* Ajusta según tus imágenes */
+    display: flex; /* Para centrar el contenido del slide si lo tienes */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .slide.active-slide {
-  opacity: 1;
-  visibility: visible;
-  position: relative;
+    opacity: 1;
+    visibility: visible;
+    position: relative; /* Lo saca del flujo para que ocupe espacio cuando es activo */
 }
 
 .slideshow-container {
-  position: relative;
+    position: relative;
+    overflow: hidden; /* Oculta cualquier parte del slide que se salga */
+    width: 100%; /* Asegura que ocupe todo el ancho */
+    /* Altura del contenedor para evitar colapso cuando no hay slides visibles */
+    min-height: 300px; /* Igual que el slide, o ajusta a una altura fija */
 }
-
 
 /* Header */
 header {
     background: #ffffff;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
-    position: sticky;
+    position: sticky; /* Sticky funciona si el body tiene min-height: 100vh; */
     top: 0;
-    z-index: 1000;
+    z-index: 1000; /* Asegura que esté por encima de otros contenidos */
 }
 
 .top-message {
@@ -50,7 +62,8 @@ header {
     text-align: center;
 }
 
-.header-content {
+/* CONTENIDO PRINCIPAL DEL HEADER (LOGO, BOTONES DE AUTENTICACIÓN/USUARIO) */
+header .header-content { /* Más específico */
     max-width: 1200px;
     margin: auto;
     padding: 12px 20px;
@@ -59,24 +72,25 @@ header {
     align-items: center;
 }
 
-.logo a {
+header .logo a { /* Más específico */
     font-size: 1.7em;
     font-weight: bold;
     color: #a0004d;
     text-decoration: none;
 }
 
-.logo a:hover {
+header .logo a:hover { /* Más específico */
     color: #d1006a;
 }
 
-.nav-buttons {
+header .nav-buttons { /* Más específico */
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
-.nav-buttons .btn {
+/* --- BOTONES DE AUTENTICACIÓN (Iniciar Sesión, Regístrate) --- */
+header .nav-buttons .btn { /* Más específico */
     background-color: #a0004d;
     color: #fff;
     padding: 8px 14px;
@@ -84,52 +98,161 @@ header {
     text-decoration: none;
     font-size: 0.9em;
     transition: 0.3s ease;
+    border: none; /* Asegurar que Bootstrap no ponga borde */
 }
 
-.nav-buttons .btn:hover {
+header .nav-buttons .btn:hover { /* Más específico */
     background-color: #d1006a;
 }
 
-.cart-icon-link {
+/* --- ICONO DEL CARRITO (si lo necesitas y no es parte del admin-dropdown) --- */
+header .cart-icon-link { /* Más específico */
     color: #a0004d;
     text-decoration: none;
     font-weight: 500;
     font-size: 0.95em;
     position: relative;
+    display: flex; /* Para alinear el ícono y el texto */
+    align-items: center;
+    gap: 5px;
 }
 
-.cart-icon-link i {
-    margin-right: 5px;
+header .cart-icon-link i { /* Más específico */
+    margin-right: 0; /* Bootstrap podría añadir margen */
 }
 
-/* Navbar */
-.navbar {
+/* --- CONTROLES DE USUARIO LOGUEADO (Menú, Nombre de Usuario) --- */
+header .user-logged-controls { /* Más específico */
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espacio entre el dropdown y la info de usuario */
+}
+
+/* Estilos para el Dropdown "Menú" (Admin) */
+header .admin-dropdown { /* Más específico */
+    position: relative;
+    display: inline-block;
+}
+
+header .admin-dropdown .admin-btn { /* Más específico */
+    background-color: #a0004d;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    display: flex; /* Para alinear el texto y el ícono */
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.3s ease;
+}
+
+header .admin-dropdown .admin-btn:hover { /* Más específico */
+    background-color: #d1006a;
+}
+
+header .admin-dropdown .dropdown-content { /* Más específico */
+    display: none; /* Oculto por defecto, Bootstrap podría cambiar esto */
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1000; /* Asegura que esté por encima de todo */
+    right: 0; /* Alinea a la derecha del botón */
+    top: 100%; /* Justo debajo del botón */
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+header .admin-dropdown .dropdown-content a { /* Más específico */
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+header .admin-dropdown .dropdown-content a:hover { /* Más específico */
+    background-color: #ddd;
+    color: #a0004d;
+}
+
+/* Clase para mostrar el dropdown con JavaScript */
+header .admin-dropdown .dropdown-content.show { /* Más específico */
+    display: block !important; /* Usar !important si Bootstrap lo esconde */
+}
+
+/* Información del usuario */
+header .user-info { /* Más específico */
+    display: flex;
+    align-items: center;
+    color: #333;
+    font-weight: bold;
+    gap: 5px;
+}
+
+header .user-info i { /* Más específico */
+    font-size: 1.2em;
+    color: #a0004d;
+}
+
+
+/* --- NAVBAR PRINCIPAL (Productos, Catálogo, Comprar, Buscar) --- */
+/* Esta sección es clave para el centrado */
+header .navbar { /* MUCHO MÁS ESPECÍFICO y crucial para el centrado */
     background-color: #fff;
     border-top: 1px solid #f2c3d1;
     border-bottom: 1px solid #f2c3d1;
-    text-align: center;
+    width: 100%; /* Asegura que la barra de navegación ocupe todo el ancho */
+    display: flex; /* Habilita Flexbox para centrar su contenido */
+    justify-content: center; /* Centra el ul.nav-links horizontalmente */
+    padding: 10px 0; /* Puedes ajustar este padding aquí o en el ul */
 }
 
-.navbar ul {
+/* La lista de enlaces dentro del navbar */
+header .navbar ul.nav-links { /* Aún más específico: ul.nav-links dentro de header .navbar */
     list-style: none;
-    display: flex;
-    justify-content: center;
-    gap: 25px;
-    padding: 10px 0;
+    display: flex; /* Habilita Flexbox para los <li> */
+    justify-content: center; /* Centra los <li> dentro de la ul */
+    gap: 25px; /* Espacio entre los elementos de la lista */
+    padding: 0; /* Quita el padding por defecto de las listas de Bootstrap */
+    margin: 0; /* Quita el margen por defecto de las listas de Bootstrap */
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
 }
 
-.navbar a {
+/* Los elementos <a> dentro de los <li> de la navbar */
+header .navbar ul.nav-links li a { /* Máxima especificidad para los enlaces */
     text-decoration: none;
     color: #a0004d;
     font-weight: 500;
     padding: 8px 12px;
     transition: 0.3s ease;
+    display: block; /* Para que el padding sea efectivo en toda el área del enlace */
 }
 
-.navbar a:hover {
+header .navbar ul.nav-links li a:hover { /* Máxima especificidad para el hover */
     color: #d1006a;
     border-bottom: 2px solid #d1006a;
 }
+
+/* Asegúrate de que el botón "Buscar" (si usa .btn) no tenga estilos de Bootstrap que lo dañen */
+header .navbar ul.nav-links li .btn { /* Si el link de buscar también usa la clase 'btn' */
+    background-color: #a0004d; /* O el color que desees para el botón de buscar */
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: 0.3s ease;
+    border: none; /* Quita el borde que Bootstrap podría añadir */
+}
+
+header .navbar ul.nav-links li .btn:hover {
+    background-color: #d1006a;
+}
+
 
 /* Secciones */
 main section {
@@ -194,15 +317,9 @@ main section {
     margin-bottom: 30px;
 }
 
-.slideshow-container {
-    position: relative;
-    overflow: hidden;
-}
-
-.slide {
-    display: none;
-    text-align: center;
-}
+/* .slideshow-container, .slide, .prev, .next, .dot se mantienen igual,
+   ya que estos no suelen entrar en conflicto con las navbars de Bootstrap.
+   Si tienes problemas con ellos, revisa la parte superior donde los ajusté. */
 
 .slide img {
     width: 100%;
@@ -245,6 +362,7 @@ main section {
 
 .dots-container {
     margin-top: 10px;
+    text-align: center; /* Asegurar centrado de los puntos */
 }
 
 .dot {
@@ -291,6 +409,7 @@ footer .social-icon:hover {
 footer .social-icon i {
     margin-left: 5px;
 }
+
 /* Estilos para la sección de productos destacados */
 .productos-destacados {
     padding: 2rem;
@@ -362,6 +481,7 @@ footer .social-icon i {
 .btn-card:hover {
     background-color: #c2185b;
 }
+
 .banner-promocional {
     background: linear-gradient(to right, #ff80ab, #ff4081);
     color: white;
@@ -397,6 +517,7 @@ footer .social-icon i {
     background-color: #e91e63;
     color: white;
 }
+
 /* Estilo visual para la sección Sobre Nosotros */
 .sobre-nosotros {
     background: linear-gradient(to right, #f8bbd0, #ff9999); /* rosado pastel degradado */
@@ -420,4 +541,138 @@ footer .social-icon i {
     margin-bottom: 1rem;
     line-height: 1.7;
     color: #6a1b4d;
+}
+
+.beneficios {
+  padding: 40px 20px;
+  text-align: center;
+  background-color: #fff0f6;
+}
+
+.beneficios .titulo {
+  font-size: 1.8rem;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.contenedor-beneficios {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.beneficio {
+  background: #fff;
+  border-radius: 15px;
+  padding: 20px;
+  width: 220px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.beneficio:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.beneficio i {
+  font-size: 2.5rem;
+  color: #a0004d;
+  margin-bottom: 10px;
+}
+
+.beneficio h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.beneficio p {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+.fade-in-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsive design */
+@media (max-width: 991px) {
+  header .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  header .nav-buttons {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  header .navbar ul.nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .bienvenida {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .bienvenida .texto,
+  .bienvenida .imagen {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+
+  .productos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .banner-promocional h2 {
+    font-size: 1.5rem;
+  }
+
+  .banner-promocional p {
+    font-size: 1rem;
+  }
+
+  .beneficio {
+    width: 100%;
+  }
+
+  .slide img {
+    max-height: 250px;
+  }
+}
+
+@media (max-width: 576px) {
+  header .logo a {
+    font-size: 1.3em;
+  }
+
+  .banner-promocional {
+    padding: 2rem 1rem;
+  }
+
+  .banner-promocional h2 {
+    font-size: 1.3rem;
+  }
+
+  .productos-destacados,
+  .sobre-nosotros,
+  .beneficios {
+    padding: 2rem 1rem;
+  }
 }

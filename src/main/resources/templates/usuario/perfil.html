@@ -22,23 +22,25 @@
                     <a th:href="@{/}">BOUTIQUE ONLINE MAR DE MODA</a>
                 </div>
 
-                <nav class="nav-buttons">
-                    <div class="admin-dropdown">
-                        <button class="admin-btn">Menú <i class="fas fa-caret-down"></i></button>
-                        <div class="dropdown-content">
-                            <a th:href="@{/}">Inicio</a>
-                            <a th:href="@{/getCart}">Mi Carrito</a>
-                            <a th:href="@{/order}">Resumen de Orden</a>
-                            <a th:href="@{/usuario/compras}">Mis Compras</a>
-                            <a th:href="@{/usuario/perfil}">Mi Perfil</a>
-                            <a th:href="@{/usuario/cerrar}">Cerrar Sesión</a>
+                <div class="header-right-group">
+                    <nav class="nav-buttons">
+                        <div class="admin-dropdown">
+                            <button class="admin-btn">Menú <i class="fas fa-caret-down"></i></button>
+                            <div class="dropdown-content">
+                                <a th:href="@{/}">Inicio</a>
+                                <a th:href="@{/getCart}">Mi Carrito</a>
+                                <a th:href="@{/order}">Resumen de Orden</a>
+                                <a th:href="@{/usuario/compras}">Mis Compras</a>
+                                <a th:href="@{/usuario/perfil}">Mi Perfil</a>
+                                <a th:href="@{/usuario/cerrar}">Cerrar Sesión</a>
+                            </div>
                         </div>
-                    </div>
-                </nav>
+                    </nav>
 
-                <div th:if="${usuario != null}" class="user-info">
-                    <i class="fas fa-user-circle"></i>
-                    <span th:text="${usuario.nombre}">Usuario</span>
+                    <div th:if="${usuario != null}" class="user-info">
+                        <i class="fas fa-user-circle"></i>
+                        <span th:text="${usuario.nombre}">Usuario</span>
+                    </div>
                 </div>
             </div>
         </header>
@@ -99,8 +101,8 @@
 
                 <div class="text-center mt-5">
                     <a th:href="@{/usuario/perfil/editar}" class="btn btn-outline-primary px-4 me-2">Editar Datos</a>
-                    <a href="#" class="btn btn-outline-warning px-4 me-2">Cambiar Contraseña</a>
-                    <a th:href="@{/usuario/inicio}" class="btn btn-outline-secondary px-4">Volver al Inicio</a>
+                    <!--<a th:href="@{/usuario/perfil/cambiar-contrasena}" class="btn btn-outline-warning px-4 me-2">Cambiar Contraseña</a>-->
+                    <a th:href="@{/usuario/index}" class="btn btn-outline-secondary px-4">Volver al Inicio</a>
                 </div>
             </div>
         </main>
