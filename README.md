@@ -100,7 +100,7 @@ CONEXION A  BASE DE DATOS
 - Git y GitHub
 =======
 
-##Integrantes
+## Integrantes
 - Bakchend Karol
 - Backend Victor
 - Backend Victor
