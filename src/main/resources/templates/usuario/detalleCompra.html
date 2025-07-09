@@ -24,23 +24,25 @@
                     <a th:href="@{/}">BOUTIQUE ONLINE MAR DE MODA</a>
                 </div>
 
-                <nav class="nav-buttons">
-                    <div class="admin-dropdown">
-                        <button class="admin-btn">Menú <i class="fas fa-caret-down"></i></button>
-                        <div class="dropdown-content">
-                            <a th:href="@{/}">Inicio</a>
-                            <a th:href="@{/getCart}">Mi Carrito</a>
-                            <a th:href="@{/order}">Resumen de Orden</a>
-                            <a th:href="@{/usuario/compras}">Mis Compras</a>
-                            <a th:href="@{/usuario/perfil}">Mi Perfil</a>
-                            <a th:href="@{/usuario/cerrar}">Cerrar Sesión</a>
+                <div class="header-right-group">
+                    <nav class="nav-buttons">
+                        <div class="admin-dropdown">
+                            <button class="admin-btn">Menú <i class="fas fa-caret-down"></i></button>
+                            <div class="dropdown-content">
+                                <a th:href="@{/}">Inicio</a>
+                                <a th:href="@{/getCart}">Mi Carrito</a>
+                                <a th:href="@{/order}">Resumen de Orden</a>
+                                <a th:href="@{/usuario/compras}">Mis Compras</a>
+                                <a th:href="@{/usuario/perfil}">Mi Perfil</a>
+                                <a th:href="@{/usuario/cerrar}">Cerrar Sesión</a>
+                            </div>
                         </div>
-                    </div>
-                </nav>
+                    </nav>
 
-                <div th:if="${usuario != null}" class="user-info">
-                    <i class="fas fa-user-circle"></i>
-                    <span th:text="${usuario.nombre}">Usuario</span>
+                    <div th:if="${usuario != null}" class="user-info">
+                        <i class="fas fa-user-circle"></i>
+                        <span th:text="${usuario.nombre}">Usuario</span>
+                    </div>
                 </div>
             </div>
         </header>
@@ -100,10 +102,8 @@
                     <h5>Estado: <span th:text="${orden.estado}"></span></h5>
                 </div>
 
-
-                <!-- Botón para descargar la factura (opcional que solo aparezca si está pagado) -->
-                <a th:if="${orden.estado == 'PAGADO'}"
-                   th:href="@{'/usuario/factura/' + ${orden.id}}" class="btn btn-primary" target="_blank">
+                <a th:href="@{'/usuario/factura/' + ${orden.id}}"
+                   class="btn btn-primary" target="_blank">
                     Descargar Factura PDF
                 </a>
 

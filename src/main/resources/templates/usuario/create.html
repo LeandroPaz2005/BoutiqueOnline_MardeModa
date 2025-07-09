@@ -77,7 +77,11 @@
                 </div>
                 <div class="campo">
                     <label for="telefono">Teléfono:</label>
-                    <input type="text" id="telefono" th:field="*{telefono}">
+                    <input type="text" id="telefono" th:field="*{telefono}"
+                           maxlength="9"
+                           pattern="[0-9]{9}"
+                           inputmode="numeric"
+                           title="Por favor, introduce exactamente 9 dígitos numéricos.">
                 </div>
                 <div class="campo">
                     <label>Rol:</label>

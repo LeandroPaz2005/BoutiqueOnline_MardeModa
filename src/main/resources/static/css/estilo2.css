@@ -24,6 +24,14 @@ header {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
+.top-message {
+    background-color: #ffccdd;
+    color: #a0004d;
+    padding: 5px 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
 .header-content {
     display: flex;
     justify-content: space-between;
@@ -35,6 +43,14 @@ header {
     text-decoration: none;
     font-size: 1.6rem;
     font-weight: bold;
+    flex-shrink: 0;
+}
+
+/* Contenedor para agrupar el menú y la info de usuario a la derecha */
+.header-right-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
 .nav-buttons {
@@ -51,6 +67,13 @@ header {
     color: white;
     font-size: 1rem;
     cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.admin-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .dropdown-content {
@@ -60,8 +83,10 @@ header {
     background-color: #fff;
     border: 1px solid #ccc;
     min-width: 160px;
-    z-index: 1;
+    z-index: 1000;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+    overflow: hidden;
 }
 
 .dropdown-content a {
@@ -80,8 +105,22 @@ header {
     background-color: #f2f2f2;
 }
 
+/* Estilos para la información del usuario en el header */
+.user-info {
+    display: flex; /* Añadido: Para alinear el icono y el texto de "Carlos" */
+    align-items: center; /* Añadido: Centra verticalmente */
+    gap: 8px; /* Añadido: Espacio entre el icono y el nombre */
+    color: white; /* Añadido: Color del texto del nombre de usuario */
+    font-size: 1.1rem; /* Añadido: Ajusta el tamaño de fuente si es necesario */
+}
+
+.user-info .fas {
+    font-size: 1.3em; /* Añadido: Tamaño del icono de usuario */
+    color: white; /* Añadido: Asegúrate de que el icono también sea blanco */
+}
+
 /* ==============================
-   Main (Panel Administrativo)
+   Main (Panel Administrativo y Contenido General)
 ============================== */
 .admin-panel-container {
     padding: 30px;
@@ -135,53 +174,6 @@ header {
     color: #444;
 }
 
-/* ==============================
-   Footer
-============================== */
-footer {
-    background-color: #a0004d;
-    color: white;
-    text-align: center;
-    padding: 20px 10px;
-    margin-top: 40px;
-}
-
-footer p {
-    margin-bottom: 10px;
-}
-
-.social-links {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-.social-icon {
-    color: white;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 1rem;
-    transition: color 0.3s;
-}
-
-.social-icon:hover {
-    color: #ffccdd;
-}
-
-/* ==============================
-   Mensaje Superior (Oferta)
-============================== */
-.top-message {
-    background-color: #ffccdd;
-    color: #a0004d;
-    padding: 5px 10px;
-    font-weight: bold;
-    text-align: center;
-}
-
 /* Contenedor del formulario */
 .form-container {
     max-width: 500px;
@@ -226,7 +218,7 @@ footer p {
     outline: none;
 }
 
-/* Botones */
+/* Botones de formulario */
 .acciones {
     display: flex;
     justify-content: center;
@@ -271,4 +263,364 @@ footer p {
     text-align: center;
     font-size: 0.95rem;
     color: #333;
+}
+
+
+/* ==============================
+   Estilos para Detalle de Compra y Perfil de Usuario
+============================== */
+
+/* Breadcrumb Styling */
+.breadcrumb {
+    background-color: #f8f9fa; /* Color de fondo ligero */
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    margin-top: 20px;
+}
+
+.breadcrumb-item a {
+    color: #a0004d; /* Color de los enlaces */
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.breadcrumb-item a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb-item.active {
+    color: #6c757d; /* Color para el elemento activo */
+}
+
+.breadcrumb-nav {
+    margin-bottom: 25px; /* Espacio debajo del breadcrumb */
+    margin-top: 20px; /* Espacio encima del breadcrumb */
+}
+
+/* Card para el contenido principal (ej. Detalle de compra, Mi Perfil) */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    background-color: #ffffff;
+}
+
+.card-body {
+    padding: 0;
+}
+
+/* Estilos de la tabla (para Detalle de Compra) */
+.table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table thead {
+    background-color: #a0004d;
+    color: white;
+}
+
+.table th, .table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Redondear las esquinas de la cabecera de la tabla */
+.table thead th:first-child {
+    border-top-left-radius: 8px;
+}
+
+.table thead th:last-child {
+    border-top-right-radius: 8px;
+}
+
+/* Eliminar borde inferior de la última fila del cuerpo de la tabla */
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Efecto hover en las filas de la tabla */
+.table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Estilos para el botón "Pagar con MercadoPago" */
+.btn-success {
+    background-color: #28a745; /* Verde Bootstrap original */
+    border-color: #28a745;
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-flex; /* Para centrar contenido si el texto es pequeño */
+    align-items: center;
+    justify-content: center;
+    text-decoration: none; /* Asegurar que no tenga subrayado si es un <a> */
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #218838; /* Verde más oscuro al hover */
+    border-color: #1e7e34;
+    transform: translateY(-2px); /* Ligero efecto de elevación */
+}
+
+/* Estilos para el mensaje de "Compra pagada" */
+.badge.bg-success {
+    background-color: #28a745 !important; /* Asegura el color verde de éxito */
+    color: white;
+    padding: 8px 15px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    display: inline-block; /* Para que tome padding y margen */
+    margin-top: 10px; /* Espacio superior */
+}
+
+/* Estilos para Total y Estado en detalle de compra */
+.mt-3 h4, .mt-3 h5 {
+    color: #a0004d; /* Color de tus textos principales */
+    margin-bottom: 10px;
+}
+
+.mt-3 h4 span, .mt-3 h5 span {
+    font-weight: bold;
+    color: #333; /* Color más oscuro para los valores */
+}
+
+/* Estilo para el botón de Descargar Factura PDF */
+.btn-primary {
+    background-color: #007bff; /* Azul Bootstrap original */
+    border-color: #007bff;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: none;
+    color: white;
+    margin-top: 20px; /* Espacio sobre el botón */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* ==============================
+   Estilos de Perfil de Usuario (específicos si los necesitas)
+============================== */
+/* Los estilos .card, .container, etc. ya aplican bien.
+   Solo para los elementos específicos de "Mi Perfil" */
+
+.img-thumbnail.rounded-circle {
+    border: 3px solid #a0004d; /* Un borde para la foto de perfil */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card .bg-white.rounded-3.p-3.shadow-sm {
+    border: 1px solid #f0f0f0; /* Un borde sutil para las cajas de información */
+}
+
+.card .text-uppercase.fw-bold {
+    border-bottom: 2px solid #f8f9fa; /* Una línea divisoria debajo del título "Mi Perfil" */
+    padding-bottom: 15px;
+    margin-bottom: 25px !important;
+}
+
+/* Botones de acción en el perfil */
+.text-center.mt-5 .btn-outline-primary,
+.text-center.mt-5 .btn-outline-warning,
+.text-center.mt-5 .btn-outline-secondary {
+    padding: 10px 20px;
+    border-width: 2px; /* Mayor grosor del borde */
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.text-center.mt-5 .btn-outline-primary {
+    color: #a0004d;
+    border-color: #a0004d;
+}
+
+.text-center.mt-5 .btn-outline-primary:hover {
+    background-color: #a0004d;
+    color: white;
+}
+
+.text-center.mt-5 .btn-outline-warning {
+    color: #ffc107; /* Amarillo de Bootstrap */
+    border-color: #ffc107;
+}
+
+.text-center.mt-5 .btn-outline-warning:hover {
+    background-color: #ffc107;
+    color: #333; /* O un color de texto oscuro */
+}
+
+.text-center.mt-5 .btn-outline-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+}
+
+.text-center.mt-5 .btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: white;
+}
+
+
+/* ==============================
+   Footer
+============================== */
+footer {
+    background-color: #a0004d;
+    color: white;
+    text-align: center;
+    padding: 20px 10px;
+    margin-top: 40px;
+}
+
+footer p {
+    margin-bottom: 10px;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.social-icon {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+
+.social-icon:hover {
+    color: #ffccdd;
+}
+
+/*Cambiar contraseña*/
+
+/* Contenedor del formulario de cambio de contraseña */
+.form-change-password {
+    max-width: 600px; /* Ancho máximo para el formulario */
+    margin: 40px auto; /* Centra el formulario y le da margen vertical */
+    padding: 40px; /* Más padding interno */
+    border: none;
+    border-radius: 15px; /* Más redondeado */
+    background-color: #fefefe; /* Un blanco muy suave */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Sombra más profunda y suave */
+}
+
+/* Título del formulario */
+.form-change-password .form-title {
+    color: #a0004d; /* Tu color principal de marca */
+    font-size: 2rem;
+    margin-bottom: 30px !important;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #f2f2f2; /* Línea divisoria sutil */
+    padding-bottom: 15px;
+}
+
+/* Etiquetas del formulario */
+.form-label-custom {
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+/* Campos de entrada del formulario */
+.form-control-custom {
+    padding: 12px 18px; /* Más padding para los campos */
+    border: 1px solid #ddd;
+    border-radius: 8px; /* Bordes más redondeados */
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-control-custom:focus {
+    border-color: #a0004d; /* Color de tu marca al enfocar */
+    box-shadow: 0 0 0 0.25rem rgba(160, 0, 77, 0.25); /* Sombra de enfoque con tu color */
+    outline: none;
+}
+
+/* Estilos para mensajes de validación de Bootstrap */
+.form-control-custom:valid {
+    border-color: #28a745; /* Verde para campos válidos */
+}
+
+.form-control-custom:invalid {
+    border-color: #dc3545; /* Rojo para campos inválidos */
+}
+
+.invalid-feedback {
+    font-size: 0.9em;
+    color: #dc3545;
+    margin-top: 5px;
+}
+.valid-feedback {
+    font-size: 0.9em;
+    color: #28a745;
+    margin-top: 5px;
+}
+
+
+/* Botón de envío (Actualizar Contraseña) */
+.btn-submit-password-change {
+    background-color: #a0004d; /* Tu color principal de marca */
+    border-color: #a0004d;
+    color: white;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(160, 0, 77, 0.2);
+}
+
+.btn-submit-password-change:hover {
+    background-color: #8f0044; /* Tono más oscuro al hover */
+    border-color: #8f0044;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(160, 0, 77, 0.3);
+}
+
+/* Botón Cancelar (ya definido con btn-outline-secondary, solo asegurar coherencia) */
+.btn-outline-secondary {
+    border-width: 2px;
+    font-weight: 600;
+}
+
+/* Asegúrate de que tu estilo2.css incluya esto */
+.password-container {
+    position: relative;
+    /* display: flex; /* Esto puede ser útil si quieres que el input y el icono estén en la misma línea */
+    align-items: center; /* Centra verticalmente si usas flex */
+}
+
+.password-container input {
+    padding-right: 40px; /* Deja espacio para el icono */
+    width: 100%;
+}
+
+.password-container .fas.fa-eye,
+.password-container .fas.fa-eye-slash {
+    position: absolute;
+    right: 10px; /* Ajusta la posición horizontal */
+    top: 50%; /* Centra verticalmente */
+    transform: translateY(-50%); /* Ajuste fino para centrado vertical */
+    cursor: pointer;
+    color: #888; /* Un color más suave para el icono */
+    font-size: 1.2em; /* Tamaño del icono */
 }
