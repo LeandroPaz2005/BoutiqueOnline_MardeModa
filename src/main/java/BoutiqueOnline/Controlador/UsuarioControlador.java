@@ -5,6 +5,7 @@ import BoutiqueOnline.Servicio.ProductoServicio;
 import BoutiqueOnline.Servicio.UploadFileService;
 import BoutiqueOnline.modelo.Orden;
 import BoutiqueOnline.modelo.Usuario;
+import BoutiqueOnline.servicio.EmailService;
 import BoutiqueOnline.servicio.UsuarioServicio;
 import BoutiqueOnline.util.FacturaPDFUtil;
 import com.mercadopago.MercadoPago;
@@ -44,6 +45,9 @@ public class UsuarioControlador {
 
     @Autowired
     private OrdenServicio ordenServicio;
+    
+    @Autowired
+    private EmailService emailService;
 
     @Autowired
     private UploadFileService uploadFileService;
@@ -62,6 +66,17 @@ public class UsuarioControlador {
         usuario.setTipo("USER");
         usuario.setPassword(passEncode.encode(usuario.getPassword()));
         usuarioServicio.save(usuario);
+        
+         // === Enviar correo de bienvenida ===
+         try {
+        emailService.sendWelcomeEmailToGmailUser(
+            usuario.getEmail(),
+            usuario.getNombre() + " " + usuario.getApellido()
+        );
+    } catch (Exception e) {
+        logger.error("Error al enviar email de bienvenida: {}", e.getMessage());
+             System.out.println("====================Error en la bienvenida del email====================");
+    }
 
         //evitar sobrescribir la sesion si ya hay alguien logeado 
         if (session.getAttribute("usuario") == null) {

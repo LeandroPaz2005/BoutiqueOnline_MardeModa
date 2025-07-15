@@ -55,4 +55,12 @@ public class ProductoServicioImple implements ProductoServicio{
     public int totalProductos(){
     return (int) productoRepositorio.count();
     }
+
+    @Override
+    public void eliminarLogico(Integer id) {
+        Producto producto=productoRepositorio.findById(id)
+                .orElseThrow(()->new RuntimeException("Producto no encontradi"));
+        producto.setActivo(false);
+        productoRepositorio.save(producto);
+    }
 }

@@ -113,7 +113,7 @@
                         <!-- Si no está logueado, lo mandamos al login o registro -->
                         <a th:if="${usuario == null}" th:href="@{/usuario/login}" class="btn btn-dark w-100">Iniciar Sesión para Comprar</a>
 
-                        <a th:href="@{/home/MostrarProducto}" class="btn btn-outline-secondary w-100 mt-2">Seguir Comprando</a> 
+                        <a th:href="@{/productos/MostrarProducto}" class="btn btn-outline-secondary w-100 mt-2">Seguir Comprando</a> 
                         <a th:if="${usuario != null}" th:href="@{/usuario/compras}" class="btn btn-outline-primary w-100 mt-2">Mis Compras</a>
                     </div>
                 </div>

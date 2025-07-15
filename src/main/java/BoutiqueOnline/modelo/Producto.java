@@ -15,6 +15,7 @@ public class Producto {
     private String imagen;
     private double precio;
     private int cantidad;
+    private boolean activo=true; //por defecto
     
     private int unidadesVendidas=0;
     //relacion de uno a muchos: un producto  puede tener muchos usuarios
@@ -105,6 +106,15 @@ public class Producto {
         this.usuario = usuario;
     }
 
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
+    
     @Override
     public String toString() {
         return "Producto: "

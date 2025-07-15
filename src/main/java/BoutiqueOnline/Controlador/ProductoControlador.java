@@ -48,13 +48,17 @@ public class ProductoControlador {
         List<Producto> producto = productoServicio.findAll()
                 .stream()
                 .filter(p -> p.getCantidad()>0)
+                .filter(p->Boolean.TRUE.equals(p.isActivo()))
                 .collect(Collectors.toList());
         model.addAttribute("productos", producto);
         return "usuario/home";
     }
      @GetMapping("/RegistroProductos")
     public String MostrarProductoAdmin(Model model) {
-        List<Producto> producto = productoServicio.findAll();
+        List<Producto> producto = productoServicio.findAll()
+                .stream()
+                .filter(p->Boolean.TRUE.equals(p.isActivo()))
+                .collect(Collectors.toList());
         model.addAttribute("productos", producto);
         return "productos/gestionProducto";
     }
@@ -62,7 +66,11 @@ public class ProductoControlador {
     //mostrar la vista de productos la tabla 
     @GetMapping("/gestionProducto")
     public String show(Model model) {
-        model.addAttribute("productos", productoServicio.findAll());
+        List<Producto> productos=productoServicio.findAll()
+                .stream()
+                .filter(p->Boolean.TRUE.equals(p.isActivo()))
+                .collect(Collectors.toList());
+        model.addAttribute("productos", productos);
         return "productos/show";
     }
 
@@ -128,15 +136,18 @@ public class ProductoControlador {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
-        Producto p = new Producto();
-        p = productoServicio.get(id).get();
-
-        //eliminar cuando no sea por defecto
-        if (p.getImagen().equals("default.jpg")) {
-            uplaod.deleteImagen("productos", p.getImagen());
-        }
-
-        productoServicio.delete(id);
+      Optional<Producto> optionalProducto=productoServicio.get(id);
+      if(optionalProducto.isPresent()){
+      Producto producto=optionalProducto.get();
+      
+      //eliminar imagen si no es por defecto
+      if(!producto.getImagen().equals("default.jpg")){
+          uplaod.deleteImagen("productos", producto.getImagen());
+      }
+      
+      producto.setActivo(false);
+      productoServicio.update(producto);
+      }
         return "redirect:/productos/gestionProducto";
     } 
     
