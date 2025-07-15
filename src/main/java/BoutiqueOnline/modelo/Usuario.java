@@ -25,6 +25,7 @@ public class Usuario {
 	private String telefono;
 	private String tipo;
 	private String password;
+        private boolean activo=true;//por defecto
 	@Column(name="foto")
         private String foto;
         
@@ -130,6 +131,15 @@ public class Usuario {
     public void setFoto(String foto) {
         this.foto = foto;
     }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+    
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nombre=" + nombre + ", username=" + username + ", email=" + email

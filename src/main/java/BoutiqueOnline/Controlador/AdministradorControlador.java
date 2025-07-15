@@ -65,7 +65,7 @@ public class AdministradorControlador {
     //========CRUD DE USUARIO========
     @GetMapping("/gestionUsuario")
     public String MostrarUsuario(Model model) {
-        model.addAttribute("usuarios", usuarioServicio.findAll());
+        model.addAttribute("usuarios", usuariorepositorio.findByActivoTrue());
         return "administrador/gestionUsuario";
     }
 
@@ -104,8 +104,13 @@ public class AdministradorControlador {
     //Eliminar usuario
     @GetMapping("/usuario/eliminarUsuario/{id}")
     public String eliminar(@PathVariable("id") Integer id) {
-
-        usuariorepositorio.deleteById(id);
+        Optional<Usuario> usuarioOpt=usuariorepositorio.findById(id);
+        if(usuarioOpt.isPresent()){
+        Usuario usuario=usuarioOpt.get();
+        usuario.setActivo(false);
+        usuariorepositorio.save(usuario);
+        }
+       
         return "redirect:/administrador/gestionUsuario";
 
     }
